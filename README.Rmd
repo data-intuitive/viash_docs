@@ -67,9 +67,28 @@ viash --help
 
 ## First execution
 
+You can run a simple 'Hello World' component by running the following command.
+
 ```{bash}
-viash run -f https://raw.githubusercontent.com/data-intuitive/viash_docs/master/docs/examples/hello_world/functionality.yaml
+HELLO=https://raw.githubusercontent.com/data-intuitive/viash_docs/master/docs/examples/hello_world/functionality.yaml
+viash run -f $HELLO
 ```
+```{bash, eval=FALSE}
+viash run -f $HELLO -- --help
+```
+```{bash, echo=FALSE}
+HELLO=https://raw.githubusercontent.com/data-intuitive/viash_docs/master/docs/examples/hello_world/functionality.yaml
+viash run -f $HELLO -- --help
+```
+```{bash, eval=FALSE}
+viash run -f $HELLO -- General Kenobi. --greeter="Hello there."
+```
+```{bash, echo=FALSE}
+HELLO=https://raw.githubusercontent.com/data-intuitive/viash_docs/master/docs/examples/hello_world/functionality.yaml
+viash run -f $HELLO -- General Kenobi. --greeter="Hello there."
+```
+
+Check out the vignette ["Wrapping a Bash script"](docs/wrapping_a_bash_script.md) to learn how this component was written.
 
 ## More documentation
 The following vignettes can help you get started with viash in a flash!

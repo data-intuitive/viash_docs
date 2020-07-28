@@ -96,11 +96,38 @@ viash --help
 
 ## First execution
 
+You can run a simple ‘Hello World’ component by running the following
+command.
+
 ``` bash
-viash run -f https://raw.githubusercontent.com/data-intuitive/viash_docs/master/docs/examples/hello_world/functionality.yaml
+HELLO=https://raw.githubusercontent.com/data-intuitive/viash_docs/master/docs/examples/hello_world/functionality.yaml
+viash run -f $HELLO
 ```
 
     ## Hello world!
+
+``` bash
+viash run -f $HELLO -- --help
+```
+
+    ## A very simple 'Hello world' component.
+    ## 
+    ## Options:
+    ##     string1 string2 ...
+    ##         type: string, multiple values allowed
+    ## 
+    ##     --greeter=string
+    ##         type: string, default: Hello world!
+
+``` bash
+viash run -f $HELLO -- General Kenobi. --greeter="Hello there."
+```
+
+    ## Hello there. General Kenobi.
+
+Check out the vignette [“Wrapping a Bash
+script”](docs/wrapping_a_bash_script.md) to learn how this component
+was written.
 
 ## More documentation
 
