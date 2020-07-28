@@ -35,22 +35,20 @@ viash run -f $HELLO -- General Kenobi. --greeter="Hello there."
     ## Hello there. General Kenobi.
 
 Check out the vignette [“Wrapping a Bash
-script”](docs/wrapping_a_bash_script.md) to learn how this component
-was written.
+script”](wrapping_a_bash_script.md) to learn how this component was
+written.
 
 ## More documentation
 
 The following vignettes can help you get started with viash in a flash\!
 
-  - [Viash sub-commands](docs/viash_commands.md)
-  - [Wrapping a Bash script](docs/wrapping_a_bash_script.md)
-  - [Wrapping an R script](docs/wrapping_an_r_script.md)
-  - [Wrapping a Python script](docs/wrapping_a_python_script.md)
-  - [Wrapping an R Markdown
-    report](docs/wrapping_an_rmarkdown_report.md)
-  - [Wrapping an executable](docs/wrapping_an_executable.md)
-  - [Description of the functionality.yaml
-    format](docs/functionality.md)
-  - [Description of the platform.yaml format](docs/platform.md)
+  - [Viash sub-commands](viash_commands.md)
+  - [Wrapping a Bash script](wrapping_a_bash_script.md)
+  - [Wrapping an R script](wrapping_an_r_script.md)
+  - [Wrapping a Python script](wrapping_a_python_script.md)
+  - [Wrapping an R Markdown report](wrapping_an_rmarkdown_report.md)
+  - [Wrapping an executable](wrapping_an_executable.md)
+  - [Description of the functionality.yaml format](functionality.md)
+  - [Description of the platform.yaml format](platform.md)
 
-For more real-world examples, check out [docs/examples](docs/examples).
+For more real-world examples, check out [examples](examples).
