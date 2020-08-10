@@ -84,6 +84,20 @@ Options:
         An alternative location if not target/
 ```
 
+### Combining namespaces
+
+Please note that it now becomes easy to combine namespaces/toolboxes without having name clashes. It even becomes possible to split large component databases in groups. We have an example of a Single Cell component library that is grouped along the _function_: cluster, normalize, filter, ... Each of these types of functionality contain multiple _methods_, possibly using complete different programming languages, libraries, versions, etc.
+
+The layout simply looks like:
+
+```
+src/
+  filter/
+  cluster/
+  ...
+```
+
+In effect, we could as well split them into different repositories. The builds (under `target/`) can be combined per platform as well because they are all properly namespaced. And in the root, one can still access the native or Docker version of the script by prepending the namespace.
 
 ## TODO
 
