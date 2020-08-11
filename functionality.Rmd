@@ -5,7 +5,7 @@ output:
     toc: true
 ---
 
-The functionality yaml is a meta file which describes the behavior of a script 
+The functionality yaml is a meta file which describes the behaviour of a script 
 in terms of input/output/parameters. By specifying a few restrictions (e.g. mandatory arguments)
 and adding some descriptions, viash can automatically generate a command-line interface.
 
@@ -37,7 +37,7 @@ tests:
   path: tests/unit_test.R
 ```
 
-## name [string]
+## name [string] {#name}
 Name of the component described.
 
 Example:
@@ -45,7 +45,7 @@ Example:
 name: exe
 ```
 
-## description [string]
+## description [string] {#description}
 A description of the component. This will be displayed with `--help` and in the README (if created).
 
 Example:
@@ -55,7 +55,7 @@ description: |
   It is possible to make this a multiline string.
 ```
 
-## arguments [list]
+## arguments [list] {#arguments}
 A list of arguments for this component. For each argument, a type and a name must be specified. 
 Depending on the type of argument, different properties can be set. Common properties for all argument types are the following.
 
@@ -89,6 +89,7 @@ The value passed through an argument of this type is converted to an 'str' objec
 
 #### type: file
 The resulting value is still an 'str' in Python and a 'character' in R. However, when using a Docker platform, the value will automatically be substituted with the path of the mounted directory inside the container (see [platform_docker.md](platform_docker.md). Additional property values:
+
 * `must_exist: true/false`, denotes whether the file or folder should exist at the start of the execution.
 * `direction: input/output/log`, specifies whether the file is an input, an output, or a log file.
 
@@ -104,7 +105,7 @@ The resulting value is a 'bool' in Python and a 'logical' in R.
 #### type: boolean_true/boolean_false
 Arguments of this type can only be used by providing a flag `--foo` or not. The resulting value is a 'bool' in Python and a 'logical' in R. These properties cannot be altered: required is false, default is undefined, multiple is false.
 
-## resources [list]
+## resources [list] {#resources}
 The first resource should be a script (with type r_script/python_script/bash_script) or an executable, which is what will be executed
 when the functionality is run. A script is a file for which the code should be provided, whereas executable is a pre-existing executable
 which should be available on the PATH of the host system. 
@@ -118,6 +119,16 @@ Common properties:
 * `path: path/to/file`, the path of the input file. Can be a relative or an absolute path, or a URI.
 * `text: ...multiline text...`, the raw content of the input file. Exactly one of `path` or `text` must be defined, the other undefined.
 * `is_executable: true/false`, whether the resulting file is made executable.
+
+Example:
+
+```yaml
+resources:
+  - type: r_script
+    path: script.R
+  - type: file
+    path: resource1.txt
+```
 
 #### type: file
 A simple file which will be copied when the functionality is exported. The first resource cannot be of this type. If the type of a resource is not given, it is assumed to be of type `file`.
@@ -137,12 +148,35 @@ to handle the command-line interface by itself, there should be a one-to-one map
 of the arguments described in the functionality and the arguments that the executable 'understands'.
 See [wrapping_an_executable.md](wrapping_an_executable.md) for more information.
 
+Example:
+```yaml
+resources:
+  - type: executable
+    path: cat
+```
 
-## tests [list]
+## tests [list] {#tests}
 
-Similar to resources, the test resources will only be used when using the `viash test` command. Each r_script/python_script/bash_script is assumed to contain unit tests which tests whether the functionality exported by viash functions as intended and exits with a code > 1 when unexpected behavior occurs. Other files are assumed to be files used during a test.
+Similar to resources, the test resources will only be used when using the `viash test` command. Each r_script/python_script/bash_script is assumed to contain unit tests which tests whether the functionality exported by viash functions as intended and exits with a code > 1 when unexpected behaviour occurs. Other files are assumed to be files used during a test.
 
-## function_type [string]
+Example:
+
+```yaml
+tests:
+  - type: bash_script
+    path: tests/test1.sh
+  - type: r_script
+    path: tests/test2.R
+  - path: resource1.txt
+```
+
+Check the following documentation for more information on how to write tests for each of the different possible scripting languages:
+
+* Bash: [wrapping_a_bash_script.md](wrapping_a_bash_script.md)
+* Python: [wrapping_a_python_script.md](wrapping_a_python_script.md)
+* R: [wrapping_an_r_script.md](wrapping_an_r_script.md)
+
+## function_type [string] {#function-type}
 
 The function_type is used in Nextflow to describe the type of function the functionality provides. The function type affects two aspects: how many files can be used as input and output, and how should the output files be named (based on the input).
 

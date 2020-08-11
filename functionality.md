@@ -1,9 +1,9 @@
 Description of the functionality.yaml format
 ================
 
-  - [name \[string\]](#name-string)
-  - [description \[string\]](#description-string)
-  - [arguments \[list\]](#arguments-list)
+  - [name \[string\]](#name)
+  - [description \[string\]](#description)
+  - [arguments \[list\]](#arguments)
       - [type: string](#type-string)
       - [type: file](#type-file)
       - [type: integer](#type-integer)
@@ -11,16 +11,16 @@ Description of the functionality.yaml format
       - [type: boolean](#type-boolean)
       - [type:
         boolean\_true/boolean\_false](#type-boolean_trueboolean_false)
-  - [resources \[list\]](#resources-list)
+  - [resources \[list\]](#resources)
       - [type: file](#type-file-1)
       - [type: r\_script](#type-r_script)
       - [type: python\_script](#type-python_script)
       - [type: bash\_script](#type-bash_script)
       - [type: executable](#type-executable)
-  - [tests \[list\]](#tests-list)
-  - [function\_type \[string\]](#function_type-string)
+  - [tests \[list\]](#tests)
+  - [function\_type \[string\]](#function-type)
 
-The functionality yaml is a meta file which describes the behavior of a
+The functionality yaml is a meta file which describes the behaviour of a
 script in terms of input/output/parameters. By specifying a few
 restrictions (e.g. mandatory arguments) and adding some descriptions,
 viash can automatically generate a command-line interface.
@@ -134,10 +134,12 @@ The resulting value is still an ‘str’ in Python and a ‘character’ in R.
 However, when using a Docker platform, the value will automatically be
 substituted with the path of the mounted directory inside the container
 (see [platform\_docker.md](platform_docker.md). Additional property
-values: \* `must_exist: true/false`, denotes whether the file or folder
-should exist at the start of the execution. \* `direction:
-input/output/log`, specifies whether the file is an input, an output, or
-a log file.
+values:
+
+  - `must_exist: true/false`, denotes whether the file or folder should
+    exist at the start of the execution.
+  - `direction: input/output/log`, specifies whether the file is an
+    input, an output, or a log file.
 
 #### type: integer
 
@@ -183,6 +185,16 @@ Common properties:
   - `is_executable: true/false`, whether the resulting file is made
     executable.
 
+Example:
+
+``` yaml
+resources:
+  - type: r_script
+    path: script.R
+  - type: file
+    path: resource1.txt
+```
+
 #### type: file
 
 A simple file which will be copied when the functionality is exported.
@@ -222,14 +234,41 @@ functionality and the arguments that the executable ‘understands’. See
 [wrapping\_an\_executable.md](wrapping_an_executable.md) for more
 information.
 
+Example:
+
+``` yaml
+resources:
+  - type: executable
+    path: cat
+```
+
 ## tests \[list\]
 
 Similar to resources, the test resources will only be used when using
 the `viash test` command. Each r\_script/python\_script/bash\_script is
 assumed to contain unit tests which tests whether the functionality
 exported by viash functions as intended and exits with a code \> 1 when
-unexpected behavior occurs. Other files are assumed to be files used
+unexpected behaviour occurs. Other files are assumed to be files used
 during a test.
+
+Example:
+
+``` yaml
+tests:
+  - type: bash_script
+    path: tests/test1.sh
+  - type: r_script
+    path: tests/test2.R
+  - path: resource1.txt
+```
+
+Check the following documentation for more information on how to write
+tests for each of the different possible scripting languages:
+
+  - Bash: [wrapping\_a\_bash\_script.md](wrapping_a_bash_script.md)
+  - Python:
+    [wrapping\_a\_python\_script.md](wrapping_a_python_script.md)
+  - R: [wrapping\_an\_r\_script.md](wrapping_an_r_script.md)
 
 ## function\_type \[string\]
 
