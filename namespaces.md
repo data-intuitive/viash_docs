@@ -29,7 +29,7 @@ src/viash/...
 In order to build the components under `src/<namespace>`, use the `build_namespace` component:
 
 ```
-❯ bin/viash_doc_namespace --help
+❯ bin/viash-doc_namespace --help
 Generate namespace documentation based on the effective contents of
 the target/ build directory (or different if configured like this).
 
@@ -49,13 +49,15 @@ The scripts checks for platform files for platform `PL` being `native`, `docker`
 - If this file does not exist, check if there is a file `platforms/PL.yaml`, use it
 - Else, just skip this component for this platform
 
-`viash_build_namespaces` by default stores the result under `target/PL/<namespace>/<component>`, but this can be overridden using the command line parameter `-t`.
+`viash-build_namespaces` by default stores the result under `target/PL/<namespace>/<component>`, but this can be overridden using the command line parameter `-t`.
 
 ### Proper namespacing
 
-The build script generates subdirectories per namespaces. But it also generates unique entry commands on the level of `target/PL` by prepending `<namespace>_` to the component name.
+The build script generates subdirectories per namespaces. But it also generates unique entry commands on the level of `target/PL` by prepending `<namespace>-` to the component name.
 
-In other words, say we have component `src/test_namespace/test_component`, then the Docker target will be under `target/docker/test_namespace/test_component` but the script to launch the process in the container itself will also be available as `target/test_namespace_test_component`. This also means that if both a native and a Docker platform spec are provided, the Docker target script will be put here.
+_Please note_: We use a `-` sign between namespace and tool names. We strongly suggest to use the `_` character to distinguish words in either namespace or tool names.
+
+In other words, say we have component `src/test_namespace/test_component`, then the Docker target will be under `target/docker/test_namespace/test_component` but the script to launch the process in the container itself will also be available as `target/test_namespace-test_component`. This also means that if both a native and a Docker platform spec are provided, the Docker target script will be put here.
 
 __Remark__: Please note that these assumptions could be changed/updated later or eventually become a configuration parameter.
 
@@ -63,14 +65,14 @@ __Remark__: Please note that these assumptions could be changed/updated later or
 
 The components that come with `viash` are handled using these scripts with only one difference: Instead of using `target/` as the build directory, we use `bin/`.
 
-In combination with the logic in the `build_viash_namespace` component, this means that we end up with the script under `bin/` directly which makes sense for the `viash` stuff.
+In combination with the logic in the `build_namespace` component, this means that we end up with the script under `bin/` directly which makes sense for the `viash` stuff.
 
 ### Documentation
 
 Documentation can be generated for the target builds by using the script:
 
 ```
-❯ bin/viash_doc_namespace --help
+❯ bin/viash-doc_namespace --help
 Generate namespace documentation based on the effective contents of
 the target/ build directory (or different if configured like this).
 
