@@ -22,9 +22,15 @@ __Remark 2__: The format and content of `viash.yaml` is still WIP, please expect
 
 `functionality.yaml` and `platform.yaml` both support (optional) versions now. These are manually provided version numbers.
 
-We are aware that manual versioning can be a pain and we are looking for better ways to do this.
+A `viash` component is available to deal with versions in collection of components: `viash-version`. Tagging the `viash` components with a version using `viash-version` can be done like this:
 
-__Remark__: For now, the version numbers need to be quoted for them to be interpreted as a `String`.
+```sh
+bin/version 0.2.0-rc2 -l src/viash
+```
+
+We plan to add additional functionality in the future.
+
+__Remark__: For now, the version numbers need to be quoted for them to be interpreted as a `String`. The `viash-version` component automatically takes care of that, but in case versions are specified manually this is still important.
 
 ## Git information
 
