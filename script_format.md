@@ -31,7 +31,6 @@ Description of the functionality.yaml format
 #'     must_exist: true
 #'     required: false
 #'     multiple: true
-#'     multiple_sep: ","
 #' platforms:
 #' - type: native
 #' - type: docker

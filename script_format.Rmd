@@ -1,5 +1,5 @@
 ---
-title: "Description of the functionality.yaml format"
+title: "The anatomy of a viash script"
 output: 
   github_document:
     toc: true
@@ -32,7 +32,7 @@ for (input in par$input) {
 }
 ```
 
-## functionality {#functionality}
+## Meta-data: Functionality {#functionality}
 The functionality metadata describes the behaviour of the script 
 in terms of input/output/parameters. By specifying a few restrictions (e.g. mandatory arguments)
 and adding some descriptions, viash can automatically generate a command-line interface.
@@ -211,7 +211,7 @@ The function_type is used in Nextflow to describe the type of function the funct
 
 See [platform_nextflow.md](platform_nextflow.md) for an explanation between the difference between function types.
 
-## platform {#platform}
+## Meta-data: Platform(s) {#platform}
 
 The platform metadata describes the environment a script executes on.
 By specifying the requirements, viash can generate wrappers around the desired functionality
