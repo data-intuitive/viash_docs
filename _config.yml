@@ -6,8 +6,8 @@ description: Documentation for `viash`
 permalink: pretty
 exclude: ["node_modules/", "*.gemspec", "*.gem", "Gemfile", "Gemfile.lock", "package.json", "package-lock.json",  "script/", "LICENSE.txt", "lib/", "bin/", "Rakefile"]
 
-# remote_theme: pmarsceill/just-the-docs
-theme: just-the-docs
+remote_theme: pmarsceill/just-the-docs
+# theme: just-the-docs
 
 # Set a path/url to a logo that will be displayed instead of the title
 #logo: "/assets/images/just-the-docs.png"
@@ -39,25 +39,25 @@ search:
   # Supports true or false (default)
   button: false
 
-# # Enable or disable heading anchors
+# Enable or disable heading anchors
 heading_anchors: true
 
-# # Aux links for the upper right navigation
+# Aux links for the upper right navigation
 aux_links:
   "viash_docs on GitHub":
     - "//github.com/data-intuitive/viash_docs"
   "viash on GitHub":
     - "//github.com/data-intuitive/viash"
 
-# # Makes Aux links open in a new tab. Default is false
+# Makes Aux links open in a new tab. Default is false
 aux_links_new_tab: false
 
-# # Sort order for navigation links
-# nav_sort: case_insensitive # default, equivalent to nil
-# # nav_sort: case_sensitive # Capital letters sorted before lowercase
+# Sort order for navigation links
+nav_sort: case_insensitive # default, equivalent to nil
+# nav_sort: case_sensitive # Capital letters sorted before lowercase
 
-# # Footer content
-# # appears at the bottom of every page's main content
+# Footer content
+# appears at the bottom of every page's main content
 
 # # Back to top link
 # back_to_top: true
