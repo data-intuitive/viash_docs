@@ -62,6 +62,52 @@ It should be noted that the downstream transformations or processes should take 
 
 A pipeline DAG usually contains forks as well as joins. This function type combines things. Tools like, e.g. Pandoc, allow the user to combine several files into one output file.
 
+## How to specify a join?
+
+A component can be tagged as being a `join` module in NextFlow, i.e. by adding the following to `functionality.yaml`:
+
+```yaml
+function_type: join
+```
+
+In order for a module to be of type join, it effectively needs to:
+
+1. Take a number of input files in the form of an argument or an option with multiple values, or
+2. Take multiple options, each requiring a file as parameter. An example is providing a reference file on top of the input file to be processed, a template, ...
+
+The reason point 2. is also of type `join` is that we want to explicitly keep track of input/output files and provide NextFlow the option to do so as well.
+
+Next, the two possible join types above result in two different ways of handling the IO in NextFlow. Let's give an example of both.
+
+First, suppose we use `cat` and we just want to concatenate multiple files one after the other. The way to express this in NextFlow would be something like:
+
+```groovy
+concatenate_ = singleSample_ \
+    | toList \
+    | map{ it -> [ it.collect{ b -> b[0]}, it.collect{ a -> a[1] }, params ]} \
+    | concatenate
+```
+
+In other words, we pass a `List`of Path objects to the concatenate module.
+
+The second approach, for instance can be used to merge meta information (from a file) to an `h5ad` file. This would be expressed like so:
+
+```groovy
+    singleSample_ = input_ \
+        ...
+        | combine(meta_) \
+        | map{ id, output, params, meta ->
+            [ id, [ "input" : output, "meta" : meta ], params ]
+        } \
+        | annotate
+```
+
+Where the `meta_` `Channel` points to the meta file to be used.
+
+In other words, we either provide a `List` of Path values or in the case multiple options take different files we use a `HashMap`.
+
+Remark: Be sure to mark the options in `functionality.yaml` as being of `type: file` and `direction: input`.
+
 ## Specific Functionality
 
 ### Labels
