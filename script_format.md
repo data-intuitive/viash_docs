@@ -1,59 +1,83 @@
 Description of the functionality.yaml format
 ================
 
-  - [name \[string\]](#name)
-  - [description \[string\]](#description)
-  - [arguments \[list\]](#arguments)
-      - [type: string](#type-string)
-      - [type: file](#type-file)
-      - [type: integer](#type-integer)
-      - [type: double](#type-double)
-      - [type: boolean](#type-boolean)
-      - [type:
-        boolean\_true/boolean\_false](#type-boolean_trueboolean_false)
-  - [resources \[list\]](#resources)
-      - [type: file](#type-file-1)
-      - [type: r\_script](#type-r_script)
-      - [type: python\_script](#type-python_script)
-      - [type: bash\_script](#type-bash_script)
-      - [type: executable](#type-executable)
-  - [tests \[list\]](#tests)
-  - [function\_type \[string\]](#function-type)
+  - [Example](#example)
+  - [functionality](#functionality)
+      - [name \[string\]](#name)
+      - [description \[string\]](#description)
+      - [arguments \[list\]](#arguments)
+      - [resources \[list\]](#resources)
+      - [tests \[list\]](#tests)
+      - [function\_type \[string\]](#function-type)
+  - [platform](#platform)
+      - [Native](#native)
+      - [Docker](#docker)
+      - [Nextflow](#nextflow)
 
-The functionality yaml is a meta file which describes the behaviour of a
-script in terms of input/output/parameters. By specifying a few
-restrictions (e.g. mandatory arguments) and adding some descriptions,
-viash can automatically generate a command-line interface.
+## Example
+
+``` r
+#' functionality:
+#'   name: test
+#'   description: |
+#'     This component performs function Y and Z.
+#'     It is possible to make this a multiline string.
+#'   arguments:
+#'   - name: --input                           
+#'     type: file
+#'     alternatives: [-i]
+#'     description: Input file(s)
+#'     default: input.txt
+#'     must_exist: true
+#'     required: false
+#'     multiple: true
+#' platforms:
+#' - type: native
+#' - type: docker
+#'   image: rocker/tidyverse
+
+for (input in par$input) {
+  cat(readLines(input), sep = "\n")
+}
+```
+
+## functionality
+
+The functionality metadata describes the behaviour of the script in
+terms of input/output/parameters. By specifying a few restrictions
+(e.g. mandatory arguments) and adding some descriptions, viash can
+automatically generate a command-line interface.
 
 An example of such a functionality yaml can be found below, each part of
 which is explained in more depth in the following sections. For more
 (extensive) examples, see [examples](examples).
 
 ``` yaml
-name: exe
-description: |
-  This component performs function Y and Z.
-  It is possible to make this a multiline string.
-function_type: transform
-arguments:
-- name: --input                           
-  type: file
-  alternatives: [-i]
-  description: Input file(s)
-  default: input.txt
-  must_exist: true
-  required: false
-  multiple: true
-  multiple_sep: ","
-resources:
-- type: r_script
-  path: script.R
-tests:
-- type: r_script
-  path: tests/unit_test.R
+functionality:
+  name: exe
+  description: |
+    This component performs function Y and Z.
+    It is possible to make this a multiline string.
+  function_type: transform
+  arguments:
+  - name: --input                           
+    type: file
+    alternatives: [-i]
+    description: Input file(s)
+    default: input.txt
+    must_exist: true
+    required: false
+    multiple: true
+    multiple_sep: ","
+  resources:
+  - type: file
+    path: additional_resource.txt
+  tests:
+  - type: r_script
+    path: tests/unit_test.R
 ```
 
-## name \[string\]
+### name \[string\]
 
 Name of the component described.
 
@@ -63,7 +87,7 @@ Example:
 name: exe
 ```
 
-## description \[string\]
+### description \[string\]
 
 A description of the component. This will be displayed with `--help` and
 in the README (if created).
@@ -76,7 +100,7 @@ description: |
   It is possible to make this a multiline string.
 ```
 
-## arguments \[list\]
+### arguments \[list\]
 
 A list of arguments for this component. For each argument, a type and a
 name must be specified. Depending on the type of argument, different
@@ -160,7 +184,7 @@ not. The resulting value is a ‘bool’ in Python and a ‘logical’ in R.
 These properties cannot be altered: required is false, default is
 undefined, multiple is false.
 
-## resources \[list\]
+### resources \[list\]
 
 The first resource should be a script (with type
 r\_script/python\_script/bash\_script) or an executable, which is what
@@ -242,7 +266,7 @@ resources:
     path: cat
 ```
 
-## tests \[list\]
+### tests \[list\]
 
 Similar to resources, the test resources will only be used when using
 the `viash test` command. Each r\_script/python\_script/bash\_script is
@@ -270,7 +294,7 @@ tests for each of the different possible scripting languages:
     [wrapping\_a\_python\_script.md](wrapping_a_python_script.md)
   - R: [wrapping\_an\_r\_script.md](wrapping_an_r_script.md)
 
-## function\_type \[string\]
+### function\_type \[string\]
 
 The function\_type is used in Nextflow to describe the type of function
 the functionality provides. The function type affects two aspects: how
@@ -279,3 +303,16 @@ files be named (based on the input).
 
 See [platform\_nextflow.md](platform_nextflow.md) for an explanation
 between the difference between function types.
+
+## platform
+
+The platform metadata describes the environment a script executes on. By
+specifying the requirements, viash can generate wrappers around the
+desired functionality in order to execute the script natively on the
+host system, in a docker container, or as part of a Nextflow pipeline.
+
+### Native
+
+### Docker
+
+### Nextflow

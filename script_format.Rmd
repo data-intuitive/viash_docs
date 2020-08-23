@@ -1,11 +1,39 @@
 ---
-title: "Description of the functionality.yaml format"
+title: "The anatomy of a viash script"
 output: 
   github_document:
     toc: true
 ---
 
-The functionality yaml is a meta file which describes the behaviour of a script 
+## Example
+
+```r
+#' functionality:
+#'   name: test
+#'   description: |
+#'     This component performs function Y and Z.
+#'     It is possible to make this a multiline string.
+#'   arguments:
+#'   - name: --input                           
+#'     type: file
+#'     alternatives: [-i]
+#'     description: Input file(s)
+#'     default: input.txt
+#'     must_exist: true
+#'     required: false
+#'     multiple: true
+#' platforms:
+#' - type: native
+#' - type: docker
+#'   image: rocker/tidyverse
+
+for (input in par$input) {
+  cat(readLines(input), sep = "\n")
+}
+```
+
+## Meta-data: Functionality {#functionality}
+The functionality metadata describes the behaviour of the script 
 in terms of input/output/parameters. By specifying a few restrictions (e.g. mandatory arguments)
 and adding some descriptions, viash can automatically generate a command-line interface.
 
@@ -14,30 +42,31 @@ explained in more depth in the following sections.
 For more (extensive) examples, see [examples](examples).
 
 ```yaml
-name: exe
-description: |
-  This component performs function Y and Z.
-  It is possible to make this a multiline string.
-function_type: transform
-arguments:
-- name: --input                           
-  type: file
-  alternatives: [-i]
-  description: Input file(s)
-  default: input.txt
-  must_exist: true
-  required: false
-  multiple: true
-  multiple_sep: ","
-resources:
-- type: r_script
-  path: script.R
-tests:
-- type: r_script
-  path: tests/unit_test.R
+functionality:
+  name: exe
+  description: |
+    This component performs function Y and Z.
+    It is possible to make this a multiline string.
+  function_type: transform
+  arguments:
+  - name: --input                           
+    type: file
+    alternatives: [-i]
+    description: Input file(s)
+    default: input.txt
+    must_exist: true
+    required: false
+    multiple: true
+    multiple_sep: ","
+  resources:
+  - type: file
+    path: additional_resource.txt
+  tests:
+  - type: r_script
+    path: tests/unit_test.R
 ```
 
-## name [string] {#name}
+### name [string] {#name}
 Name of the component described.
 
 Example:
@@ -45,7 +74,7 @@ Example:
 name: exe
 ```
 
-## description [string] {#description}
+### description [string] {#description}
 A description of the component. This will be displayed with `--help` and in the README (if created).
 
 Example:
@@ -55,7 +84,7 @@ description: |
   It is possible to make this a multiline string.
 ```
 
-## arguments [list] {#arguments}
+### arguments [list] {#arguments}
 A list of arguments for this component. For each argument, a type and a name must be specified. 
 Depending on the type of argument, different properties can be set. Common properties for all argument types are the following.
 
@@ -105,7 +134,7 @@ The resulting value is a 'bool' in Python and a 'logical' in R.
 #### type: boolean_true/boolean_false
 Arguments of this type can only be used by providing a flag `--foo` or not. The resulting value is a 'bool' in Python and a 'logical' in R. These properties cannot be altered: required is false, default is undefined, multiple is false.
 
-## resources [list] {#resources}
+### resources [list] {#resources}
 The first resource should be a script (with type r_script/python_script/bash_script) or an executable, which is what will be executed
 when the functionality is run. A script is a file for which the code should be provided, whereas executable is a pre-existing executable
 which should be available on the PATH of the host system. 
@@ -155,7 +184,7 @@ resources:
     path: cat
 ```
 
-## tests [list] {#tests}
+### tests [list] {#tests}
 
 Similar to resources, the test resources will only be used when using the `viash test` command. Each r_script/python_script/bash_script is assumed to contain unit tests which tests whether the functionality exported by viash functions as intended and exits with a code > 1 when unexpected behaviour occurs. Other files are assumed to be files used during a test.
 
@@ -176,8 +205,21 @@ Check the following documentation for more information on how to write tests for
 * Python: [wrapping_a_python_script.md](wrapping_a_python_script.md)
 * R: [wrapping_an_r_script.md](wrapping_an_r_script.md)
 
-## function_type [string] {#function-type}
+### function_type [string] {#function-type}
 
 The function_type is used in Nextflow to describe the type of function the functionality provides. The function type affects two aspects: how many files can be used as input and output, and how should the output files be named (based on the input).
 
 See [platform_nextflow.md](platform_nextflow.md) for an explanation between the difference between function types.
+
+## Meta-data: Platform(s) {#platform}
+
+The platform metadata describes the environment a script executes on.
+By specifying the requirements, viash can generate wrappers around the desired functionality
+in order to execute the script natively on the host system, in a docker container, or 
+as part of a Nextflow pipeline.
+
+### Native
+
+### Docker
+
+### Nextflow
