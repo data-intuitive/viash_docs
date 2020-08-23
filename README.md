@@ -1,3 +1,7 @@
+---
+nav_order: 1
+---
+
 viash: from scripts to pipelines
 ================
 
