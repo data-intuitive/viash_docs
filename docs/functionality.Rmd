@@ -1,8 +1,5 @@
 ---
-title: "The anatomy of a viash script"
-output: 
-  github_document:
-    toc: true
+title: "Functionality"
 ---
 
 ## Example
@@ -210,16 +207,3 @@ Check the following documentation for more information on how to write tests for
 The function_type is used in Nextflow to describe the type of function the functionality provides. The function type affects two aspects: how many files can be used as input and output, and how should the output files be named (based on the input).
 
 See [platform_nextflow.md](platform_nextflow.md) for an explanation between the difference between function types.
-
-## Meta-data: Platform(s) {#platform}
-
-The platform metadata describes the environment a script executes on.
-By specifying the requirements, viash can generate wrappers around the desired functionality
-in order to execute the script natively on the host system, in a docker container, or 
-as part of a Nextflow pipeline.
-
-### Native
-
-### Docker
-
-### Nextflow

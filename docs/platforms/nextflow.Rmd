@@ -1,11 +1,10 @@
 ---
-title: "Running a pipeline in Nextflow"
-output: 
-  github_document:
-    toc: true
+title: "Nextflow pipeline"
+nav_order: 3
+parent: Platforms
 ---
 
-## Introduction
+... introduction ... 
 
 ## Filenames
 

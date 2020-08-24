@@ -1,0 +1,24 @@
+---
+title: "Wrapping an R script"
+nav_order: 3
+parent: Guides
+---
+
+WIP. Example copied from functionality.Rmd.
+
+```r
+## VIASH START
+par <- list(
+  input = "file.txt",
+  output = "output.txt",
+  remove_odd_lines = TRUE
+)
+resource_dir <- "."
+## VIASH END
+
+lines <- readLines(par$input)
+if (par$remove_odd_lines && length(lines) > 1) {
+  lines <- lines[-seq(1, length(lines), by = 2)]
+}
+writeLines(lines, par$output)
+```

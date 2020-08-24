@@ -1,4 +1,6 @@
-# Namespaces
+---
+title: "Namespaces"
+---
 
 ## Background
 

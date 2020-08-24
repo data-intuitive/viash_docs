@@ -1,4 +1,6 @@
-# Reproducibility with Viash
+---
+title: "Reproducibility"
+---
 
 ## Introduction
 
