@@ -1,5 +1,6 @@
 ---
 title: "Functionality"
+nav_order: 4
 ---
 
 ## Example

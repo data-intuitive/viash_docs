@@ -1,8 +1,12 @@
 ---
-title: "Overview"
-nav_order: 1
-parent: Commands
+layout: default
+title: Commands
+nav_order: 3
+has_children: true
+permalink: /docs/commands
 ---
+
+# Commands
 
 viash has three main commands:
 
