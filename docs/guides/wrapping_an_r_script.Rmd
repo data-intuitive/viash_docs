@@ -1,6 +1,10 @@
+---
+title: "Wrapping an R script"
+nav_order: 3
+parent: Guides
+---
 
-
-Example copied from functionality.Rmd.
+WIP. Example copied from functionality.Rmd.
 
 ```r
 ## VIASH START

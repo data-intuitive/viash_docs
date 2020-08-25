@@ -1,4 +1,10 @@
-Example copied from functionality.Rmd.
+---
+title: "Wrapping a Python script"
+nav_order: 4
+parent: Guides
+---
+
+WIP. Example copied from functionality.Rmd.
 
 ```python
 ## VIASH START
