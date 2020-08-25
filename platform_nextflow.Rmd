@@ -221,3 +221,7 @@ Remarks:
 
 The NXF target inherits the R and Python platforms. This should _in principle_ allow a user to specify additional packages to be installed prior to running the function/module. This functionality is not yet available, though.
 
+## Remarks
+
+- A join operation requires a default value for the output file in order to extract the proper extension to be used for the output file.
+
