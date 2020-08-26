@@ -1,5 +1,6 @@
 ---
 title: "Namespaces"
+nav_order: 7
 ---
 
 ## Background
@@ -90,7 +91,7 @@ target/
 
 ### Proper namespacing
 
-The build script generates subdirectories per namespaces. But it also generates unique entry commands on the level of `target/PL` by prepending `<namespace>-` to the component name.
+The `ns build` command generates subdirectories per namespaces. But it also generates unique entry commands on the level of `target/PL` by prepending `<namespace>-` to the component name.
 
 _Please note_: We use a `-` sign between namespace and tool names. We strongly suggest to use the `_` character to distinguish words in either namespace or tool names. In other words, say we have component `src/test_namespace/test_component`, then the Docker target will be under `target/docker/test_namespace/test_component` but the script to launch the process in the container itself will also be available as `target/test_namespace-test_component`. This also means that if both a native and a Docker platform spec are provided, the Docker target script will be put here.
 
@@ -98,34 +99,13 @@ __Remark__: Please note that these conventions could be changed/updated later or
 
 ### A note about the `viash` namespace
 
-The components that come with `viash` are handled using these scripts with only one difference: Instead of using `target/` as the build directory, we use `bin/`, so we effectively run:
+The components that come with `viash` are handled using namespaces with only one difference: Instead of using `target/` as the build directory, we use `bin/`, so we effectively run:
 
 ```
 viash ns build -n viash -t bin
 ```
 
 In combination with the logic described above, this means that we end up with the script under `bin/` directly which makes sense for the `viash` stuff.
-
-- - -
-
-### Documentation
-
-Documentation can be generated for the target builds by using the script:
-
-```
-❯ bin/viash-doc_namespace --help
-Generate namespace documentation based on the effective contents of
-the target/ build directory (or different if configured like this).
-
-Options:
-    -n string, --namespace=string
-        type: string, required parameter, default: viash
-        The name of the namespace
-
-    -t string, --target=string
-        type: string, default: target
-        An alternative location if not target/
-```
 
 ### Combining namespaces
 
@@ -141,8 +121,3 @@ src/
 ```
 
 In effect, we could as well split them into different repositories. The builds (under `target/`) can be combined per platform as well because they are all properly namespaced. And in the root, one can still access the native or Docker version of the script by prepending the namespace.
-
-## TODO
-
-- Split the namespace code in code relevant for 1 component and call that component instead of doing everything in the main script
-- Add functionality to process a number of namespaces as well.

@@ -1,20 +1,15 @@
 functionality:
-  name: knitr
-  description: ""
+  name: knit
+  description: "Convert an .Rmd file to a .md file"
   arguments:
   - name: "input"
     type: file
     direction: input
-    default: input.Rmd
-  - name: "--output"
-    type: file
-    direction: output
-    default: output.md
+    required: true
+    description: "Input .Rmd file"
   resources:
   - type: r_script
     path: ./code.R
-  - type: executable
-    path: viash
 platforms:
 - type: docker
   image: dataintuitive/viash:0.2.0-rc3
@@ -28,6 +23,7 @@ platforms:
     - apt update -y
     - apt install -y r-base
     - Rscript -e "install.packages('knitr')"
+    - Rscript -e "install.packages('blogdown')"
   volumes:
   - name: data
     mount: /data
