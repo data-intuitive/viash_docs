@@ -1,0 +1,34 @@
+functionality:
+  name: knitr
+  description: ""
+  arguments:
+  - name: "input"
+    type: file
+    direction: input
+    default: input.Rmd
+  - name: "--output"
+    type: file
+    direction: output
+    default: output.md
+  resources:
+  - type: r_script
+    path: ./code.R
+  - type: executable
+    path: viash
+platforms:
+- type: docker
+  image: dataintuitive/viash:latest
+  docker:
+    run:
+    - apt install -y dirmngr --install-recommends
+    - apt install -y software-properties-common
+    - apt install -y apt-transport-https
+    - apt-key adv --keyserver keys.gnupg.net --recv-key 'E19F5F87128899B192B1A2C2AD5F960A256A04AF'
+    - add-apt-repository 'deb http://cloud.r-project.org/bin/linux/debian buster-cran35/'
+    - apt update -y
+    - apt install -y r-base
+    - Rscript -e "install.packages('knitr')"
+  volumes:
+  - name: data
+    mount: /data
+  workdir: /app
