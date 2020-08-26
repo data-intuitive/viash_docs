@@ -16,17 +16,26 @@ What we want to achieve with _namespaces_ is to be able to group tools/component
 
 From version `viash` 0.2.0-rc3 onwards, namespaces are managed using the `viash ns` subcommand:
 
-```sh
-$ viash ns -h
-  -h, --help   Show help message
 
-Subcommand: build
-  -n, --namespace  <arg>   The name of the namespace.
-  -s, --src  <arg>         An alternative source directory if not under
-                           src/<namespace>. Default = source/<namespace>.
-  -t, --target  <arg>      An alternative destination directory if not target/.
-                           Default = target/.
-  -h, --help               Show help message
+```bash
+viash ns -h
+```
+
+```
+##   -h, --help   Show help message
+## 
+## Subcommand: build
+##   -n, --namespace  <arg>      The name of the namespace.
+##   -p, --platform  <arg>       Path to the platform file. If not provided, the
+##                               native platform is used.
+##   -P, --platform-i-d  <arg>   If multiple platforms are specified in the
+##                               component, this argument allows you to choose
+##                               which one.
+##   -s, --src  <arg>            An alternative source directory if not under
+##                               src/<namespace>. Default = source/.
+##   -t, --target  <arg>         An alternative destination directory if not
+##                               target/. Default = target/.
+##   -h, --help                  Show help message
 ```
 
 ## Use

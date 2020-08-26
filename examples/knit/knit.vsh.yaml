@@ -17,7 +17,7 @@ functionality:
     path: viash
 platforms:
 - type: docker
-  image: dataintuitive/viash:latest
+  image: dataintuitive/viash:0.2.0-rc3
   docker:
     run:
     - apt install -y dirmngr --install-recommends
