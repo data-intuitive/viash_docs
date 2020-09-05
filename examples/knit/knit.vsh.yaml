@@ -12,7 +12,9 @@ functionality:
     path: ./code.R
 platforms:
 - type: docker
-  image: dataintuitive/viash:0.2.0-rc3
+  image: dataintuitive/viash:0.2.0
+  target_image: dataintuitive/viash_docs
+  version: 0.2.0
   docker:
     run:
     - apt install -y dirmngr --install-recommends

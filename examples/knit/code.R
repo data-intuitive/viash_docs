@@ -1,13 +1,12 @@
 ### VIASH START
 par <- list(
   input = "index.Rmd"
-  output = "output.md"
 )
 resources_dir <- "."
 ### VIASH END
 
 # input/output filenames are passed as two additional arguments to Rscript
-d = gsub('^_|[.][a-zA-Z]+$', '', par$input)
+d = par$input
 knitr::opts_chunk$set(
   fig.path   = sprintf('figure/%s/', d),
   cache.path = sprintf('cache/%s/', d)
