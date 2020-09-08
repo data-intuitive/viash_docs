@@ -14,5 +14,11 @@ knitr::opts_chunk$set(
 options(digits = 4)
 knitr::opts_knit$set(width = 70)
 
-  # render markdown
-knitr::knit(par$input, quiet = TRUE, encoding = 'UTF-8', envir = .GlobalEnv)
+# render markdown
+knitr::knit(
+  par$input,
+  output = gsub("Rmd$", "md", par$input),
+  quiet = TRUE,
+  encoding = 'UTF-8',
+  envir = .GlobalEnv
+)
