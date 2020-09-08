@@ -84,9 +84,11 @@ platforms:
   target_image: dataintuitive/viash_docs
 ```
 
-## Janssen
+## CI integration
 
-The above workflow fits nicely within the Janssen/Artifactory setup. Using the `viash_jnj` component to convert a repository of Docker targets to an SCM build repository all the components can be built. During development, the image can be built locally and tested with the same name/tag that will later appear in Artifactory.
+The above workflow fits nicely within a custom CI/CD setup. From the `meta.vsh` one can easily extract the information necessary to build custom images. Using the `---dockerfile` flag with the Docker target build, one can find out what `Dockerfile` should be used to build the container for the respective component.
+
+During development, the image can be built locally and tested with the same name/tag that will later appear in Artifactory.
 
 ## Caveat
 
