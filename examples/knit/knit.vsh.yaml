@@ -7,20 +7,32 @@ functionality:
     direction: input
     required: true
     description: "Input .Rmd file"
+  - name: "output"
+    type: file
+    direction: output
+    default: "${VIASH_PAR_INPUT/Rmd/md}"
+    description: "Output .md file"
   resources:
   - type: r_script
     path: ./code.R
+  tests:
+  - type: r_script
+    path: tests/check_outputs.R
+  - path: tests/input.Rmd
 platforms:
 - type: docker
-  image: dataintuitive/randpy:latest
+  image: rocker/tidyverse:4.0.2
   target_image: dataintuitive/viash_docs
-  version: 0.2.0
+  version: 0.2.1
   r:
-  cran:
-    - knitr
+    cran:
+    - rmarkdown
     - blogdown
-  volumes:
-  - name: data
-    mount: /data
-  workdir: /app
+  apt:
+    packages:
+    - libxtst6
 - type: native
+  r:
+    cran:
+    - rmarkdown
+    - blogdown
