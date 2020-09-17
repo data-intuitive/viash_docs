@@ -26,7 +26,6 @@
 #'     - openxlsx
 #'     - lubridate
 #'     - patchwork
-#'   workdir: /app
 #' - type: native
 #'   r:
 #'     cran:
