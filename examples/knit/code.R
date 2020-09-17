@@ -1,24 +1,15 @@
 ### VIASH START
 par <- list(
-  input = "index.Rmd"
+  input = "examples/knit/tests/input.Rmd",
+  output = "examples/knit/tests/input.md"
 )
 resources_dir <- "."
 ### VIASH END
 
-# input/output filenames are passed as two additional arguments to Rscript
-d = par$input
-knitr::opts_chunk$set(
-  fig.path   = sprintf('figure/%s/', d),
-  cache.path = sprintf('cache/%s/', d)
-)
-options(digits = 4)
-knitr::opts_knit$set(width = 70)
-
-# render markdown
-knitr::knit(
-  par$input,
-  output = gsub("Rmd$", "md", par$input),
-  quiet = TRUE,
-  encoding = 'UTF-8',
-  envir = .GlobalEnv
+library(rmarkdown)
+render(
+  input = par$input,
+  output_format = github_document(html_preview = FALSE),
+  output_file = basename(par$output),
+  output_dir = dirname(par$output)
 )
