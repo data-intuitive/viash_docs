@@ -12,6 +12,9 @@ functionality:
     direction: output
     default: "${VIASH_PAR_INPUT/Rmd/md}"
     description: "Output .md file"
+  - name: "--preserve_yaml"
+    type: boolean
+    default: true
   resources:
   - type: r_script
     path: ./code.R
