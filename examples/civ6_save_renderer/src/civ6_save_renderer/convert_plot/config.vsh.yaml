@@ -1,29 +1,22 @@
 functionality:
-  name: combine_plots
+  name: convert_plot
   namespace: civ6_save_renderer
   arguments:
     - name: "--input"
       alternatives: [-i]
       type: file
       required: true
-      default: "/path/to/my/dir"
+      default: "input.pdf"
       must_exist: true
     - name: "--output"
       alternatives: [-o]
       type: file
       required: true
-      default: "output.webm"
+      default: "output.png"
       direction: output
-    - name: "--framerate"
-      alternatives: [-f]
-      type: integer
-      default: 4
   resources:
     - type: bash_script
       path: script.sh
 platforms:
   - type: docker
-    image: jrottenberg/ffmpeg
-    apt:
-      packages:
-        - imagemagick
+    image: dpokidov/imagemagick
