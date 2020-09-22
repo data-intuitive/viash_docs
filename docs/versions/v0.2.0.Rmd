@@ -3,35 +3,54 @@ title: "viash v0.2.0"
 parent: Versions
 ---
 
-## NEW FEATURES
+WIP. This document does not describe the full list of changes yet.
 
-* Allow (optional) version attributes in `functionality.yaml` and `platform.yaml`.
-* Allow testing a component with the `viash test` functionality. Tests are executed in a temporary directory on the specified platform. The temporary directory contains all the resource and test files. 
-* `viash --version`: Add flag for printing the version of viash.
-* Allow fetching resources from URL (http:// and https://)
-* Allow retrieving functionality and platform YAMLs from URL.
-* For docker containers, autoresolve path names of files. Use `---v path:path` or `---volume path:path` to manually mount a specific folder.
-* Implement parameter multiplicity. 
-  Set `multiple: true` to denote an argument to have higher multiplicity. 
-  Run `./cmd --foo one --foo two --foo three:four` in order for multiple values to be added to the same parameter list.
-* Added a new format for defining functionality in which the user passes the script in which the functionality and platforms are listed as yaml headers.
+View the full changelog [here](https://github.com/data-intuitive/viash/blob/master/CHANGELOG.md).
 
-## MAJOR CHANGES
-* Remove passthrough parameters.
-* Since CLI generation is now performed in the outer script, `viash pimp` has been deprecated.
-* (WIP) Write out meta.yaml containing viash run information as well as the original `functionality.yaml` and `platform.yaml` content.
+## Changes to functionality metadata
 
-## MINOR CHANGES
-* `viash run` and `viash test`: Allow changing the temporary directory by defining `VIASH_TEMP` as a environment variable. Temporary directories are cleaned up after successful executions.
-* `viash run` and `viash test`: Exit(1) when execution or test fails.
-* `viash export`: Add -m flag for outputting metadata after export.
-* `viash run`: Required parameters can have a default value now. Produce error when a required parameter is not passed, even when a default is provided.
+* Added version attribute
+## Autoresolve docker paths
+Arguments of type: file are processed to automatically create a mount in docker. More specifically, when you pass an argument value: `--input /path/to/file`, this will be processed such that the following parameters are passed to docker:
+```
+docker run -v /path/to:/viash_automount/path/to ... --input /viash_automount/path/to/file
+```
 
-## BUG FIXES
-* NXF: Correctly escape path variable when running NXF command.
-* NXF: Surround parameters with quotes when running NXF command.
+If, for some reason, you need to manually specify a mount, you can do this with `---mount /path/to/mount:/mymount`.
 
-## INTERNAL CHANGES
-* Move CLI from inner script to outer script.
-* Renamed Target to Platform
-* Renamed Environment to Requirements
+## Argument multiplicity
+For all parameter types (except for `boolean_true` and `boolean_false`), you can specify `multiple: true` in order to turn this argument into an array-based argument. What this does is allow you to pass multiple values for this argument, e.g. `--input file1 --input file2 --input file3:file4:file5`.
+
+The default separator is `:` but this can be overridden by changing the separator by setting it to `multiple_sep: ","` (for example).
+
+## New format
+viash now supports placing the functionality.yaml, platform*.yaml(s) and script into a single file. For example, this could be a merged script.R:
+
+```r
+#' functionality:
+#'   name: r-estimate
+#'   arguments: ...
+#' platforms:
+#' - type: native
+#' - type: docker
+#'   image: rocker/tidyverse
+
+library(tidyverse)
+cat("Hello world!\n")
+```
+
+Instead of running 
+```bash
+viash run -f functionality.yaml -p platform_docker.yaml -- arg1
+```
+
+with this format, you can now run:
+```bash
+viash run script.R                     # run script.R with the first platform
+viash run -P docker script.R           # run script.R with the platform called 'docker' with the large P argument
+
+# use small p to override the platform with a custom yaml:
+viash run -p ../common_resources/platform_docker.yaml script.R
+
+# note that any arguments for the run command (e.g. -p or -P) should come before the script.R, as script.R is considered a trailing argument.
+```
