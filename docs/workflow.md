@@ -1,5 +1,6 @@
 ---
 title: "Workflow"
+nav_order: 8
 ---
 
 ## Introduction
