@@ -1,0 +1,25 @@
+functionality:
+  name: parse_header
+  namespace: civ6_save_renderer
+  arguments:
+    - name: "--input"
+      alternatives: [-i]
+      type: file
+      required: true
+      default: "save.Civ6Save"
+      must_exist: true
+    - name: "--output"
+      alternatives: [-o]
+      type: file
+      required: true
+      default: "output.yaml"
+      direction: output
+  resources:
+    - type: bash_script
+      path: script.sh
+platforms:
+  - type: docker
+    image: node
+    docker:
+      run: 
+        - cd /home/node && npm install civ6-save-parser 
