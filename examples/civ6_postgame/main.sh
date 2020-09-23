@@ -1,7 +1,8 @@
 #!/bin/bash
 
 # run beforehand:
-# viash ns build -s src -t target -P docker --setup
+# viash ns build -P docker --setup
+# viash ns build -P nextflow
 
 BIN=target/docker/civ6_save_renderer
 output_dir="output"

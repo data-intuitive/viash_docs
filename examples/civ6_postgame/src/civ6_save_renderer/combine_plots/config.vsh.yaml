@@ -28,6 +28,4 @@ functionality:
 platforms:
   - type: docker
     image: jrottenberg/ffmpeg
-    apt:
-      packages:
-        - imagemagick
+  - type: nextflow
