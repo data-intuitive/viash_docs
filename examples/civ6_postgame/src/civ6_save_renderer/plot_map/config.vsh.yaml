@@ -32,5 +32,6 @@ platforms:
         - yaml
         - bit64
         - ggnewscale
+        - cowplot
       github:
         - rcannood/civ6saves

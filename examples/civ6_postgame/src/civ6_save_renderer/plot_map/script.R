@@ -1,6 +1,10 @@
 library(tidyverse)
 library(ggforce)
 library(civ6saves)
+library(bit64)
+library(cowplot)
+library(yaml)
+library(ggnewscale)
 
 # setwd("/home/rcannood/workspace/di/viash_docs/examples/civ6_save_renderer")
 # par <- list(
@@ -130,4 +134,7 @@ if (nrow(tab %>% filter(!is.na(owner))) > 0) {
 }
 
 # save map to file
-ggsave(par$output, g, width = 24, height = 13)
+gleg <- cowplot::get_legend(g)
+gnoleg <- g + theme(legend.position = "none")
+gout <- cowplot::plot_grid(gnoleg, gleg, rel_widths = c(8, 1))
+ggsave(par$output, gout, width = 24, height = 13)

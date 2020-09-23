@@ -8,6 +8,10 @@ output_dir="output"
 
 mkdir -p "$output_dir"
 
+function msg {
+  echo -e "\033[32m>>>>>>> $1\e[0m"
+}
+
 for save_file in data/*.Civ6Save; do
   file_basename=$(basename $save_file)
   yaml_file="$output_dir/${file_basename/Civ6Save/yaml}"
@@ -15,18 +19,18 @@ for save_file in data/*.Civ6Save; do
   pdf_file="$output_dir/${file_basename/Civ6Save/pdf}"
   png_file="$output_dir/${file_basename/Civ6Save/png}"
   
-  echo -e "\033[32m>>>>>>> parse header $save_file\e[0m"
+  msg "parse header '$save_file'"
   $BIN/parse_header/parse_header -i "$save_file" -o "$yaml_file"
   
-  echo -e "\033[32m>>>>>>> parse map $save_file\e[0m"
+  msg "parse map '$save_file'"
   $BIN/parse_map/parse_map -i "$save_file" -o "$tsv_file"
   
-  echo -e "\033[32m>>>>>>> plot map $save_file\e[0m"
+  msg "plot map '$save_file'"
   $BIN/plot_map/plot_map -y "$yaml_file" -t "$tsv_file" -o "$pdf_file"
   
-  echo -e "\033[32m>>>>>>> convert plot $save_file\e[0m"
+  msg "convert plot '$save_file'"
   $BIN/convert_plot/convert_plot -i "$pdf_file" -o "$png_file"
 done
 
-echo -e "\033[32m>>>>>>> combine plots\e[0m"
+msg "combine plots"
 $BIN/combine_plots/combine_plots -i "$output_dir" -o "$output_dir/movie.webm" --framerate 1

@@ -1,3 +1,3 @@
 #!/bin/bash
 
-convert "$par_input" "$par_output"
+convert "$par_input" -flatten "$par_output"
