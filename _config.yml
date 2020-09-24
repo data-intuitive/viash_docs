@@ -4,7 +4,7 @@ description: Documentation for `viash`
 # url: "https://pmarsceill.github.io" # the base hostname & protocol for your site, e.g. http://example.com
 
 permalink: pretty
-exclude: ["node_modules/", "*.gemspec", "*.gem", "Gemfile", "Gemfile.lock", "package.json", "package-lock.json",  "script/", "LICENSE.txt", "lib/", "bin/", "Rakefile", "bundle", "*.Rproj", "R/", "docs/examples", "docs/*.Rmd", "index.Rmd", "examples"]
+exclude: ["node_modules/", "*.gemspec", "*.gem", "Gemfile", "Gemfile.lock", "package.json", "package-lock.json",  "LICENSE.txt", "Rakefile", "bundle", "*.Rproj", "R/",  "docs/*.Rmd", "index.Rmd", "*/.gitignore"]
 
 remote_theme: pmarsceill/just-the-docs
 # theme: just-the-docs
