@@ -10,6 +10,7 @@ View the full changelog [here](https://github.com/data-intuitive/viash/blob/mast
 ## Changes to functionality metadata
 
 * Added version attribute
+
 ## Autoresolve docker paths
 Arguments of type: file are processed to automatically create a mount in docker. More specifically, when you pass an argument value: `--input /path/to/file`, this will be processed such that the following parameters are passed to docker:
 ```
