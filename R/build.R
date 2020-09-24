@@ -1,11 +1,11 @@
-build_one <- function(io) {
+build_one <- function(rmd, md) {
   # if output is not older than input, skip the compilation
-  if (!blogdown:::require_rebuild(io[2], io[1])) return()
+  if (!blogdown:::require_rebuild(md, rmd)) return()
 
-  message('* knitting ', io[1])
-  if (blogdown:::Rscript(shQuote(c('R/build_one.R', io))) != 0) {
-    unlink(io[2])
-    stop('Failed to compile ', io[1], ' to ', io[2])
+  message('* knitting ', rmd)
+  if (blogdown:::Rscript(shQuote(c('R/build_one.R', rmd, md))) != 0) {
+    unlink(md)
+    stop('Failed to compile ', rmd, ' to ', md)
   }
 }
 
@@ -14,8 +14,10 @@ rmds <- c(
   list.files('.', '[.]Rmd$', recursive = FALSE, full.names = TRUE),
   list.files('docs', '[.]Rmd$', recursive = TRUE, full.names = TRUE)
 )
-files <- cbind(rmds, blogdown:::with_ext(rmds, '.md'))
+mds <- blogdown:::with_ext(rmds, '.md')
 
-for (i in seq_len(nrow(files))) build_one(files[i, ])
 
+for (i in seq_along(rmds)) {
+  build_one(rmds[[i]], mds[[i]])
+}
 system2('jekyll', 'build')
