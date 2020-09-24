@@ -4,9 +4,9 @@ nav_order: 2
 ---
 
 
-Viash is developed in Scala (2.12). You'll need a working Java installation (tested with version 1.8) in order to use it. Viash is tested and used on MacOS and Linux systems. Windows is currently not tested, although there is no reason is shouldn't run on [WSL](https://docs.microsoft.com/en-us/windows/wsl/install-win10).
+viash is developed in Scala (2.12). You'll need a working Java installation (tested with version 1.8) in order to use it. viash is tested and used on MacOS and Linux systems. Windows is currently not tested, although there is no reason is shouldn't run on [WSL](https://docs.microsoft.com/en-us/windows/wsl/install-win10).
 
-Make sure Viash (`viash`) is available in your `$PATH` and run:
+Make sure viahs is available in your `$PATH` and run:
 
 ```bash
 viash --help
@@ -16,7 +16,7 @@ viash --help
 
 ### Packaged Release
 
-To install viash, download the [latest release](https://github.com/data-intuitive/Viash/releases) and save it to the `~/bin` folder or any other directory that is on your `$PATH`.
+To install viash, download the [latest release](https://github.com/data-intuitive/viash/releases) and save it to the `~/bin` folder or any other directory that is on your `$PATH`.
 
 ### Build from Source
 
