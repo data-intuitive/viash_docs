@@ -1,10 +1,12 @@
 ---
-title: "Namespace build"
-nav_order: 3
+title: "viash ns build"
+nav_order: 4
 parent: Commands
 ---
 
-`viash ns build` builds a namespace from many [viash config files](../../config).
+# viash ns build
+
+Build a namespace from many [viash config files](../../config).
 
 Usage: 
 ```

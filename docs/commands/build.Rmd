@@ -1,10 +1,12 @@
 ---
-title: "Build"
-nav_order: 3
+title: "viash build"
+nav_order: 2
 parent: Commands
 ---
 
-`viash build` builds an executable from the provided [viash config file](../../config).
+# viash build
+
+Build an executable from the provided [viash config file](../../config).
 
 Usage: 
 ```

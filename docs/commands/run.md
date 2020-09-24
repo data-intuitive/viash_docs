@@ -1,14 +1,16 @@
 ---
-title: "Run"
-nav_order: 2
+title: "viash run"
+nav_order: 1
 parent: Commands
 ---
 
-`viash run` runs a viash component from the provided [viash config file](../../config). viash generates a temporary executable and immediately executes it with the given parameters.
+# viash run
+
+Run a viash component from the provided [viash config file](../../config). viash generates a temporary executable and immediately executes it with the given parameters.
 
 Usage:
 ```
-viash run [-P docker] [-k] config.vsh.yaml -- [arguments for script]
+viash run [-P docker/-p platform.yaml] [-k] config.vsh.yaml -- [arguments for script]
 ```
 
 Arguments:

@@ -1,10 +1,12 @@
 ---
-title: "Test"
-nav_order: 4
+title: "viash test"
+nav_order: 3
 parent: Commands
 ---
 
-`viash test` tests the component using the tests defined in the [viash config file](../../config).
+# viash test
+
+Test the component using the tests defined in the [viash config file](../../config).
 
 Usage:
 ```
