@@ -7,4 +7,23 @@ has_children: true
 
 # Getting started
 
-WIP
+You can run a simple 'Hello World' component by running the following command.
+
+```{bash}
+URL=https://raw.githubusercontent.com/data-intuitive/viash_docs/master/examples/toys/hello_world/config.vsh.yaml
+viash run $URL
+```
+```{bash, eval=FALSE}
+viash run $URL -- --help
+```
+```{bash, echo=FALSE}
+URL=https://raw.githubusercontent.com/data-intuitive/viash_docs/master/examples/toys/hello_world/config.vsh.yaml
+viash run $URL -- --help
+```
+```{bash, eval=FALSE}
+viash run $URL -- General Kenobi. --greeter="Hello there."
+```
+```{bash, echo=FALSE}
+URL=https://raw.githubusercontent.com/data-intuitive/viash_docs/master/examples/toys/hello_world/config.vsh.yaml
+viash run $URL -- General Kenobi. --greeter="Hello there."
+```
