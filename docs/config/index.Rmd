@@ -1,10 +1,10 @@
 ---
 layout: default
-title: Platforms
-nav_order: 5
+title: Config
+nav_order: 4
 has_children: true
 ---
 
-# Platforms
+# Metadata
 
 WIP

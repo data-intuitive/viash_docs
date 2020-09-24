@@ -1,10 +1,10 @@
 ---
 title: "Nextflow pipeline"
 nav_order: 3
-parent: Platforms
+parent: Config
 ---
 
-## introduction
+## Introduction
 
 ## Filenames
 
