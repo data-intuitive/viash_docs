@@ -1,43 +1,17 @@
 ---
 title: "Namespaces"
-nav_order: 7
+parent: "Good practices"
 ---
 
-## Background
+# Namespaces
 
-Sometimes you just need one tool wrapped in a container or a pimped script. That's where `viash` can help. Using the CLI interface, one can export the component spec to a runnable (Docker) script.
+Sometimes you just need one tool wrapped in a container. That's where `viash` can help. Using the CLI interface, one can export the component spec to a runnable (Docker) script.
 
 In many cases though a _toolbox_ is required. Either as a set of tools to manually call or to combine them in a workflow/pipeline. That's where namespaces come in. They are a _collection_ of tools.
 
 Better even, we would like to combine tools from different toolboxes and ideally not run into the issue of clashes in names etc.
 
 What we want to achieve with _namespaces_ is to be able to group tools/components and share the toolbox rather than the individual tool but without the hassle of a complex and error-prone dependency system behind it.
-
-## Idea
-
-From version `viash` 0.2.0-rc3 onwards, namespaces are managed using the `viash ns` subcommand:
-
-
-```bash
-viash ns -h
-```
-
-```
-##   -h, --help   Show help message
-## 
-## Subcommand: build
-##   -n, --namespace  <arg>      The name of the namespace.
-##   -p, --platform  <arg>       Path to the platform file. If not provided, the
-##                               native platform is used.
-##   -P, --platform-i-d  <arg>   If multiple platforms are specified in the
-##                               component, this argument allows you to choose
-##                               which one.
-##   -s, --src  <arg>            An alternative source directory if not under
-##                               src/<namespace>. Default = source/.
-##   -t, --target  <arg>         An alternative destination directory if not
-##                               target/. Default = target/.
-##   -h, --help                  Show help message
-```
 
 ## Use
 
@@ -46,7 +20,7 @@ viash ns -h
 Component sources go under `src/<namespace>/<component>`. For instance, the components bundled with `viash` are under `src/viash/...` because they are part of the `viash` namespace. Processing the complete namespace is as simple as:
 
 ```sh
-$ viash ns build -n viash
+$ viash ns build
 ```
 
 By default sources are taken from `src/` (or from `-s ...`) and the target it `target/` (unless specified with `-t ...`).
@@ -55,17 +29,12 @@ Components can be nested as well and this is represented in the namespace refere
 
 ```
 src/
-  subdir/
-    ns1/
+  ns1/
+    group1/
       tool1
       tool2
 ```
 
-This namespace should be referred to as:
-
-```sh
-$ viash ns build -n subdir/ns1
-```
 
 ### Builds go under `target/<platform>/<namespace>`
 

@@ -1,6 +1,6 @@
 ---
 title: "Reproducibility"
-nav_order: 9
+parent: "Good practices"
 ---
 
 ## Introduction

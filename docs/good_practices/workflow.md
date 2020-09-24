@@ -1,6 +1,6 @@
 ---
 title: "Workflow"
-nav_order: 8
+parent: "Good practices"
 ---
 
 ## Introduction
