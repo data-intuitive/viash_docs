@@ -1,7 +1,6 @@
 ---
-title: "Wrapping an R script"
-nav_order: 3
-parent: Guides
+title: "R example"
+parent: Getting started
 ---
 
 WIP. Example copied from functionality.Rmd.

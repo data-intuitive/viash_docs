@@ -1,7 +1,6 @@
 ---
-title: "Wrapping a Bash script"
-nav_order: 2
-parent: Guides
+title: "Bash example"
+parent: Getting started
 ---
 
 ```{r init, include=FALSE}

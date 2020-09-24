@@ -1,7 +1,6 @@
 ---
-title: "Wrapping a Bash script"
-nav_order: 2
-parent: Guides
+title: "Bash example"
+parent: Getting started
 ---
 
 
@@ -36,22 +35,7 @@ viash run -f functionality.yaml -p platform_docker.yaml -- General Kenobi. --gre
 
 
 {% highlight text %}
-## Unable to find image 'bash:4.0' locally
-## 4.0: Pulling from library/bash
-## df20fa9351a1: Already exists
-## e6d37e0b43c8: Pulling fs layer
-## ed93c8924e2f: Pulling fs layer
-## ed93c8924e2f: Verifying Checksum
-## ed93c8924e2f: Download complete
-## e6d37e0b43c8: Verifying Checksum
-## e6d37e0b43c8: Download complete
-## e6d37e0b43c8: Pull complete
-## ed93c8924e2f: Pull complete
-## Digest: sha256:cbab680571678488e461a0bf293f75c7965301a4fb617c2c121ee3275132e52f
-## Status: Downloaded newer image for bash:4.0
-## Error relocating /usr/lib/libncursesw.so.6: RELRO protection failed: Permission denied
-## Error relocating /lib/ld-musl-x86_64.so.1: RELRO protection failed: Permission denied
-## Error relocating /usr/local/bin/bash: RELRO protection failed: Permission denied
+## Hello there. General Kenobi.
 {% endhighlight %}
 
 #### Export as an executable
@@ -95,11 +79,8 @@ viash test -f functionality.yaml -p platform_docker.yaml
 
 {% highlight text %}
 ## 
-## >> test_hello_world.sh finished with code 127:
-## 
-## 
-## FAIL! Only 1 out of 2 test scripts succeeded!
-## Test files and logs are stored at '/home/rcannood/workspace/di/viash_temp/viash_test_hello_world1804943887061591426'
+## SUCCESS! All 2 out of 2 test scripts succeeded!
+## Cleaning up temporary files
 {% endhighlight %}
 
 ## Developing a new component

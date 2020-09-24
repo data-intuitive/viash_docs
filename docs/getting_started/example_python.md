@@ -1,7 +1,6 @@
 ---
-title: "Wrapping a Python script"
-nav_order: 4
-parent: Guides
+title: "Python example"
+parent: Getting started
 ---
 
 WIP. Example copied from functionality.Rmd.
