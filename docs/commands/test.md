@@ -8,7 +8,7 @@ parent: Commands
 
 Usage:
 ```
-viash test -f functionality.yaml [-p platform.yaml] [-v] [-k]
+viash test [-P docker/-p platform.yaml] [-v] [-k] config.vsh.yaml
 ```
 
 Arguments:

@@ -8,7 +8,7 @@ parent: Commands
 
 Usage:
 ```
-viash run [-P docker] [-k] config.vsh.yaml -- [arguments for script]
+viash run [-P docker/-p platform.yaml] [-k] config.vsh.yaml -- [arguments for script]
 ```
 
 Arguments:
