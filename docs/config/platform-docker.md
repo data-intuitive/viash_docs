@@ -1,6 +1,6 @@
 ---
-title: "Docker"
-nav_order: 2
+title: "Docker platform"
+nav_order: 3
 parent: Config
 ---
 

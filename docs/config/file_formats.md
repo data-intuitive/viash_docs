@@ -1,6 +1,7 @@
 ---
 title: "File Formats"
 nav_order: 10
+parent: Config
 ---
 
 viash supports multiple file formats, the most important of which are 'joined' and 'integrated'.

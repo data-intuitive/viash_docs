@@ -1,6 +1,6 @@
 ---
-title: "Nextflow pipeline"
-nav_order: 3
+title: "Nextflow platform"
+nav_order: 4
 parent: Config
 ---
 

@@ -1,68 +1,39 @@
 ---
 title: "Functionality"
-nav_order: 4
+nav_order: 1
 parent: Config
 ---
 
-## Example
+# Functionality
+The functionality metadata describes the behaviour of the script in terms of arguments and resources. 
+By specifying a few restrictions (e.g. mandatory arguments) and adding some descriptions, viash automatically generates a command-line interface.
 
-```r
-#' functionality:
-#'   name: test
-#'   description: |
-#'     This component performs function Y and Z.
-#'     It is possible to make this a multiline string.
-#'   arguments:
-#'   - name: --input                           
-#'     type: file
-#'     alternatives: [-i]
-#'     description: Input file(s)
-#'     default: input.txt
-#'     must_exist: true
-#'     required: false
-#'     multiple: true
-#' platforms:
-#' - type: native
-#' - type: docker
-#'   image: rocker/tidyverse
-
-for (input in par$input) {
-  cat(readLines(input), sep = "\n")
-}
-```
-
-## Meta-data: Functionality {#functionality}
-The functionality metadata describes the behaviour of the script 
-in terms of input/output/parameters. By specifying a few restrictions (e.g. mandatory arguments)
-and adding some descriptions, viash can automatically generate a command-line interface.
-
-An example of such a functionality yaml can be found below, each part of which is 
-explained in more depth in the following sections. 
-For more (extensive) examples, see [examples](examples).
+An example of such a functionality yaml can be found below, each part of which is explained in more depth in the following sections. 
 
 ```yaml
 functionality:
   name: exe
+  version: "1.0.0"
   description: |
     This component performs function Y and Z.
     It is possible to make this a multiline string.
   function_type: transform
   arguments:
-  - name: --input                           
-    type: file
-    alternatives: [-i]
-    description: Input file(s)
-    default: input.txt
-    must_exist: true
-    required: false
-    multiple: true
-    multiple_sep: ","
+    - name: --input                           
+      type: file
+      alternatives: [-i]
+      description: Input file(s)
+      default: input.txt
+      must_exist: true
+      required: false
+      multiple: true
+      multiple_sep: ","
   resources:
-  - type: file
-    path: additional_resource.txt
+    - type: file
+      path: additional_resource.txt
   tests:
-  - type: r_script
-    path: tests/unit_test.R
+    - type: r_script
+      path: tests/unit_test.R
 ```
 
 ### name [string] {#name}
@@ -82,6 +53,8 @@ description: |
   This component performs function Y and Z.
   It is possible to make this a multiline string.
 ```
+
+### version [string] {#version}
 
 ### arguments [list] {#arguments}
 A list of arguments for this component. For each argument, a type and a name must be specified. 

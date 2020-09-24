@@ -5,6 +5,45 @@ nav_order: 4
 has_children: true
 ---
 
-# Metadata
+```{r init, include=FALSE}
+library(tidyverse)
 
-WIP
+source("../../R/md_helpers.R")
+```
+
+# The viash config file
+
+A viash config file describes the functionality of the component (e.g. arguments, extra resources),
+as well as the platform which will execute the component (e.g. native, docker, nextflow).
+Usually, the config file is accompanied by a script which contains the actual code for the
+component.
+
+Only a small example of a viash config file is shown below, but check out the more detailed documentation regarding 
+the [functionality](functionality), [native platform](platform-native), [docker platform](platform-docker), and [nextflow platform](platform-nextflow) for the full specifications for each of these subsections.
+
+```{r, echo = FALSE}
+print_file("../../examples/standalone/addrowlines/config.vsh.yaml", "config.vsh.yaml", format = "yaml")
+```
+
+```{r, echo = FALSE}
+print_file("../../examples/standalone/addrowlines/script.sh", "script.sh", format = "bash")
+```
+
+The output of simply running this component.
+```{bash, eval=FALSE}
+viash run config.vsh.yaml -- --help
+```
+```{bash, echo=FALSE}
+cd ../../examples/standalone/addrowlines/
+viash run config.vsh.yaml -- --help
+```
+
+```{bash, eval=FALSE}
+viash run config.vsh.yaml -- --input config.vsh.yaml
+```
+```{bash, echo=FALSE}
+cd ../../examples/standalone/addrowlines/
+viash run config.vsh.yaml -- --input config.vsh.yaml
+```
+
+See the [commands documentation](../../commands) for more information on the different viash commands.
