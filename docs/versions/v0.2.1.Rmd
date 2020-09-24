@@ -1,6 +1,6 @@
 ---
 title: "viash v0.2.1"
-parent: Versions
+parent: Version history
 ---
 
 View the full changelog [here](https://github.com/data-intuitive/viash/blob/master/CHANGELOG.md).

@@ -1,6 +1,6 @@
 ---
 layout: default
-title: Versions
+title: Version history
 has_children: true
 nav_order: 100
 ---
