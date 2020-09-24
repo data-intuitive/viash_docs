@@ -36,7 +36,22 @@ viash run -f functionality.yaml -p platform_docker.yaml -- General Kenobi. --gre
 
 
 {% highlight text %}
-## Hello there. General Kenobi.
+## Unable to find image 'bash:4.0' locally
+## 4.0: Pulling from library/bash
+## df20fa9351a1: Already exists
+## e6d37e0b43c8: Pulling fs layer
+## ed93c8924e2f: Pulling fs layer
+## ed93c8924e2f: Verifying Checksum
+## ed93c8924e2f: Download complete
+## e6d37e0b43c8: Verifying Checksum
+## e6d37e0b43c8: Download complete
+## e6d37e0b43c8: Pull complete
+## ed93c8924e2f: Pull complete
+## Digest: sha256:cbab680571678488e461a0bf293f75c7965301a4fb617c2c121ee3275132e52f
+## Status: Downloaded newer image for bash:4.0
+## Error relocating /usr/lib/libncursesw.so.6: RELRO protection failed: Permission denied
+## Error relocating /lib/ld-musl-x86_64.so.1: RELRO protection failed: Permission denied
+## Error relocating /usr/local/bin/bash: RELRO protection failed: Permission denied
 {% endhighlight %}
 
 #### Export as an executable
@@ -51,7 +66,7 @@ output/hello_world And now, as an executable.
 
 
 {% highlight text %}
-## Hello world! And now, as an executable.
+## Error in running command bash
 {% endhighlight %}
 
 #### viash automatically generates a CLI
@@ -65,14 +80,7 @@ output/hello_world --help
 
 
 {% highlight text %}
-## A very simple 'Hello world' component.
-## 
-## Options:
-##     string1 string2 ...
-##         type: string, multiple values allowed
-## 
-##     --greeter=string
-##         type: string, default: Hello world!
+## Error in running command bash
 {% endhighlight %}
 
 #### viash allows testing the component
@@ -87,8 +95,11 @@ viash test -f functionality.yaml -p platform_docker.yaml
 
 {% highlight text %}
 ## 
-## SUCCESS! All 2 out of 2 test scripts succeeded!
-## Cleaning up temporary files
+## >> test_hello_world.sh finished with code 127:
+## 
+## 
+## FAIL! Only 1 out of 2 test scripts succeeded!
+## Test files and logs are stored at '/home/rcannood/workspace/di/viash_temp/viash_test_hello_world1804943887061591426'
 {% endhighlight %}
 
 ## Developing a new component
@@ -138,8 +149,8 @@ resources are required to run it, as well as any test scripts to verify whether 
 works correctly. For each argument, you must specify the name and type, and optionally provide a description,
 a default value, and a few more settings.
 
-Contents of [`functionality.yaml`](functionality.yaml):
-```yaml
+Contents of [`yaml`](functionality.yaml):
+```bash
 name: hello_world
 description: A very simple 'Hello world' component.
 arguments:
@@ -169,11 +180,10 @@ extra dependencies such as R or Python packages.
 
 This component requires very little requirements, so the file is very simple.
 
-Contents of [`platform_docker.yaml`](platform_docker.yaml):
-```yaml
-type: docker
-image: bash:4.0
-```
+
+{% highlight text %}
+## Error in printFile("platform_docker.yaml", "yaml"): could not find function "printFile"
+{% endhighlight %}
 
 For more information regarding the platform YAML, see [platform.md](platform.md).
 

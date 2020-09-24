@@ -7,22 +7,10 @@ parent: Guides
 ```{r init, include=FALSE}
 library(tidyverse)
 
-printFile <- function(path, format = "bash") {
-  code <- 
-    readLines(path) %>% 
-    paste0(collapse = "\n")
-  
-  markdown <- paste0(
-    "Contents of [`", path, "`](", path, "):\n",
-    "```", format, "\n", 
-    code, "\n",
-    "```"
-  )
-  knitr::asis_output(markdown)
-}
+source("../../R/md_helpers.R")
 
 # change wd to where the files are located
-knitr::opts_knit$set(root.dir = "examples/hello_world/")
+knitr::opts_knit$set(root.dir = "examples/toys/hello_world/")
 ```
 
 This vignette demonstrates how to wrap a simple 'hello world' bash script with viash.
@@ -76,7 +64,7 @@ This is a simple script which prints a simple message, along with any input prov
 Optionally, you can override the greeter with `par_greeter`.
 
 ```{r, echo = FALSE}
-printFile("hello_world.sh")
+print_file("hello_world.sh")
 ```
 
 Anything between the `## VIASH START` and `## VIASH END` lines will automatically be replaced 
@@ -97,7 +85,7 @@ works correctly. For each argument, you must specify the name and type, and opti
 a default value, and a few more settings.
 
 ```{r, echo = FALSE}
-printFile("functionality.yaml", "yaml")
+print_file("functionality.yaml", "yaml")
 ```
 
 For more information regarding the functionality YAML, see [functionality.md](functionality.md).
@@ -125,7 +113,7 @@ times, and verifies the output. Take note that the test needs to produce an erro
 
 
 ```{r, echo = FALSE}
-printFile("test_hello_world.sh")
+print_file("test_hello_world.sh")
 ```
 
 When running the test, viash will automatically build an executable and place it -- along with other 
