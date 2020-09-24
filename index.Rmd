@@ -3,7 +3,9 @@ title: "Introduction"
 nav_order: 1
 ---
 
-Viash is a spec and a tool for defining execution contexts and converting execution instructions to concrete instantiations.
+# Introduction
+
+viash is a spec and a tool for defining execution contexts and converting execution instructions to concrete instantiations.
 
 ## Toward Building Blocks of Processing
 

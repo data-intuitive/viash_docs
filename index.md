@@ -3,7 +3,9 @@ title: "Introduction"
 nav_order: 1
 ---
 
-Viash is a spec and a tool for defining execution contexts and converting execution instructions to concrete instantiations.
+# Introduction
+
+viash is a spec and a tool for defining execution contexts and converting execution instructions to concrete instantiations.
 
 ## Toward Building Blocks of Processing
 
@@ -35,7 +37,19 @@ viash run -f $HELLO
 
 
 {% highlight text %}
-## Hello world!
+## Exception in thread "main" java.io.FileNotFoundException: https://raw.githubusercontent.com/data-intuitive/viash_docs/master/examples/hello_world/functionality.yaml
+## 	at sun.net.www.protocol.http.HttpURLConnection.getInputStream0(HttpURLConnection.java:1896)
+## 	at sun.net.www.protocol.http.HttpURLConnection.getInputStream(HttpURLConnection.java:1498)
+## 	at sun.net.www.protocol.https.HttpsURLConnectionImpl.getInputStream(HttpsURLConnectionImpl.java:268)
+## 	at java.net.URL.openStream(URL.java:1068)
+## 	at scala.io.Source$.fromURL(Source.scala:144)
+## 	at com.dataintuitive.viash.helpers.IO$.read(IO.scala:40)
+## 	at com.dataintuitive.viash.functionality.Functionality$.parse(Functionality.scala:51)
+## 	at com.dataintuitive.viash.functionality.Functionality$.read(Functionality.scala:86)
+## 	at com.dataintuitive.viash.config.Config$.readSplitOrJoined(Config.scala:118)
+## 	at com.dataintuitive.viash.Main$.readConfigFromArgs(Main.scala:44)
+## 	at com.dataintuitive.viash.Main$.main(Main.scala:17)
+## 	at com.dataintuitive.viash.Main.main(Main.scala)
 {% endhighlight %}
 
 {% highlight bash %}
@@ -43,14 +57,19 @@ viash run -f $HELLO -- --help
 {% endhighlight %}
 
 {% highlight text %}
-## A very simple 'Hello world' component.
-## 
-## Options:
-##     string1 string2 ...
-##         type: string, multiple values allowed
-## 
-##     --greeter=string
-##         type: string, default: Hello world!
+## Exception in thread "main" java.io.FileNotFoundException: https://raw.githubusercontent.com/data-intuitive/viash_docs/master/examples/hello_world/functionality.yaml
+## 	at sun.net.www.protocol.http.HttpURLConnection.getInputStream0(HttpURLConnection.java:1896)
+## 	at sun.net.www.protocol.http.HttpURLConnection.getInputStream(HttpURLConnection.java:1498)
+## 	at sun.net.www.protocol.https.HttpsURLConnectionImpl.getInputStream(HttpsURLConnectionImpl.java:268)
+## 	at java.net.URL.openStream(URL.java:1068)
+## 	at scala.io.Source$.fromURL(Source.scala:144)
+## 	at com.dataintuitive.viash.helpers.IO$.read(IO.scala:40)
+## 	at com.dataintuitive.viash.functionality.Functionality$.parse(Functionality.scala:51)
+## 	at com.dataintuitive.viash.functionality.Functionality$.read(Functionality.scala:86)
+## 	at com.dataintuitive.viash.config.Config$.readSplitOrJoined(Config.scala:118)
+## 	at com.dataintuitive.viash.Main$.readConfigFromArgs(Main.scala:44)
+## 	at com.dataintuitive.viash.Main$.main(Main.scala:17)
+## 	at com.dataintuitive.viash.Main.main(Main.scala)
 {% endhighlight %}
 
 {% highlight bash %}
@@ -58,5 +77,17 @@ viash run -f $HELLO -- General Kenobi. --greeter="Hello there."
 {% endhighlight %}
 
 {% highlight text %}
-## Hello there. General Kenobi.
+## Exception in thread "main" java.io.FileNotFoundException: https://raw.githubusercontent.com/data-intuitive/viash_docs/master/examples/hello_world/functionality.yaml
+## 	at sun.net.www.protocol.http.HttpURLConnection.getInputStream0(HttpURLConnection.java:1896)
+## 	at sun.net.www.protocol.http.HttpURLConnection.getInputStream(HttpURLConnection.java:1498)
+## 	at sun.net.www.protocol.https.HttpsURLConnectionImpl.getInputStream(HttpsURLConnectionImpl.java:268)
+## 	at java.net.URL.openStream(URL.java:1068)
+## 	at scala.io.Source$.fromURL(Source.scala:144)
+## 	at com.dataintuitive.viash.helpers.IO$.read(IO.scala:40)
+## 	at com.dataintuitive.viash.functionality.Functionality$.parse(Functionality.scala:51)
+## 	at com.dataintuitive.viash.functionality.Functionality$.read(Functionality.scala:86)
+## 	at com.dataintuitive.viash.config.Config$.readSplitOrJoined(Config.scala:118)
+## 	at com.dataintuitive.viash.Main$.readConfigFromArgs(Main.scala:44)
+## 	at com.dataintuitive.viash.Main$.main(Main.scala:17)
+## 	at com.dataintuitive.viash.Main.main(Main.scala)
 {% endhighlight %}
