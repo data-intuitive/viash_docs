@@ -13,13 +13,28 @@ source("../../R/md_helpers.R")
 
 # The viash config file
 
-A viash config file describes the functionality of the component (e.g. arguments, extra resources),
-as well as the platform which will execute the component (e.g. native, docker, nextflow).
+A viash config file describes the behaviour of a script and the platform it runs on.
+It consists of two main sections: `functionality` and `platforms`.
+
+The [functionality](functionality) section describes the core functionality of the component, such as 
+its inputs, outputs, arguments, and extra resources. For each of the arguments, specifying
+a description and a set of argument restrictions help create a useful command-line interface.
+To ensure that your component works as expected, writing one or more tests is essential.
+
+The platforms section specifies the requirements to execute the component on zero or more platforms.
+The list of currently supported platforms are [Native](platform-native), [Docker](platform-docker),
+and [Nextflow](platform-nextflow). If no platforms are specified, a native platform with no 
+system requirements is assumed.
+
 Usually, the config file is accompanied by a script which contains the actual code for the
 component.
 
-Only a small example of a viash config file is shown below, but check out the more detailed documentation regarding 
-the [functionality](functionality), [native platform](platform-native), [docker platform](platform-docker), and [nextflow platform](platform-nextflow) for the full specifications for each of these subsections.
+Only a small example of a viash config file is shown below, but check out the more detailed 
+documentation regarding the [functionality](functionality), the [Native platform](platform-native), 
+the [Docker platform](platform-docker), and the [Nextflow platform](platform-nextflow) for 
+the full specifications for each of these subsections.
+
+## Example
 
 ```{r, echo = FALSE}
 print_file("../../examples/standalone/addrowlines/config.vsh.yaml", "config.vsh.yaml", format = "yaml")
@@ -29,7 +44,25 @@ print_file("../../examples/standalone/addrowlines/config.vsh.yaml", "config.vsh.
 print_file("../../examples/standalone/addrowlines/script.sh", "script.sh", format = "bash")
 ```
 
-The output of simply running this component.
+The component can be executed as follows.
+```{bash, eval=FALSE}
+viash run config.vsh.yaml -- config.vsh.yaml | head -5
+```
+```{bash, echo=FALSE}
+cd ../../examples/standalone/addrowlines/
+viash run config.vsh.yaml -- config.vsh.yaml | head -5
+```
+
+Would you rather use Docker as a backend? Easy as pie!
+```{bash, eval=FALSE}
+viash run -P docker config.vsh.yaml -- config.vsh.yaml | head -5
+```
+```{bash, echo=FALSE}
+cd ../../examples/standalone/addrowlines/
+viash run -P docker config.vsh.yaml -- config.vsh.yaml | head -5
+```
+
+
 ```{bash, eval=FALSE}
 viash run config.vsh.yaml -- --help
 ```
@@ -37,13 +70,3 @@ viash run config.vsh.yaml -- --help
 cd ../../examples/standalone/addrowlines/
 viash run config.vsh.yaml -- --help
 ```
-
-```{bash, eval=FALSE}
-viash run config.vsh.yaml -- --input config.vsh.yaml
-```
-```{bash, echo=FALSE}
-cd ../../examples/standalone/addrowlines/
-viash run config.vsh.yaml -- --input config.vsh.yaml
-```
-
-See the [commands documentation](../../commands) for more information on the different viash commands.

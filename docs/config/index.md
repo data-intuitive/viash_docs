@@ -9,13 +9,28 @@ has_children: true
 
 # The viash config file
 
-A viash config file describes the functionality of the component (e.g. arguments, extra resources),
-as well as the platform which will execute the component (e.g. native, docker, nextflow).
+A viash config file describes the behaviour of a script and the platform it runs on.
+It consists of two main sections: `functionality` and `platforms`.
+
+The [functionality](functionality) section describes the core functionality of the component, such as 
+its inputs, outputs, arguments, and extra resources. For each of the arguments, specifying
+a description and a set of argument restrictions help create a useful command-line interface.
+To ensure that your component works as expected, writing one or more tests is essential.
+
+The platforms section specifies the requirements to execute the component on zero or more platforms.
+The list of currently supported platforms are [Native](platform-native), [Docker](platform-docker),
+and [Nextflow](platform-nextflow). If no platforms are specified, a native platform with no 
+system requirements is assumed.
+
 Usually, the config file is accompanied by a script which contains the actual code for the
 component.
 
-Only a small example of a viash config file is shown below, but check out the more detailed documentation regarding 
-the [functionality](functionality), [native platform](platform-native), [docker platform](platform-docker), and [nextflow platform](platform-nextflow) for the full specifications for each of these subsections.
+Only a small example of a viash config file is shown below, but check out the more detailed 
+documentation regarding the [functionality](functionality), the [Native platform](platform-native), 
+the [Docker platform](platform-docker), and the [Nextflow platform](platform-nextflow) for 
+the full specifications for each of these subsections.
+
+## Example
 
 Contents of [`config.vsh.yaml`](../../examples/standalone/addrowlines/config.vsh.yaml):
 ```yaml
@@ -23,7 +38,7 @@ functionality:
   name: addrowlines
   description: Add rowlines to a text file.
   arguments:
-  - name: --input                           
+  - name: input                           
     type: file
     description: The input file.
   resources:
@@ -42,7 +57,35 @@ Contents of [`script.sh`](../../examples/standalone/addrowlines/script.sh):
 cat -n $par_input
 ```
 
-The output of simply running this component.
+The component can be executed as follows.
+
+{% highlight bash %}
+viash run config.vsh.yaml -- config.vsh.yaml | head -5
+{% endhighlight %}
+
+{% highlight text %}
+##      1	functionality:
+##      2	  name: addrowlines
+##      3	  description: Add rowlines to a text file.
+##      4	  arguments:
+##      5	  - name: input
+{% endhighlight %}
+
+Would you rather use Docker as a backend? Easy as pie!
+
+{% highlight bash %}
+viash run -P docker config.vsh.yaml -- config.vsh.yaml | head -5
+{% endhighlight %}
+
+{% highlight text %}
+##      1	functionality:
+##      2	  name: addrowlines
+##      3	  description: Add rowlines to a text file.
+##      4	  arguments:
+##      5	  - name: input
+{% endhighlight %}
+
+
 
 {% highlight bash %}
 viash run config.vsh.yaml -- --help
@@ -52,33 +95,7 @@ viash run config.vsh.yaml -- --help
 ## Add rowlines to a text file.
 ## 
 ## Options:
-##     --input=file
+##     file
 ##         type: file
 ##         The input file.
 {% endhighlight %}
-
-
-{% highlight bash %}
-viash run config.vsh.yaml -- --input config.vsh.yaml
-{% endhighlight %}
-
-{% highlight text %}
-##      1	functionality:
-##      2	  name: addrowlines
-##      3	  description: Add rowlines to a text file.
-##      4	  arguments:
-##      5	  - name: --input                           
-##      6	    type: file
-##      7	    description: The input file.
-##      8	  resources:
-##      9	  - type: bash_script
-##     10	    path: script.sh
-##     11	platforms:
-##     12	  - type: native
-##     13	  - type: docker
-##     14	    image: bash:4.0
-##     15	  - type: nextflow
-##     16	    image: bash:4.0
-{% endhighlight %}
-
-See the [commands documentation](../../commands) for more information on the different viash commands.
