@@ -4,7 +4,7 @@ description: Documentation for `viash`
 # url: "https://pmarsceill.github.io" # the base hostname & protocol for your site, e.g. http://example.com
 
 permalink: pretty
-exclude: ["node_modules/", "*.gemspec", "*.gem", "Gemfile", "Gemfile.lock", "package.json", "package-lock.json",  "LICENSE.txt", "Rakefile", "bundle", "*.Rproj", "R/",  "docs/*.Rmd", "examples/*.Rmd", "index.Rmd", "*/.gitignore"]
+exclude: ["node_modules/", "*.gemspec", "*.gem", "Gemfile", "Gemfile.lock", "package.json", "package-lock.json",  "LICENSE.txt", "Rakefile", "bundle", "*.Rproj", "R/",  "docs/*.Rmd", "index.Rmd", "*/.gitignore"]
 
 remote_theme: pmarsceill/just-the-docs
 # theme: just-the-docs
@@ -73,8 +73,8 @@ last_edit_time_format: "%b %e %Y at %I:%M %p" # uses ruby's time format: https:/
 gh_edit_link: true # show or hide edit this page link
 gh_edit_link_text: "Edit this page on GitHub"
 gh_edit_repository: "https://github.com/data-intuitive/viash_docs" # the github URL for your repo
-# gh_edit_branch: "master" # the branch that your docs is served from
-# gh_edit_view_mode: "tree" # "tree" or "edit" if you want the user to jump into the editor immediately
+gh_edit_branch: "master" # the branch that your docs is served from
+gh_edit_view_mode: "tree" # "tree" or "edit" if you want the user to jump into the editor immediately
 
 # Color scheme currently only supports "dark", "light"/nil (default), or a custom scheme that you define
 color_scheme: light
@@ -101,3 +101,9 @@ compress_html:
   blanklines: false
   profile: false
 
+defaults:
+  - scope:
+      path: "examples"
+    values:
+      nav_exclude: true
+      search_exclude: true
