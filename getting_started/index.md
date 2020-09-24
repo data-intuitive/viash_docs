@@ -11,7 +11,7 @@ You can run a simple 'Hello World' component by running the following command.
 
 
 {% highlight bash %}
-URL=https://raw.githubusercontent.com/data-intuitive/viash_docs/master/examples/toys/hello_world/config.vsh.yaml
+URL=http://www.data-intuitive.com/viash_docs/examples/hello_world/config.vsh.yaml
 viash run $URL
 {% endhighlight %}
 

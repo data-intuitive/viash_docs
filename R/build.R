@@ -11,9 +11,13 @@ build_one <- function(rmd, md) {
 
 # Rmd files under the root directory
 rmds <- c(
-  list.files('.', '[.]Rmd$', recursive = FALSE, full.names = TRUE),
-  list.files('docs', '[.]Rmd$', recursive = TRUE, full.names = TRUE)
+  list.files('.', '[.]Rmd$', recursive = TRUE, full.names = TRUE)
 )
+
+# remove rmds under examples dir
+rmds <- rmds[!grepl("^\\./examples|^\\./_site", rmds)]
+
+# get corresponding mds
 mds <- blogdown:::with_ext(rmds, '.md')
 
 

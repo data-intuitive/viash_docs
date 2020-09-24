@@ -1,10 +1,11 @@
-Nextflow
-================
+---
+title: "Nextflow"
+output: github_document
+---
 
 ## Introduction
 
-This example deals with creating a *module* that can be incorporated in
-a larger NextFlow pipeline.
+This example deals with creating a _module_ that can be incorporated in a larger NextFlow pipeline.
 
 We reuse a simple filter script in R.
 
@@ -12,7 +13,7 @@ We reuse a simple filter script in R.
 
 From the example directory, run the following:
 
-``` sh
+```sh
 viash export -f functionality.yaml -p platform_docker.yaml -o export/setup/
 viash export -f functionality.yaml -p platform_nextflow.yaml -o export/nextflow
 export/setup/filter_table ---setup
@@ -20,10 +21,9 @@ export/setup/filter_table ---setup
 
 ## Running the Module
 
-We are now ready to run the module and we use the example `train.csv`
-data:
+We are now ready to run the module and we use the example `train.csv` data:
 
-``` sh
+```sh
 cd export/nextflow
 NXF_VER=20.04.1-edge nextflow run . \
    --input $VIASH/data/train.csv \
