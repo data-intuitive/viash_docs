@@ -4,19 +4,21 @@ nav_order: 2
 parent: Commands
 ---
 
-`viash run` executes a viash component. From the provided functionality.yaml, viash
-generates a temporary executable and immediately executes it with the given parameters.
+`viash run` runs a viash component from the provided [viash config file](../../config). viash generates a temporary executable and immediately executes it with the given parameters.
 
 Usage:
 ```
-viash run -f fun.yaml [-p plat.yaml] [-k] [-- --params --to component]
+viash run [-P docker] [-k] config.vsh.yaml -- [arguments for script]
 ```
 
 Arguments:
 
-* `-f|--functionality <arg>`: Path to the functionality file. See [functionality.md](functionality.md) for more info.
-* `-p|--platform <arg>`: Path to the platform file. If not provided, the component is executed on the native platform. See [platform.md](platform.md) for more info.
-* `-k|--keep`: Do not remove temporary files.
+* `config`: A viash config file (example: `config.vsh.yaml`). This argument can also be a script with the config as a header (example: `script.vsh.R`).
+* `-P|--platformid <arg>`: If multiple platforms are specified in the config, use the platform with this name.
+* `-p|--platform <arg>`: Path to a custom platform file.
+* `-k|--keep`: Do not remove temporary files. The temporary directory can be overwritten by defining a `VIASH_TEMP` variable.
 * `-- param1 param2 ...`: Extra parameters to be passed to the component itself. `--` is used to separate viash arguments from the arguments of the component. 
 * `VIASH_TEMP="<path>"`: An environment variable which can be defined to specify a temporary directory. By default, `/tmp` is used.
 
+Deprecated arguments:
+* `-f|--functionality <arg>`: [deprecated] Path to the functionality file.
