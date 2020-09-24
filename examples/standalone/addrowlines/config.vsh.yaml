@@ -1,0 +1,16 @@
+functionality:
+  name: addrowlines
+  description: Add rowlines to a text file.
+  arguments:
+  - name: --input                           
+    type: file
+    description: The input file.
+  resources:
+  - type: bash_script
+    path: script.sh
+platforms:
+  - type: native
+  - type: docker
+    image: bash:4.0
+  - type: nextflow
+    image: bash:4.0
