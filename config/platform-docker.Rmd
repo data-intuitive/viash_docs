@@ -5,6 +5,56 @@ parent: Config
 ---
 
 # Docker Platform
+{: .no_toc }
+
+## Table of contents
+{: .no_toc .text-delta }
+
+1. TOC
+{:toc}
+
+---
+
+
+## Example
+
+```yaml
+- type: docker
+  id: custom_platform_name
+  image: bash:4.0
+  version: "0.1.0"
+  target_image: myorganisation/example_docker
+  resolve_volume: Automatic
+  chown: true
+  port: [80, 8080]
+  workdir: /app
+  setup:
+    - type: docker
+      build_args: 
+        - GITHUB_PAT="$GITHUB_PAT"
+    - type: apt
+      packages:
+        - imagemagick
+    - type: r
+      cran:
+        - tidyverse
+        - dynutils
+    - type: docker
+      run: 
+        - "git clone https://github.com/data-intuitive/randpy.git"
+```
+
+## Fields
+
+### type [string] {#type}
+
+### id [string] {#id}
+
+### image [string] {#image}
+
+### version [string] {#version}
+
+### target_image [string] {#target_image}
 
 ## From `image` to `target_image`
 
