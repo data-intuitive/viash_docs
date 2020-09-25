@@ -1,15 +1,14 @@
 Civ6 post-game summary
 ================
 
-# Civ6 post-game summary
-
 This is a toy dataset which uses savefiles from a game called
 Civilization VI and generates a post-game video of the in-game tile
 ownership over time.
 
 ## Build
 
-First build the pipeline. This might take a while.
+First build components for the pipeline. Building the docker containers
+from scratch will take a while.
 
 ``` bash
 viash ns build -s src -t target -P docker --setup
