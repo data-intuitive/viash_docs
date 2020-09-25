@@ -29,7 +29,6 @@ platforms:
   version: 0.2.1
   r:
     cran:
-    - rmarkdown
     - blogdown
   apt:
     packages:
@@ -37,5 +36,4 @@ platforms:
 - type: native
   r:
     cran:
-    - rmarkdown
     - blogdown

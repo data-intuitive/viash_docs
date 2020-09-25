@@ -41,12 +41,7 @@ functionality:
 platforms:
   - type: native
     r:
-      cran: 
-      - rmarkdown
-      - tidyverse
+      cran:
+        - tidyverse
   - type: docker
     image: rocker/verse
-    r:
-      cran: 
-      - rmarkdown
-      - tidyverse
