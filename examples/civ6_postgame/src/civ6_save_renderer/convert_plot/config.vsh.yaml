@@ -25,3 +25,4 @@ platforms:
     image: dpokidov/imagemagick
   - type: nextflow
     image: dpokidov/imagemagick
+  - type: native

@@ -32,3 +32,4 @@ platforms:
   - type: nextflow
     image: jrottenberg/ffmpeg
     publish: true
+  - type: native
