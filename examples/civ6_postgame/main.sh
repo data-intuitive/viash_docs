@@ -42,5 +42,7 @@ for save_file in $input_dir/*.Civ6Save; do
   fi
 done
 
+png_inputs=`find "$output_dir" -name "*.png" | sed "s#.*#&:#" | tr -d '\n' | sed 's#:$#\n#'`
+
 msg "combine plots"
-$BIN/combine_plots/combine_plots -i "$output_dir" -o "$output_dir/movie.webm" --framerate 1
+$BIN/combine_plots/combine_plots -i "$png_inputs" -o "$output_dir/movie.webm" --framerate 1
