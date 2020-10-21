@@ -32,7 +32,7 @@ workflow {
         | plot_map \
         | convert_plot \
         | rename \
-        | toList \
+        | toSortedList{ a,b -> a[0] <=> b[0] }  \
         | map( listToTriplet ) \
         | combine_plots
 
