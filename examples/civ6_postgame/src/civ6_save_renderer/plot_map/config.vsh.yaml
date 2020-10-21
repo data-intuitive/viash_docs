@@ -40,3 +40,4 @@ platforms:
       github:
         - rcannood/civ6saves
   - type: nextflow
+  - type: native

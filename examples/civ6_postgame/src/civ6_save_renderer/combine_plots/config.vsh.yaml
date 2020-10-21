@@ -29,3 +29,4 @@ platforms:
   - type: docker
     image: jrottenberg/ffmpeg
   - type: nextflow
+  - type: native

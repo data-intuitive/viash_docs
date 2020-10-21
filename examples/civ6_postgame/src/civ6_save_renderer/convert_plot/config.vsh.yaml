@@ -24,3 +24,4 @@ platforms:
   - type: docker
     image: dpokidov/imagemagick
   - type: nextflow
+  - type: native
