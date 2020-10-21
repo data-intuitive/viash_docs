@@ -9,7 +9,8 @@ functionality:
       required: true
       default: "/path/to/my/dir"
       must_exist: true
-      description: A directory containing images.
+      multiple: true
+      description: A list of images.
     - name: "--output"
       alternatives: [-o]
       type: file
@@ -29,3 +30,5 @@ platforms:
   - type: docker
     image: jrottenberg/ffmpeg
   - type: nextflow
+    image: jrottenberg/ffmpeg
+    publish: true

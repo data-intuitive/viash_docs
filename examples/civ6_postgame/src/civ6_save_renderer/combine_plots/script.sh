@@ -1,4 +1,5 @@
 #!/bin/bash
 
 # render movie
-ffmpeg -framerate $par_framerate -f image2 -i "$par_input/%*.png" -c:v libvpx-vp9 -pix_fmt yuva420p -y "$par_output"
+inputs=`echo $par_input | sed 's#:# -i #g'`
+ffmpeg -framerate $par_framerate -f image2 -i $inputs -c:v libvpx-vp9 -pix_fmt yuva420p -y $par_output
