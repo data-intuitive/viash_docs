@@ -7,9 +7,10 @@ functionality:
       alternatives: [-i]
       type: file
       required: true
-      default: "/path/to/my/dir"
+      default: "plot1.png:plot2.png"
       must_exist: true
       description: A directory containing images.
+      multiple: true
     - name: "--output"
       alternatives: [-o]
       type: file
