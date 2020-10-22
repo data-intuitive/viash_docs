@@ -15,7 +15,7 @@ workflow {
         println(params)
 
     if (!params.containsKey("input") || params.input == "") {
-        exit 1, "ERROR: Please provide a --input parameter pointing to .Cif6Save file(s)"
+        exit 1, "ERROR: Please provide a --input parameter pointing to .Civ6Save file(s)"
     }
 
     def input_ = Channel.fromPath(params.input)
