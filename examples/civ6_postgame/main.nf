@@ -7,7 +7,7 @@ include  combine_plots  from  './target/nextflow/civ6_save_renderer/combine_plot
 include  convert_plot   from  './target/nextflow/civ6_save_renderer/convert_plot/main.nf'   params(params)
 include  parse_header   from  './target/nextflow/civ6_save_renderer/parse_header/main.nf'   params(params)
 include  parse_map      from  './target/nextflow/civ6_save_renderer/parse_map/main.nf'      params(params)
-include  rename         from  './utils.nf'
+include  rename         from  './src/utils.nf'
 
 workflow {
 
