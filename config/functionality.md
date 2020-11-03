@@ -122,11 +122,11 @@ Example:
 ```
 
 ## resources [list] {#resources}
-The first resource should be a script (`bash_script`, `r_script`, `python_script`) which is what will be executed when the functionality is run. Additional resources will be copied to the same directory.
+The first resource should be a script (`bash_script`, `r_script`, `python_script`, `javascript_script`, `scala_script`) which is what will be executed when the functionality is run. Additional resources will be copied to the same directory.
 
 Common properties:
 
-* `type: file/r_script/python_script/bash_script`, the type of resource. The first resource cannot be of type `file`. When the type is not specified, the default type is simply `file`. For more information regarding how to write a script in Bash, R or Python with viash, check out the [Guides](../../guides) for the respective languages.
+* `type: file/r_script/python_script/bash_script/javascript_script/scala_script`, the type of resource. The first resource cannot be of type `file`. When the type is not specified, the default type is simply `file`. For more information regarding how to write a script in Bash, R or Python with viash, check out the [Guides](../../guides) for the respective languages.
 * `name: filename`, the resulting name of the resource.
 * `path: path/to/file`, the path of the input file. Can be a relative or an absolute path, or a URI.
 * `text: ...multiline text...`, the raw content of the input file. Exactly one of `path` or `text` must be defined, the other undefined.
