@@ -10,17 +10,24 @@ Run a viash component from the provided [viash config file](../../config). viash
 
 Usage:
 ```
-viash run [-P docker/-p platform.yaml] [-k] config.vsh.yaml -- [arguments for script]
+viash run config.vsh.yaml [-p docker] [-k true/false]  -- [arguments for script]
 ```
 
 Arguments:
 
-* `config`: A viash config file (example: `config.vsh.yaml`). This argument can also be a script with the config as a header (example: `script.vsh.R`).
-* `-P|--platformid <arg>`: If multiple platforms are specified in the config, use the platform with this name.
-* `-p|--platform <arg>`: Path to a custom platform file.
-* `-k|--keep`: Do not remove temporary files. The temporary directory can be overwritten by defining a `VIASH_TEMP` variable.
+* `config`: A viash config file (example: `config.vsh.yaml`). This argument can also be a script with the config as a header.
+* `-p|--platform <arg>`:Specifies which platform amongst those specified in
+                          the config to use. If this is not provided, the first
+                          platform will be used. If no platforms are defined in
+                          the config, the native platform will be used. In
+                          addition, the path to a platform yaml file can also be
+                          specified.
+* `-k|--keep true/false`: Whether or not to keep temporary files. By default,
+                          files will be deleted if all goes well but remain when
+                          an error occurs. By specifying `--keep true`, the
+                          temporary files will always be retained, whereas
+                          `--keep false` will always delete them. The temporary
+                          directory can be overwritten by setting defining a
+                          `VIASH_TEMP` directory.
 * `-- param1 param2 ...`: Extra parameters to be passed to the component itself. `--` is used to separate viash arguments from the arguments of the component. 
 * `VIASH_TEMP="<path>"`: An environment variable which can be defined to specify a temporary directory. By default, `/tmp` is used.
-
-Deprecated arguments:
-* `-f|--functionality <arg>`: [deprecated] Path to the functionality file.
