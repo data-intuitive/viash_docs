@@ -15,8 +15,13 @@ parent: Config
 
 ---
 
+Run a viash component on a Docker backend platform. 
+
+By specifying which dependencies your component needs, users will be able to build 
+a docker container from scratch using the setup flag, or pull it from a docker repository (WIP).
 
 ## Example
+An example of a docker platform yaml can be found below, each part of which is explained in more depth in the following sections. 
 
 ```yaml
 - type: docker
@@ -42,19 +47,108 @@ parent: Config
     - type: docker
       run: 
         - "git clone https://github.com/data-intuitive/randpy.git"
+        
+
+  setup:
+    - type: r
+      cran: [ dynutils ]
+      bioc: [ AnnotationDbi ]
+      git: [ https://some.git.repository/org/repo ]
+      github: [ rcannood/SCORPIUS ]
+      gitlab: [ org/package ]
+      svn: [ https://path.to.svn/group/repo ]
+      url: [ https://github.com/hadley/stringr/archive/HEAD.zip ]
+    - type: python
+      pip: [ numpy ]
+      git: [ https://some.git.repository/org/repo ]
+      github: [ jkbr/httpie ]
+      gitlab: [ foo/bar ]
+      mercurial: [ http://... ]
+      svn: [ http://...]
+      bazaar: [ http://... ]
+      url: [ http://... ]
+    - type: javascript
+      npm: [ packagename ]
+      git: [ https://... ]
+      github: [ owner/repository ]
+      url: [ https://... ]
 ```
 
-## Fields
 
-### type [string] {#type}
+## id [string] {#id}
+As with all platforms, you can give a platform a different name. By specifying `id: foo`, you can target this platform (only) by specifying `-p foo` in any of the viash commands.
 
-### id [string] {#id}
+Example:
+```yaml
+id: foo
+```
 
-### image [string] {#image}
+## version [string] {#version}
+The version of the platform specifications. This will automatically be used as a tag for the target docker image name.
 
-### version [string] {#version}
+Example:
+```yaml
+version: "0.1.0"
+```
 
-### target_image [string] {#target_image}
+## image [string] {#image}
+The base container to start from.
+
+```yaml
+image: "bash:4.0"
+```
+
+## target_image [string] {#target_image}
+
+## setup [list] {#setup}
+A list of requirements. The native platform only supports specifying `r` and `python` requirements.
+
+## R requirements [list] {#r-reqs}
+Specify which R packages should be available in order to run the component.
+
+Example:
+```yaml
+type: r
+cran: [ dynutils ]
+bioc: [ AnnotationDbi ]
+git: [ https://some.git.repository/org/repo ]
+github: [ rcannood/SCORPIUS ]
+gitlab: [ org/package ]
+svn: [ https://path.to.svn/group/repo ]
+url: [ https://github.com/hadley/stringr/archive/HEAD.zip ]
+```
+
+## Python requirements [list] {#py-reqs}
+Specify which Python packages should be available in order to run the component.
+
+Example: 
+```yaml
+type: python
+pip: [ numpy ]
+git: [ https://some.git.repository/org/repo ]
+github: [ jkbr/httpie ]
+gitlab: [ foo/bar ]
+mercurial: [ http://... ]
+svn: [ http://...]
+bazaar: [ http://... ]
+url: [ http://... ]
+```
+
+## JavaScript requirements [list] {#js-reqs}
+Specify which JavaScript packages should be available in order to run the component.
+
+Example: 
+```yaml
+type: javascript
+npm: [ packagename ]
+git: [ https://... ]
+github: [ owner/repository ]
+url: [ https://... ]
+```
+
+
+
+
 
 ## From `image` to `target_image`
 
@@ -100,5 +194,9 @@ __Customization required?__ (i.e. `---dockerfile` return an empty string)
     - Image is tagged with `target_image` and `platform.version` as version.
 
 [^1]: Future versions of `viash` will also tag the image with `target_image` if the latter is filled, which improved consistency.
+
+
+
+
 
 
