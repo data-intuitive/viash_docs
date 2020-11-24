@@ -4,54 +4,51 @@ nav_order: 10
 parent: Config
 ---
 
-viash supports multiple file formats, the most important of which are 'joined' and 'integrated'.
+viash uses a `config.vsh.yaml` file represent a component's metadata. Alternatively, the metadata can also be contained in the component script itself. 
 
-## Split
-This is a legacy file format which is (still) supported for backwards compatibility. The file structure is as follows:
+The following two file formats are equivalent.
 
-* `functionality.yaml`: Metadata concerning the functionality provided by a software component.
-* `script.R/py/sh`: A script.
-* `platform_native.yaml` (optional): Metadata describing the requirements for using the software component as is.
-* `platform_docker.yaml` (optional): Metadata describing the requirements for using the software component in a Docker container.
-* `platform_nextflow.yaml` (optional): Metadata describing the requirements for using the software component as part of a Nextflow pipeline.
+## Config format 
 
-Examples for each of these files are show below.
-
-`functionality.yaml`:
+Metadata `config.vsh.yaml`:
 
 ```yaml
-name: hello
-arguments:
-  - name: "name"
-    type: string
-    default: Bob
-resources:
-  - type: bash_script
-    path: script.sh
+functionality:
+  name: hello
+  arguments:
+    - name: "name"
+      type: string
+      default: Bob
+  resources:
+    - type: bash_script
+      path: script.sh
+platforms:
+  - type: native
 ```
 
-`script.sh`:
+Script `script.sh`:
 
 ```bash
 #!/bin/bash
 echo Hello $par_name
 ```
 
+## Script format
 
-## Joined
+Script `script.vsh.sh`:
 
-## Integrated
+```bash
+#!/bin/bash
 
-```r
 #' functionality:
-#'   name: r-estimate
-#'   arguments: ...
+#'   name: hello
+#'   arguments:
+#'     - name: "name"
+#'       type: string
+#'       default: Bob
 #' platforms:
 #' - type: native
-#' - type: docker
-#'   image: rocker/tidyverse
 
-library(tidyverse)
-cat("Hello world!\n")
+echo Hello $par_name
 ```
 
