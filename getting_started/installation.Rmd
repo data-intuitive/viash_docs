@@ -8,7 +8,7 @@ nav_order: 1
 
 viash is developed in Scala (2.12). You'll need a working Java installation (tested with version 1.8) in order to use it. viash is tested and used on MacOS and Linux systems. Windows is currently not tested, although there is no reason is shouldn't run on [WSL](https://docs.microsoft.com/en-us/windows/wsl/install-win10).
 
-Make sure viahs is available in your `$PATH` and run:
+Make sure viash is available in your `$PATH` and run:
 
 ```bash
 viash --help

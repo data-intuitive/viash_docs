@@ -10,7 +10,7 @@ Test the component using the tests defined in the [viash config file](../../conf
 
 Usage:
 ```
-viash test config.vsh.yaml [-p docker [-k true/false]
+viash test [-p docker [-k true/false] config.vsh.yaml
 ```
 
 Arguments:

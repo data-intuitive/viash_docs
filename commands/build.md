@@ -10,7 +10,7 @@ Build an executable from the provided [viash config file](../../config).
 
 Usage: 
 ```
-viash build config.vsh.yaml -o output [-p docker] [-m] [-s]
+viash build -o output [-p docker] [-m] [-s] config.vsh.yaml 
 ```
 
 Arguments:

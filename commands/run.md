@@ -10,7 +10,7 @@ Run a viash component from the provided [viash config file](../../config). viash
 
 Usage:
 ```
-viash run config.vsh.yaml [-p docker] [-k true/false]  -- [arguments for script]
+viash run [-p docker] [-k true/false] config.vsh.yaml -- [arguments for script]
 ```
 
 Arguments:
