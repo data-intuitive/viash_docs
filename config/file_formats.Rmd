@@ -4,6 +4,8 @@ nav_order: 10
 parent: Config
 ---
 
+# Regarding viash file formats
+
 viash uses a `config.vsh.yaml` file represent a component's metadata. Alternatively, the metadata can also be contained in the component script itself. 
 
 The following two file formats are equivalent.
