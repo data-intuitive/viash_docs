@@ -69,17 +69,56 @@ version: "0.1.0"
 ## image [string] {#image}
 The base container to start from.
 
+Example:
 ```yaml
 image: "bash:4.0"
 ```
 
 ## target_image [string] {#target_image}
+If anything is specified in the `setup` section, running the `---setup` will result in a container with the name of `<target_image>:<version>`.
+If nothing is specified in the `setup` section, simply `image` will be used. 
+
+Example:
+```yaml
+target_image: myfoo
+```
+
+## chown [boolean] {#chown}
+In Linux, files created by a Docker container will be owned by `root`. 
+With `chown: true`, viash will automatically change the ownership of output files 
+(arguments with `type: file` and `direction: output`) to the user running the viash command
+after execution of the component. Default value: `true`.
+
+Example:
+```yaml
+chown: false
+```
+
+## port [list[string]] {#port}
+A list of enabled ports. This doesn't change the
+Dockerfile but gets added as a command-line argument at runtime.
+
+Example:
+```yaml
+port:
+  - 80
+  - 8080
+```
+
+## workdir [string] {#workdir}
+The working directory when starting the container. This doesn't change the
+Dockerfile but gets added as a command-line argument at runtime.
+
+Example:
+```yaml
+workdir: /home/user
+```
 
 ## setup [list] {#setup}
 A list of requirements for installing apt, apk, R, Python, JavaScript packages or 
 specifying other Docker setup instructions.
 The order in which these dependencies are specified determines the order in which they will
-be installed.^
+be installed.
 
 ### R requirements [list] {#r-reqs}
 Specify which R packages should be available in order to run the component.
@@ -163,7 +202,6 @@ setup:
     resources: 
       - resource.txt /path/to/resource.txt
 ```
-
 
 
 ## Decision tree
