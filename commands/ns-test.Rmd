@@ -10,7 +10,7 @@ Test a [namespace](../../good_practices/namespaces) from many [viash config file
 
 Usage: 
 ```
-viash ns test [-n nmspc] [-s src] [-p docker] [--parallel] [--tsv file.tsv]
+viash ns test [-n nmspc] [-s src] [-p docker] [--parallel] [--tsv file.tsv] [-k true/false]
 ```
 
 Arguments:
@@ -23,6 +23,12 @@ Arguments:
                            platforms are defined in a config, the native
                            platform will be used. In addition, the path to a
                            platform yaml file can also be specified.
-* `--setup`: Whether or not to set up the platform environment after building the executable.
+* `-k|--keep true/false`: Whether or not to keep temporary files. By default,
+                          files will be deleted if all goes well but remain when
+                          an error occurs. By specifying `--keep true`, the
+                          temporary files will always be retained, whereas
+                          `--keep false` will always delete them. The temporary
+                          directory can be overwritten by setting defining a
+                          `VIASH_TEMP` directory.
 * `-l|--parallel`: Whether or not to run the process in parallel.
 * `-t|--tsv`: Path to write a summary of the test results to.

@@ -13,3 +13,4 @@ viash currently supports the following commands:
 * [`viash build config.vsh.yaml`](build): Build a component to an executable using a specified platform.
 * [`viash test config.vsh.yaml`](test): Test a component.
 * [`viash ns build`](ns-build): Build many viash components.
+* [`viash ns test`](ns-test): Test many viash components.
