@@ -93,7 +93,7 @@ Example:
 chown: false
 ```
 
-## port [list[string]] {#port}
+## port [list of strings] {#port}
 A list of enabled ports. This doesn't change the
 Dockerfile but gets added as a command-line argument at runtime.
 
