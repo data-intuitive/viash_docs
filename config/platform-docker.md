@@ -76,50 +76,92 @@ image: "bash:4.0"
 ## target_image [string] {#target_image}
 
 ## setup [list] {#setup}
-A list of requirements. The native platform only supports specifying `r` and `python` requirements.
+A list of requirements for installing apt, apk, R, Python, JavaScript packages or 
+specifying other Docker setup instructions.
+The order in which these dependencies are specified determines the order in which they will
+be installed.^
 
-## R requirements [list] {#r-reqs}
+### R requirements [list] {#r-reqs}
 Specify which R packages should be available in order to run the component.
 
 Example:
 ```yaml
-type: r
-cran: [ dynutils ]
-bioc: [ AnnotationDbi ]
-git: [ https://some.git.repository/org/repo ]
-github: [ rcannood/SCORPIUS ]
-gitlab: [ org/package ]
-svn: [ https://path.to.svn/group/repo ]
-url: [ https://github.com/hadley/stringr/archive/HEAD.zip ]
-script: [ 'devtools::install(".")' ]
+setup: 
+  - type: r
+    cran: [ dynutils ]
+    bioc: [ AnnotationDbi ]
+    git: [ https://some.git.repository/org/repo ]
+    github: [ rcannood/SCORPIUS ]
+    gitlab: [ org/package ]
+    svn: [ https://path.to.svn/group/repo ]
+    url: [ https://github.com/hadley/stringr/archive/HEAD.zip ]
+    script: [ 'devtools::install(".")' ]
 ```
 
-## Python requirements [list] {#py-reqs}
+### Python requirements [list] {#py-reqs}
 Specify which Python packages should be available in order to run the component.
 
 Example: 
 ```yaml
-type: python
-pip: [ numpy ]
-git: [ https://some.git.repository/org/repo ]
-github: [ jkbr/httpie ]
-gitlab: [ foo/bar ]
-mercurial: [ http://... ]
-svn: [ http://...]
-bazaar: [ http://... ]
-url: [ http://... ]
+setup:
+  - type: python
+    pip: [ numpy ]
+    git: [ https://some.git.repository/org/repo ]
+    github: [ jkbr/httpie ]
+    gitlab: [ foo/bar ]
+    mercurial: [ http://... ]
+    svn: [ http://...]
+    bazaar: [ http://... ]
+    url: [ http://... ]
 ```
 
-## JavaScript requirements [list] {#js-reqs}
+### JavaScript requirements [list] {#js-reqs}
 Specify which JavaScript packages should be available in order to run the component.
 
 Example: 
 ```yaml
-type: javascript
-npm: [ packagename ]
-git: [ https://... ]
-github: [ owner/repository ]
-url: [ https://... ]
+setup:
+  - type: javascript
+    npm: [ packagename ]
+    git: [ https://... ]
+    github: [ owner/repository ]
+    url: [ https://... ]
+```
+
+### Aptitude requirements [list] {#apt-reqs}
+Specify which apt packages should be available in order to run the component.
+
+Example: 
+```yaml
+setup:
+  - type: apt
+    packages: [ sl ]
+```
+
+
+
+### Alpine requirements [list] {#apt-reqs}
+Specify which apk packages should be available in order to run the component.
+
+Example: 
+```yaml
+setup:
+  - type: apk
+    packages: [ sl ]
+```
+
+
+### Docker requirements [list] {#apt-reqs}
+Specify which Docker commands should be run during setup.
+
+Example: 
+```yaml
+setup:
+  - type: docker
+    build_args: [ GITHUB_PAT=hello_world ]
+    run: [ git clone ... ]
+    resources: 
+      - resource.txt /path/to/resource.txt
 ```
 
 
