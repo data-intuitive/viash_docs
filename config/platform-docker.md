@@ -29,7 +29,6 @@ An example of a docker platform yaml can be found below, each part of which is e
   image: bash:4.0
   version: "0.1.0"
   target_image: myorganisation/example_docker
-  resolve_volume: Automatic
   chown: true
   port: [80, 8080]
   workdir: /app
