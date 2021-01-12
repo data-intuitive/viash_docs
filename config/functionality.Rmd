@@ -58,6 +58,14 @@ functionality:
     - type: r_script
       path: tests/second_unit_test.R
     - path: tests/test_resource.txt
+  authors:
+    - name: Bob Cando
+      roles: [maintainer, author]
+      email: bob@can.do
+      props: {github: bobcando, orcid: 0000-0001-0002-0003}
+    - name: Tim Farbe
+      roles: [author]
+      email: tim@far.be
 ```
 
 ## name [string] {#name}
@@ -160,10 +168,30 @@ tests:
   - path: resource1.txt
 ```
 
-<!--
-## function_type [string] {#function-type}
 
-The function_type is used in Nextflow to describe the type of function the functionality provides. The function type affects two aspects: how many files can be used as input and output, and how should the output files be named (based on the input).
+## authors [list] {#authors}
+A list of authors (introduced in viash 0.3.1). An author must at least have a name, but can also have a list of roles, an e-mail address, and a map of custom properties. 
 
-See [platform_nextflow.md](platform_nextflow.md) for an explanation between the difference between function types.
--->
+Suggested values for roles are:
+
+Role | Abbrev. | Description
+---|---|---
+maintainer | mnt | for the maintainer of the code. Ideally, exactly one maintainer is specified.
+author | aut | for persons who have made substantial contributions to the software.
+contributor | ctb | for persons who have made smaller contributions (such as code patches).
+datacontributor | dtc | for persons or organisations that contributed data sets for the software
+copyrightholder | cph | for all copyright holders. This is a legal concept so should use the legal name of an institution or corporate body.
+funder | fnd | for persons or organizations that furnished financial support for the development of the software
+
+Example:
+
+```yaml
+authors:
+  - name: Bob Cando
+    roles: [maintainer, author]
+    email: bob@can.do
+    props: {github: bobcando, orcid: 0000-0001-0002-0003}
+  - name: Tim Farbe
+    roles: [author]
+    email: tim@far.be
+```
