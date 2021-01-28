@@ -27,6 +27,7 @@ functionality:
   resources:
     - type: r_script
       path: script.R
+    - path: helper.R
 platforms:
   - type: docker
     image: rocker/tidyverse
