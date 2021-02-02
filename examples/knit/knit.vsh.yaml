@@ -12,9 +12,13 @@ functionality:
     direction: output
     default: "${VIASH_PAR_INPUT/Rmd/md}"
     description: "Output .md file"
+  - name: "--format"
+    type: string
+    default: "md_document"
+    description: "The format to use for rendering the markdown. Possible values are, amongst others, 'md_document', 'github_document'. See `?rmarkdown::render` parameter `output_format`."
   - name: "--preserve_yaml"
-    type: boolean
-    default: true
+    description: "[md_document] Preserve YAML front matter in final document."
+    type: boolean_true
   resources:
   - type: r_script
     path: ./code.R
