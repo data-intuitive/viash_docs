@@ -1,7 +1,10 @@
 library(rmarkdown)
 
-if (par$format == "md_format") {
-  par$format <- md_document(preserve_yaml = par$preserve_yaml)
+if (par$format == "md_document") {
+  par$format <- md_document(
+    preserve_yaml = par$preserve_yaml, 
+    variant = par$variant
+  )
 } else if (par$format == "github_document") {
   par$format <- github_document(html_preview = FALSE)
 }

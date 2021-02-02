@@ -15,10 +15,15 @@ functionality:
   - name: "--format"
     type: string
     default: "md_document"
-    description: "The format to use for rendering the markdown. Possible values are, amongst others, 'md_document', 'github_document'. See `?rmarkdown::render` parameter `output_format`."
+    description: "The format to use for rendering the markdown. Possible values are, amongst others, 'md_document', 'github_document'. See `?rmarkdown::render` parameter `output_format` for more info."
   - name: "--preserve_yaml"
     description: "[md_document] Preserve YAML front matter in final document."
-    type: boolean_true
+    type: boolean
+    default: true
+  - name: "--variant"
+    description: "[md_document] Markdown variant to produce. Markdown variant to produce (defaults to 'markdown_strict'). Other valid values are 'commonmark', 'markdown_github', 'markdown_mmd', 'markdown_phpextra', or even 'markdown' (which produces pandoc markdown). See `?rmarkdown::md_document` parameter `variant` for more info."
+    type: string
+    default: markdown_strict
   resources:
   - type: r_script
     path: ./code.R
@@ -31,13 +36,14 @@ platforms:
   image: rocker/tidyverse:4.0.2
   target_image: dataintuitive/viash_docs
   version: 0.2.1
-  setup_strategy: ifneedbebuild
+  setup_strategy: cachedbuild
   r:
     cran:
     - blogdown
   apt:
     packages:
     - libxtst6
+    - libxt6
 - type: native
   r:
     cran:
