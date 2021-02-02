@@ -31,6 +31,7 @@ platforms:
   image: rocker/tidyverse:4.0.2
   target_image: dataintuitive/viash_docs
   version: 0.2.1
+  setup_strategy: ifneedbebuild
   r:
     cran:
     - blogdown
