@@ -2,6 +2,12 @@ functionality:
   name: plot_map
   namespace: civ6_save_renderer
   description: "Use the settings yaml and the map tsv to generate a plot (as PDF)."
+  version: "1.0"
+  authors:
+    - name: Robrecht Cannoodt
+      email: rcannood@gmail.com
+      roles: [maintainer, author]
+      props: {github: rcannood, orcid: 0000-0003-3641-729X}
   arguments:
     - name: "--yaml"
       alternatives: [-y]
