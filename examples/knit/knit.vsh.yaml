@@ -24,6 +24,16 @@ functionality:
     description: "[md_document] Markdown variant to produce. Markdown variant to produce (defaults to 'markdown_strict'). Other valid values are 'commonmark', 'markdown_github', 'markdown_mmd', 'markdown_phpextra', or even 'markdown' (which produces pandoc markdown). See `?rmarkdown::md_document` parameter `variant` for more info."
     type: string
     default: markdown_strict
+  - name: "--html_preview"
+    type: boolean_true
+    description: "[github_document] Used to also generate an HTML file for the purpose of locally previewing what the document will look like on GitHub."
+  - name: "--toc"
+    type: boolean_true
+    description: "Used to include a table of contents in the output"
+  - name: "--toc_depth"
+    type: integer
+    description: "Depth of headers to include in table of contents"
+    default: 3
   resources:
   - type: r_script
     path: ./code.R
@@ -45,6 +55,3 @@ platforms:
     - libxtst6
     - libxt6
 - type: native
-  r:
-    cran:
-    - blogdown
