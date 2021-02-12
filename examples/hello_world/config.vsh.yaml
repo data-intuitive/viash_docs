@@ -19,3 +19,9 @@ platforms:
   - type: native
   - type: docker
     image: bash:4.0
+  - type: docker
+    id: alpine
+    image: alpine
+    setup:
+      - type: apk
+        packages: [ bash ]

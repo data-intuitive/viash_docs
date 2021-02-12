@@ -20,7 +20,7 @@ the platform on which you want to run the software, viash can help you:
 Here are a few use cases which serve as motivation for viash.
 
 * You developed a Jupyter notebook report for a data analysis. You wish to share it with your colleague, only to spend two hours installing your Conda stack on their laptop.
-* You want to combine a couple of tools in a pipeline and every tool has specific requirements on how they should be run. Even worse: some requirements might directly conflict with eachother.
+* You want to combine a couple of tools in a pipeline and every tool has specific requirements on how they should be run. Even worse: some requirements might directly conflict with each other.
 * Your next data analysis project is very similar to the previous project, so you copy and paste the source code. Unfortunately, you detect a bug in some of your code, so now you need to go back and fix the same bug in all the different projects.
 * You want to look back at a data analysis you performed two years ago. Unfortunately, the software you used back then is not supported anymore, or the newest version produces totally different results.
 
