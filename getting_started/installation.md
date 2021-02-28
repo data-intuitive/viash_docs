@@ -36,10 +36,10 @@ save it to the `~/bin` folder or any other directory that is specified
 your `$PATH` variable.
 
 Here’s a one-liner command to download the latest release of viash to
-your `~bin` folder:
+your `~/bin` folder:
 
 ``` bash
-sudo wget "https://github.com/data-intuitive/viash/releases/latest/download/viash" -O /bin/viash
+sudo wget "https://github.com/data-intuitive/viash/releases/latest/download/viash" -O usr/bin/viash
 ```
 
 To verify your installation, run the following command:
