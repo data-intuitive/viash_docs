@@ -1,3 +1,9 @@
+---
+title: "Installation"
+parent: Getting started
+nav_order: 1
+---
+
 # Installation
 
 ## Supported Operating Systems
@@ -21,9 +27,9 @@ You can run viash on the following operating systems:
 ### Packaged Release
 
 To install viash, download the [latest
-release](https://github.com/data-intuitive/viash/releases) and save it
-to the `~/bin` folder or any other directory that is specified your
-`$PATH` variable.
+release](https://github.com/data-intuitive/viash/releases/latest) and
+save it to the `~/bin` folder or any other directory that is specified
+your `$PATH` variable.
 
 To verify your installation, run the following command:
 
