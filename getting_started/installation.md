@@ -35,6 +35,12 @@ release](https://github.com/data-intuitive/viash/releases/latest) and
 save it to the `~/bin` folder or any other directory that is specified
 your `$PATH` variable.
 
+To verify your installation, run the following command:
+
+``` bash
+viash --help
+```
+
 ### Build from Source
 
 The following needs to be installed on your system in order to install
