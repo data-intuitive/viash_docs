@@ -2,6 +2,10 @@
 title: "Installation"
 parent: Getting started
 nav_order: 1
+output:
+  md_document:
+    variant: markdown_github
+    preserve_yaml : true
 ---
 
 # Installation
