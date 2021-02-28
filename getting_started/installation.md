@@ -1,16 +1,20 @@
 # Installation
 
-viash is developed in Scala (2.12). You’ll need a working Java
-installation (tested with version 1.8) in order to use it. viash is
-tested and used on MacOS and Linux systems. Windows is currently not
-tested, although there is no reason is shouldn’t run on
-[WSL](https://docs.microsoft.com/en-us/windows/wsl/install-win10).
+## Supported Operating Systems
 
-Make sure viash is available in your `$PATH` and run:
+You can run viash on the following operating systems:
 
-``` bash
-viash --help
-```
+-   linux
+-   macOS
+-   Windows using [Windows Subsystem for
+    Linux](https://docs.microsoft.com/en-us/windows/wsl/install-win10)
+
+## Prerequisites
+
+-   viash is developed in [Scala 2.12](https://www.scala-lang.org/), so
+    you’ll need an [Oracle Java 8
+    installation](https://www.oracle.com/java/technologies/javase/javase-jdk8-downloads.html)
+    in order to use it.
 
 ## Install
 
@@ -18,7 +22,14 @@ viash --help
 
 To install viash, download the [latest
 release](https://github.com/data-intuitive/viash/releases) and save it
-to the `~/bin` folder or any other directory that is on your `$PATH`.
+to the `~/bin` folder or any other directory that is specified your
+`$PATH` variable.
+
+To verify your installation, run the following command:
+
+``` bash
+viash --help
+```
 
 ### Build from Source
 
