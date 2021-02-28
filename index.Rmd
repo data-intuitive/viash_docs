@@ -10,10 +10,10 @@ viash helps you turn a script (Bash/R/Python/Scala/JavaScript) into a reusable c
 By providing some meta-data regarding its functionality and
 the platform on which you want to run the software, viash can help you:
 
-* wrap your script in an executable with a CLI and `--help` functionality,
-* seamlessly execute your component natively on the host platform or in a Docker container,
-* combine multiple components in a Nextflow pipeline, and
-* unit-test your component to ensure that it works at all times.
+* Wrap your script in an executable with a CLI and `--help` functionality
+* Seamlessly execute your component natively on the host platform or in a Docker container
+* Combine multiple components in a Nextflow pipeline
+* Unit-test your component to ensure that it works at all times
 
 ## Toward building blocks of processing
 
