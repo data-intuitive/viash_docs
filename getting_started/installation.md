@@ -22,8 +22,8 @@ You can run viash on the following operating systems:
 ## Prerequisites
 
 -   viash is developed in [Scala 2.12](https://www.scala-lang.org/), so
-    you’ll need an [Oracle Java SE Development Kit 8
-    installation](https://www.oracle.com/java/technologies/javase/javase-jdk8-downloads.html)
+    you’ll need an [Oracle Java SE Runtime Environment 8
+    installation](https://www.oracle.com/java/technologies/javase-jre8-downloads.html)
     in order to use it.
 
 ## Installing viash
@@ -55,8 +55,8 @@ viash:
 
 -   GNU
     [Autotools](https://www.gnu.org/software/automake/manual/html_node/Autotools-Introduction.html#Autotools-Introduction)
--   [Oracle Java SE Development Kit 8
-    installation](https://www.oracle.com/java/technologies/javase/javase-jdk8-downloads.html)
+-   [Oracle Java SE Runtime Environment 8
+    installation](https://www.oracle.com/java/technologies/javase-jre8-downloads.html)
 -   [sbt](https://www.scala-sbt.org/)
 
 To build and install viash, run the following commands.
