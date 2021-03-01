@@ -1,6 +1,10 @@
 ---
 title: "Bash example"
 parent: Getting started
+output:
+  md_document:
+    variant: markdown_github
+    preserve_yaml : true
 ---
 
 ```{r init, include=FALSE}
