@@ -26,7 +26,7 @@ You can run viash on the following operating systems:
     installation](https://www.oracle.com/java/technologies/javase/javase-jdk8-downloads.html)
     in order to use it.
 
-## Install
+## Installing viash
 
 ### Packaged Release
 
@@ -39,7 +39,7 @@ Here’s a one-liner command to download the latest release of viash to
 your `~/bin` folder:
 
 ``` bash
-sudo wget "https://github.com/data-intuitive/viash/releases/latest/download/viash" -O usr/bin/viash
+sudo wget "https://github.com/data-intuitive/viash/releases/latest/download/viash" -O /usr/bin/viash
 ```
 
 To verify your installation, run the following command:
@@ -51,7 +51,7 @@ viash --help
 ### Build from Source
 
 The following needs to be installed on your system in order to install
-Viash:
+viash:
 
 -   GNU
     [Autotools](https://www.gnu.org/software/automake/manual/html_node/Autotools-Introduction.html#Autotools-Introduction)
