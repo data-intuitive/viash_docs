@@ -1,0 +1,99 @@
+---
+title: "Hello World"
+parent: Getting started
+nav_order: 2
+output:
+  md_document:
+    variant: markdown_github
+    preserve_yaml : true
+---
+
+# Hello World
+
+We have provided a simple **Hello World** component as an introduction
+to viash. Follow the steps below to learn how to run a component and get
+a result back from it.
+
+## Running the Component
+
+You can run a simple ‘Hello World’ component by running the following
+command:
+
+``` bash
+URL=http://www.data-intuitive.com/viash_docs/examples/hello_world/config.vsh.yaml
+viash run $URL
+```
+
+    ## Hello world!
+
+Every component accepts –help as an option, which outputs a description
+of the component and a list of accepted options. Run the command below
+to see the help for the ‘Hello World’ component:
+
+``` bash
+viash run $URL -- --help
+```
+
+    ## A very simple 'Hello world' component.
+    ## 
+    ## Options:
+    ##     string1 string2 ...
+    ##         type: string, multiple values allowed
+    ## 
+    ##     --greeter=string
+    ##         type: string, default: Hello world!
+
+As you can see, the ‘Hello World’ component accepts several string
+arguments and a `--greeter` option. Run the command below and replace
+NAME with your name to see what happens:
+
+``` bash
+viash run $URL -- NAME. --greeter="Hello there,"
+```
+
+    ## Hello there, Mike.
+
+## How does the Hello World component work?
+
+The
+[`config.vsh.yaml`](http://www.data-intuitive.com/viash_docs/examples/hello_world/config.vsh.yaml)
+is a meta description of the component, containing information such as
+the name, a description, and the various input and output arguments it
+has. It also contains a reference to a Bash script ‘hello_world.sh’.
+
+``` yaml
+functionality:
+  name: hello_world
+  description: A very simple 'Hello world' component.
+  arguments:
+  - type: string
+    name: input
+    multiple: true
+    multiple_sep: " "
+  - type: string
+    name: --greeter
+    default: "Hello world!"
+  resources:
+  - type: bash_script
+    path: hello_world.sh
+  tests:
+  - type: bash_script
+    path: test_hello_world.sh
+platforms:
+  - type: native
+  - type: docker
+    image: bash:4.0
+```
+
+The Bash script
+[`hello_world.sh`](http://www.data-intuitive.com/viash_docs/examples/hello_world/hello_world.sh)
+are the ‘brains’ of the componet. It is a very simple bash script which
+prints out two environment values, `par_greeter` and `par_input`. Where
+do these variables come from? When executing a component, these values
+are inserted into the script at runtime.
+
+``` bash
+#!/usr/bin/env bash
+
+echo $par_greeter $par_input
+```

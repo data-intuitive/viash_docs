@@ -13,6 +13,7 @@ editor_options:
 # Introduction
 
 TODO: What is viash if you would describe it in one or two sentences?
+viash is a …
 
 viash helps you turn a script (Bash/R/Python/Scala/JavaScript) into a
 reusable component. By providing some meta-data regarding its
@@ -20,11 +21,11 @@ functionality and the platform on which you want to run the software,
 viash can help you:
 
 -   Wrap your script in an executable with a CLI and `--help`
-    functionality
+    functionality.
 -   Seamlessly execute your component natively on the host platform or
-    in a Docker container
--   Combine multiple components in a Nextflow pipeline
--   Unit-test your component to ensure that it works at all times
+    in a **Docker** container.
+-   Combine multiple components in a **Nextflow** pipeline.
+-   Unit-test your component to ensure that it works at all times.
 
 ## Example Use Cases
 
@@ -36,14 +37,19 @@ this part of the docs is presented before the installation after all.
 
 -   You want to combine several tools in a pipeline and every tool has
     specific requirements on how they should be run. Even worse: some
-    requirements might directly conflict with each other.
+    requirements might directly conflict with each other. By using
+    viash…
 -   Your next data analysis project is very similar to the previous
     project, so you copy and paste the source code. Unfortunately, you
     detect a bug in some of your code, so now you need to go back and
-    fix the same bug in all the different projects.
+    fix the same bug in all the different projects. In this case, viash
+    …
 -   You want to look back at a data analysis you performed two years
     ago. Unfortunately, the software you used back then is not supported
     anymore, or the newest version produces totally different results.
+    With viash you can package the older version together with its
+    dependencies in an executable so you don’t have to worry about
+    conflicts or deprecated versions
 -   You developed a [Jupyter](https://jupyter.org/) notebook report for
     a data analysis. You wish to share it with your colleague, only to
     spend two hours installing your [Conda](https://docs.conda.io/)
@@ -51,94 +57,22 @@ this part of the docs is presented before the installation after all.
 
 ## Getting Started
 
-TODO: Add links and a description for:
+Here are some links to get you started with viash:
 
--   Installing viash
--   Running your first component
--   Point to good starting points on navigation bar on the left
+-   [Installing viash](/viash_docs/getting_started/installation): This
+    guide walks you through the steps to install viash on your machine.
+-   [Running your first
+    component](/viash_docs/getting_started/hello_world): Get a feel for
+    viash with a classic **Hello World** tutorial.
 
-## Hello World
+## Documentation
 
-### Running the Component
+Once you understand how viash works and what it could do for you, take a
+look at our docs:
 
-You can run a simple ‘Hello World’ component by running the following
-command:
+-   [Commands](/commands)
+-   [Config files](/config)
+-   [Good practices](/good_practices)
 
-``` bash
-URL=http://www.data-intuitive.com/viash_docs/examples/hello_world/config.vsh.yaml
-viash run $URL
-```
-
-    ## Hello world!
-
-Every component accepts –help as an option, which outputs a description
-of the component and a list of accepted options. Run the command below
-to see the help for the ‘Hello World’ component:
-
-``` bash
-viash run $URL -- --help
-```
-
-    ## A very simple 'Hello world' component.
-    ## 
-    ## Options:
-    ##     string1 string2 ...
-    ##         type: string, multiple values allowed
-    ## 
-    ##     --greeter=string
-    ##         type: string, default: Hello world!
-
-As you can see, the ‘Hello World’ component accepts several string
-arguments and a `--greeter` option. Run the command below and replace
-NAME with your name to see what happens:
-
-``` bash
-viash run $URL -- NAME. --greeter="Hello there,"
-```
-
-    ## Hello there, Mike.
-
-### How does the Hello World component work?
-
-The
-[`config.vsh.yaml`](http://www.data-intuitive.com/viash_docs/examples/hello_world/config.vsh.yaml)
-is a meta description of the component, containing information such as
-the name, a description, and the various input and output arguments it
-has. It also contains a reference to a Bash script ‘hello_world.sh’.
-
-``` yaml
-functionality:
-  name: hello_world
-  description: A very simple 'Hello world' component.
-  arguments:
-  - type: string
-    name: input
-    multiple: true
-    multiple_sep: " "
-  - type: string
-    name: --greeter
-    default: "Hello world!"
-  resources:
-  - type: bash_script
-    path: hello_world.sh
-  tests:
-  - type: bash_script
-    path: test_hello_world.sh
-platforms:
-  - type: native
-  - type: docker
-    image: bash:4.0
-```
-
-The Bash script
-[`hello_world.sh`](http://www.data-intuitive.com/viash_docs/examples/hello_world/hello_world.sh)
-are the ‘brains’ of the componet. It is a very simple bash script which
-prints out two environment values, `par_greeter` and `par_input`. Where
-do these variables come from? When executing a component, these values
-are inserted into the script at runtime.
-
-``` bash
-#!/usr/bin/env bash
-
-echo $par_greeter $par_input
-```
+Check out the navigation menu on the left for more in-depth information
+about each topic.
