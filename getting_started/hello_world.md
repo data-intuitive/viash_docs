@@ -55,11 +55,10 @@ viash run $URL -- NAME. --greeter="Hello there,"
 
 ## How does the Hello World component work?
 
-The
+When you call ‘viash run’, viash parses the
 [`config.vsh.yaml`](http://www.data-intuitive.com/viash_docs/examples/hello_world/config.vsh.yaml)
-is a meta description of the component, containing information such as
-the name, a description, and the various input and output arguments it
-has. It also contains a reference to a Bash script ‘hello_world.sh’.
+file, which is a meta description of the component written in the yaml
+serialization language:
 
 ``` yaml
 functionality:
@@ -83,17 +82,48 @@ platforms:
   - type: native
   - type: docker
     image: bash:4.0
+  - type: docker
+    id: alpine
+    image: alpine
+    setup:
+      - type: apk
+        packages: [ bash ]
 ```
 
-The Bash script
-[`hello_world.sh`](http://www.data-intuitive.com/viash_docs/examples/hello_world/hello_world.sh)
-are the ‘brains’ of the componet. It is a very simple bash script which
-prints out two environment values, `par_greeter` and `par_input`. Where
-do these variables come from? When executing a component, these values
-are inserted into the script at runtime.
+This config file describes the behavior of a script and the platform it
+runs on. Every config file consists of two main sections:
+**functionality** and **platforms**.
+
+### Functionality
+
+The **functionality** section describes the core functionality of the
+component, such as its inputs, outputs, arguments, and extra resources.
+The ‘Hello World’ component accepts two arguments:
+
+-   A `string` named **input** that accepts multiple space-separated
+    arguments.
+-   A second `string` named **–greeter** which defaults to “Hello
+    world!”.
+
+These arguments are passed on to the **resources**. In this case,
+there’s a single reference to a file named
+[`hello_world.sh`](http://www.data-intuitive.com/viash_docs/examples/hello_world/hello_world.sh).
+This file is the ‘brain’ of the component, it’s small Bash script which
+prints out two environment values: `par_input` and `par_greeter`:
 
 ``` bash
 #!/usr/bin/env bash
 
+## VIASH START
+
+par_input="I am debug!"
+par_greeter="Hello world!"
+
+## VIASH END
+
 echo $par_greeter $par_input
 ```
+
+The values of these variables are edited by viash at runtime.
+
+### Platforms
