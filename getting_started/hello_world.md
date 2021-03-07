@@ -124,6 +124,62 @@ par_greeter="Hello world!"
 echo $par_greeter $par_input
 ```
 
-The values of these variables are edited by viash at runtime.
+Any variables starting with `par_` between the `## VIASH START` and
+`## VIASH END` lines will automatically be replaced at runtime with
+parameter values from the CLI.
+
+Finally, there’s a **tests** section to put your test scripts. It’s a
+good practice to write tests and run these every time you update your
+component and/or the resources. You can read more about writing and
+running viash tests
+[here](http://www.data-intuitive.com/viash_docs/good_practices/testing/).
 
 ### Platforms
+
+The **platforms** section specifies the requirements to execute the
+component on one or more platforms:
+
+    platforms:
+      - type: native
+      - type: docker
+        image: bash:4.0
+      - type: docker
+        id: alpine
+        image: alpine
+        setup:
+          - type: apk
+            packages: [ bash ]
+
+The list of currently supported platforms are
+[Native](http://www.data-intuitive.com/viash_docs/config/platform-native/),
+[Docker](http://www.data-intuitive.com/viash_docs/config/platform-docker/),
+and
+[Nextflow](http://www.data-intuitive.com/viash_docs/config/platform-nextflow/).
+If no platforms are specified, a native platform with no system
+requirements is assumed.
+
+You can specify what platform a component should run on by passing the
+`-p` or `--platform` option. For example, try running the following
+command:
+
+``` bash
+viash run -p native $URL -- Mike. --greeter="Hello there,"
+```
+
+    ## Hello there, Mike.
+
+The results should be exactly the same as viash automatically picks the
+first platform when you don’t pass the platform option, in this case
+that’s `native`.
+
+## Exporting a Component
+
+Components can be exported… TODO
+
+## What’s Next?
+
+TODO: Add links to bash, python and R specific tutorials. Now that you
+understand the basics of how viash works, take a look at how to write
+your own component:
+
+-   
