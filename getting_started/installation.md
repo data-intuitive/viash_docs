@@ -2,45 +2,83 @@
 title: "Installation"
 parent: Getting started
 nav_order: 1
+output:
+  md_document:
+    variant: markdown_github
+    preserve_yaml : true
 ---
 
 # Installation
 
-viash is developed in Scala (2.12). You'll need a working Java installation (tested with version 1.8) in order to use it. viash is tested and used on MacOS and Linux systems. Windows is currently not tested, although there is no reason is shouldn't run on [WSL](https://docs.microsoft.com/en-us/windows/wsl/install-win10).
+## Supported Operating Systems
 
-Make sure viash is available in your `$PATH` and run:
+You can run viash on the following operating systems:
 
-```bash
-viash --help
-```
+-   linux
+-   macOS
+-   Windows using [Windows Subsystem for
+    Linux](https://docs.microsoft.com/en-us/windows/wsl/install-win10)
+
+## Prerequisites
+
+-   viash is developed in [Scala 2.12](https://www.scala-lang.org/), so
+    you’ll need an [Oracle Java SE Development Kit 8
+    installation](https://www.oracle.com/java/technologies/javase/javase-jdk8-downloads.html)
+    in order to use it.
 
 ## Install
 
 ### Packaged Release
 
-To install viash, download the [latest release](https://github.com/data-intuitive/viash/releases) and save it to the `~/bin` folder or any other directory that is on your `$PATH`.
+To install viash, download the [latest
+release](https://github.com/data-intuitive/viash/releases/latest) and
+save it to the `~/bin` folder or any other directory that is specified
+your `$PATH` variable.
 
-### Build from Source
+Here’s a one-liner command to download the latest release of viash to
+your `~/bin` folder:
 
-The following needs to be installed on your system in order to install Viash:
+``` bash
+sudo wget "https://github.com/data-intuitive/viash/releases/latest/download/viash" -O usr/bin/viash
+```
 
-- GNU [Autotools](https://www.gnu.org/software/automake/manual/html_node/Autotools-Introduction.html#Autotools-Introduction)
-- Java 1.8
-- `sbt`
+To verify your installation, run the following command:
 
-To build and install viash, run the following commands.
-```bash
-./configure --prefix=~
-make
-make install
+``` bash
 viash --help
 ```
 
-If you wish to install viash for all users and not just yourself, run the following commands instead.
-```bash
+### Build from Source
+
+The following needs to be installed on your system in order to install
+Viash:
+
+-   GNU
+    [Autotools](https://www.gnu.org/software/automake/manual/html_node/Autotools-Introduction.html#Autotools-Introduction)
+-   [Oracle Java SE Development Kit 8
+    installation](https://www.oracle.com/java/technologies/javase/javase-jdk8-downloads.html)
+-   [sbt](https://www.scala-sbt.org/)
+
+To build and install viash, run the following commands.
+
+``` bash
+./configure --prefix=~
+make
+make install
+```
+
+If you wish to install viash for all users and not just yourself, run
+the following commands instead.
+
+``` bash
 ./configure
 make
 sudo make install
+```
+
+To verify your installation, run the following command:
+
+``` bash
 viash --help
 ```
 
@@ -48,9 +86,14 @@ viash --help
 
 If you have Java and Docker installed, but not `sbt`, run this instead:
 
-```bash
+``` bash
 ./configure --prefix=~
 make docker
 make install
+```
+
+To verify your installation, run the following command:
+
+``` bash
 viash --help
 ```
