@@ -51,7 +51,7 @@ NAME with your name to see what happens:
 viash run $URL -- NAME. --greeter="Hello there,"
 ```
 
-    ## Hello there, Mike.
+    ## Hello there, NAME.
 
 ## How does the Hello World component work?
 
@@ -96,7 +96,7 @@ runs on. Every config file consists of two main sections:
 
 ### Functionality
 
-The **functionality** section describes the core functionality of the
+The **functionality** attribute describes the core functionality of the
 component, such as its inputs, outputs, arguments, and extra resources.
 The ‘Hello World’ component accepts two arguments:
 
@@ -133,10 +133,11 @@ good practice to write tests and run these every time you update your
 component and/or the resources. You can read more about writing and
 running viash tests
 [here](http://www.data-intuitive.com/viash_docs/good_practices/testing/).
+(TODO: link vervangen, tekst ipv here)
 
 ### Platforms
 
-The **platforms** section specifies the requirements to execute the
+The **platforms** attribute specifies the requirements to execute the
 component on one or more platforms:
 
     platforms:
@@ -151,12 +152,9 @@ component on one or more platforms:
             packages: [ bash ]
 
 The list of currently supported platforms are
-[Native](http://www.data-intuitive.com/viash_docs/config/platform-native/),
-[Docker](http://www.data-intuitive.com/viash_docs/config/platform-docker/),
-and
-[Nextflow](http://www.data-intuitive.com/viash_docs/config/platform-nextflow/).
-If no platforms are specified, a native platform with no system
-requirements is assumed.
+[Native](/config/platform-native/), [Docker](/config/platform-docker/),
+and [Nextflow](/config/platform-nextflow/). If no platforms are
+specified, a native platform with no system requirements is assumed.
 
 You can specify what platform a component should run on by passing the
 `-p` or `--platform` option. For example, try running the following
@@ -172,14 +170,14 @@ The results should be exactly the same as viash automatically picks the
 first platform when you don’t pass the platform option, in this case
 that’s `native`.
 
-## Exporting a Component
-
-Components can be exported… TODO
+<!-- ## Exporting a Component -->
+<!-- Components can be exported... TODO -->
 
 ## What’s Next?
 
-TODO: Add links to bash, python and R specific tutorials. Now that you
-understand the basics of how viash works, take a look at how to write
-your own component:
+Now that you understand the basics of how viash works, take a look at
+how to write your own component:
 
--   
+-   [Bash example](/getting_started/example_bash)
+-   [Python example](/getting_started/example_python)
+-   [R example](/getting_started/example_r)

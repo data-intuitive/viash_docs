@@ -50,12 +50,20 @@ line to the end of it:
 export PATH="$HOME/bin:$PATH"
 ```
 
+You can use nano for this for example:
+
+``` bash
+nano ~/.bashrc
+```
+
 Next, create a `~/bin` folder, reload $PATH, download the latest release
 of viash to `~/bin` and add executable permissions to viash. Here’s a
 one-liner command that does this for you:
 
 ``` bash
-mkdir ~/bin ; source ~/.bashrc && wget "https://github.com/data-intuitive/viash/releases/latest/download/viash" -O ~/bin/viash && chmod +x ~/bin/viash
+mkdir ~/bin ; source ~/.bashrc &&
+wget "https://github.com/data-intuitive/viash/releases/latest/download/viash" -O ~/bin/viash &&
+chmod +x ~/bin/viash
 ```
 
 **Note**: Replace `~/.bashrc` with `~/.zshrc` in the command above if

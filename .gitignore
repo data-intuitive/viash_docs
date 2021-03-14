@@ -6,3 +6,4 @@ _site
 bundle
 Gemfile.lock
 bin
+run_jekyll_local.sh
