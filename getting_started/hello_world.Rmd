@@ -2,10 +2,6 @@
 title: "Hello World"
 parent: Getting started
 nav_order: 2
-output:
-  md_document:
-    variant: markdown_github
-    preserve_yaml : true
 ---
 
 
@@ -57,10 +53,10 @@ functionality:
     default: "Hello world!"
   resources:
   - type: bash_script
-    path: hello_world.sh
+    path: script.sh
   tests:
   - type: bash_script
-    path: test_hello_world.sh
+    path: test.sh
 platforms:
   - type: native
   - type: docker
@@ -83,7 +79,7 @@ The **functionality** attribute describes the core functionality of the componen
 - A `string` named **input** that accepts multiple space-separated arguments.
 - A second `string` named **--greeter** which defaults to "Hello world!".
 
-These arguments are passed on to the **resources**. In this case, there's a single reference to a file named [`hello_world.sh`](http://www.data-intuitive.com/viash_docs/examples/hello_world/hello_world.sh). This file is the 'brain' of the component, it's small Bash script which prints out two environment values: `par_input` and `par_greeter`: 
+These arguments are passed on to the **resources**. In this case, there's a single reference to a file named [`script.sh`](http://www.data-intuitive.com/viash_docs/examples/hello_world/script.sh). This file is the 'brain' of the component, it's small Bash script which prints out two environment values: `par_input` and `par_greeter`: 
 
 ```bash
 #!/usr/bin/env bash
