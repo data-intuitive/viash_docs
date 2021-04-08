@@ -1,5 +1,5 @@
 functionality:
-  name: hello_world
+  name: hello_world_r
   description: A very simple 'Hello world' component.
   arguments:
   - type: string
@@ -10,18 +10,12 @@ functionality:
     name: --greeter
     default: "Hello world!"
   resources:
-  - type: bash_script
-    path: script.sh
+  - type: r_script
+    path: script.R
   tests:
-  - type: bash_script
-    path: test.sh
+  - type: r_script
+    path: test.R
 platforms:
   - type: native
   - type: docker
-    image: bash:4.0
-  - type: docker
-    id: alpine
-    image: alpine
-    setup:
-      - type: apk
-        packages: [ bash ]
+    image: "rocker/tidyverse:4.0.4"

@@ -17,7 +17,7 @@ By running the component, it will output "Hello world!", followed by any other i
 
 {% highlight bash %}
 cd examples/hello_world
-viash run -f functionality.yaml -- I am viash!
+viash run config.vsh.yaml -- I am viash!
 {% endhighlight %}
 
 {% highlight text %}
@@ -25,10 +25,29 @@ viash run -f functionality.yaml -- I am viash!
 {% endhighlight %}
 
 #### Run the component with a Docker backend
-It can also be run with a Docker backend, by providing viash with a platform yaml.
+It can also be run with a Docker backend by specifying the `-p` or `--platform` parameter.
+
+First, you need to let viash set up the Docker container by pulling it from Docker Hub.
 
 {% highlight bash %}
-viash run -f functionality.yaml -p platform_docker.yaml -- General Kenobi. --greeter="Hello there."
+viash run config.vsh.yaml -p docker -- ---setup
+{% endhighlight %}
+
+
+
+
+{% highlight text %}
+## > docker pull bash:4.0
+## 4.0: Pulling from library/bash
+## Digest: sha256:ec2960a16bac139b7a78fed1b035b4f46153da60fb9d3617420492d1e5ed0bd3
+## Status: Image is up to date for bash:4.0
+## docker.io/library/bash:4.0
+{% endhighlight %}
+
+You can run the component with viash in the backend as follows.
+
+{% highlight bash %}
+viash run config.vsh.yaml -p docker -- General Kenobi. --greeter="Hello there."
 {% endhighlight %}
 
 
@@ -42,7 +61,7 @@ viash run -f functionality.yaml -p platform_docker.yaml -- General Kenobi. --gre
 Now that we know what the component does, we can export the functionality as an executable.
 
 {% highlight bash %}
-viash export -f functionality.yaml -p platform_docker.yaml -o output
+viash build config.vsh.yaml -p docker -o output
 output/hello_world And now, as an executable.
 {% endhighlight %}
 
@@ -50,7 +69,7 @@ output/hello_world And now, as an executable.
 
 
 {% highlight text %}
-## Error in running command bash
+## Hello world! And now, as an executable.
 {% endhighlight %}
 
 #### viash automatically generates a CLI
@@ -64,23 +83,58 @@ output/hello_world --help
 
 
 {% highlight text %}
-## Error in running command bash
+## A very simple 'Hello world' component.
+## 
+## Options:
+##     string1 string2 ...
+##         type: string, multiple values allowed
+## 
+##     --greeter=string
+##         type: string, default: Hello world!
 {% endhighlight %}
 
 #### viash allows testing the component
 To verify that the component works, use `viash test`. This can be run both with or without the Docker backend.
 
 {% highlight bash %}
-viash test -f functionality.yaml -p platform_docker.yaml
+viash test config.vsh.yaml -p docker
 {% endhighlight %}
 
 
 
 
 {% highlight text %}
-## 
-## SUCCESS! All 2 out of 2 test scripts succeeded!
-## Cleaning up temporary files
+## Running tests in temporary directory: '/home/rcannood/workspace/viash_temp/viash_test_hello_world2265628589195155961'
+## ====================================================================
+## +/home/rcannood/workspace/viash_temp/viash_test_hello_world2265628589195155961/build_executable/hello_world ---setup
+## > docker pull bash:4.0
+## 4.0: Pulling from library/bash
+## Digest: sha256:ec2960a16bac139b7a78fed1b035b4f46153da60fb9d3617420492d1e5ed0bd3
+## Status: Image is up to date for bash:4.0
+## docker.io/library/bash:4.0
+## ====================================================================
+## +/home/rcannood/workspace/viash_temp/viash_test_hello_world2265628589195155961/test_test.sh/test.sh
+## >>> Checking whether output is correct
+## + echo '>>> Checking whether output is correct'
+## + ./hello_world I am 'viash!'
+## + [[ ! -f output.txt ]]
+## + grep -q 'Hello world! I am viash!' output.txt
+## + echo '>>> Checking whether output is correct when no parameters are given'
+## >>> Checking whether output is correct when no parameters are given
+## + ./hello_world
+## + [[ ! -f output2.txt ]]
+## + grep -q 'Hello world!' output2.txt
+## + echo '>>> Checking whether output is correct when more parameters are given'
+## >>> Checking whether output is correct when more parameters are given
+## + ./hello_world General Kenobi. '--greeter=Hello there.'
+## + [[ ! -f output3.txt ]]
+## + grep -q 'Hello there. General Kenobi.' output3.txt
+## + echo '>>> Test finished successfully!'
+## >>> Test finished successfully!
+## + exit 0
+## ====================================================================
+## [32mSUCCESS! All 1 out of 1 test scripts succeeded![0m
+## Cleaning up temporary directory
 {% endhighlight %}
 
 ## Developing a new component
@@ -91,19 +145,17 @@ The first step of developing this component, is writing the core functionality o
 This is a simple script which prints a simple message, along with any input provided to it through the `par_input` parameter.
 Optionally, you can override the greeter with `par_greeter`.
 
-Contents of [`hello_world.sh`](hello_world.sh):
-```bash
-#!/usr/bin/env bash
 
-## VIASH START
+{% highlight text %}
+## Warning in file(con, "r"): cannot open file 'hello_world.sh': No such file or
+## directory
+{% endhighlight %}
 
-par_input="I am debug!"
-par_greeter="Hello world!"
 
-## VIASH END
 
-echo $par_greeter $par_input
-```
+{% highlight text %}
+## Error in file(con, "r"): cannot open the connection
+{% endhighlight %}
 
 Anything between the `## VIASH START` and `## VIASH END` lines will automatically be replaced 
 at runtime with parameter values from the CLI. Anything between these two lines can be used to 
@@ -118,94 +170,77 @@ test the script without viash:
 
 
 {% highlight text %}
-## Hello world! I am debug!
+## Error in running command bash
 {% endhighlight %}
 
 Next, we write a meta-file describing the functionality of this component in YAML format.
 
-#### Describe the functionality with a functionality.yaml
+#### Describe the component with as a YAML
 
-This file describes the general functionality of the component, its inputs, outputs and arguments, which 
-resources are required to run it, as well as any test scripts to verify whether the component
-works correctly. For each argument, you must specify the name and type, and optionally provide a description,
-a default value, and a few more settings.
+A [viash config](../config) file describes the behaviour of a script and the platform it runs on.
+It consists of two main sections: `functionality` and `platforms`.
 
-Contents of [`yaml`](functionality.yaml):
+
+Contents of [`yaml`](config.vsh.yaml):
 ```bash
-name: hello_world
-description: A very simple 'Hello world' component.
-arguments:
-- type: string
-  name: input
-  multiple: true
-  multiple_sep: " "
-- type: string
-  name: --greeter
-  default: "Hello world!"
-resources:
-- type: bash_script
-  path: hello_world.sh
-tests:
-- type: bash_script
-  path: test_hello_world.sh
+functionality:
+  name: hello_world
+  description: A very simple 'Hello world' component.
+  arguments:
+  - type: string
+    name: input
+    multiple: true
+    multiple_sep: " "
+  - type: string
+    name: --greeter
+    default: "Hello world!"
+  resources:
+  - type: bash_script
+    path: script.sh
+  tests:
+  - type: bash_script
+    path: test.sh
+platforms:
+  - type: native
+  - type: docker
+    image: bash:4.0
+  - type: docker
+    id: alpine
+    image: alpine
+    setup:
+      - type: apk
+        packages: [ bash ]
 ```
 
-For more information regarding the functionality YAML, see [functionality.md](functionality.md).
+The [functionality](../config/functionality) section describes the core functionality of the component, such as 
+its inputs, outputs, arguments, and extra resources. For each of the arguments, specifying
+a description and a set of argument restrictions help create a useful command-line interface.
+To ensure that your component works as expected, writing one or more tests is essential.
 
-#### Describe the platform it will be run on with a platform_docker.yaml
+The platforms section specifies the requirements to execute the component on zero or more platforms.
+The list of currently supported platforms are [Native](../config/platform-native), [Docker](../config/platform-docker),
+and [Nextflow](../config/platform-nextflow). If no platforms are specified, a native platform with no 
+system requirements is assumed.
 
-If no platform yaml is provided, viash will execute the component natively on the host environment. 
-In order to run the component with a Docker backend, the platform yaml needs to be provided. 
-This file describes the dependencies of the component, that is, the base docker image and if-need-be
-extra dependencies such as R or Python packages.
-
-This component requires very little requirements, so the file is very simple.
-
-
-{% highlight text %}
-## Error in printFile("platform_docker.yaml", "yaml"): could not find function "printFile"
-{% endhighlight %}
-
-For more information regarding the platform YAML, see [platform.md](platform.md).
 
 ### Writing a first unit test
-Finally, writing a unit test for a viash component is relatively simple. 
+Writing a unit test for a viash component is relatively simple. 
 You just need to write a Bash script (or R, or Python) which runs the executable multiple
 times, and verifies the output. Take note that the test needs to produce an error code not equal to
 0 when a mistake is found.
 
 
-Contents of [`test_hello_world.sh`](test_hello_world.sh):
-```bash
-#!/usr/bin/env bash
-set -ex # exit the script when one of the checks fail.
 
-# check 1
-echo ">>> Checking whether output is correct"
-./hello_world I am viash! > output.txt
+{% highlight text %}
+## Warning in file(con, "r"): cannot open file 'test_hello_world.sh': No such file
+## or directory
+{% endhighlight %}
 
-[[ ! -f output.txt ]] && echo "Output file could not be found!" && exit 1
-grep -q 'Hello world! I am viash!' output.txt
 
-# check 2
-echo ">>> Checking whether output is correct when no parameters are given"
-./hello_world > output2.txt
 
-[[ ! -f output2.txt ]] && echo "Output file could not be found!" && exit 1
-grep -q 'Hello world!' output2.txt
-
-echo ">>> Test finished successfully!"
-
-# check 3
-echo ">>> Checking whether output is correct when more parameters are given"
-./hello_world General Kenobi. --greeter="Hello there." > output3.txt
-
-[[ ! -f output3.txt ]] && echo "Output file could not be found!" && exit 1
-grep -q 'Hello there. General Kenobi.' output3.txt
-
-echo ">>> Test finished successfully!"
-
-```
+{% highlight text %}
+## Error in file(con, "r"): cannot open the connection
+{% endhighlight %}
 
 When running the test, viash will automatically build an executable and place it -- along with other 
 resources and test resources -- in a temporary working directory.

@@ -4,14 +4,14 @@ export GEM_HOME=/home/<username>/.gem
 export PATH="$PATH:$HOME/.gem/bin"
 ```
 
-To run from R, execute the following:
+Execute the following:
 
 ```bash
 bundle install
-bundle exec R
+bundle exec jekyll serve --port 4070 --host 127.0.0.1
 ```
 
-Once in R:
-```R
-blogdown::serve_site()
+To update an Rmd file, change its content and run:
+```bash
+Rscript R/build.R
 ```
