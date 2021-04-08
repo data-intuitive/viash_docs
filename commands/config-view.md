@@ -6,12 +6,12 @@ parent: Commands
 
 # viash config view
 
-View the config file after parsing
+View the config file after parsing.
 
 Usage:
 
 ``` bash
-  [viash config](/config) view config.vsh.yaml
+  viash config view config.vsh.yaml
 ```
 
 Arguments:

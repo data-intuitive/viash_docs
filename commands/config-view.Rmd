@@ -36,8 +36,7 @@ usage <- txt[seq(
   grep("^Usage:", txt)+1,
   grep("^Arguments:", txt)-2
 )] %>% 
-  {paste0("```bash\n", paste(., collapse = "\n"), "\n```\n")} %>% 
-  detect_links
+  {paste0("```bash\n", paste(., collapse = "\n"), "\n```\n")}
 knitr::asis_output(usage)
 ```
 
