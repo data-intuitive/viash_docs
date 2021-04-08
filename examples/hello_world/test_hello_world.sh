@@ -25,5 +25,4 @@ echo ">>> Checking whether output is correct when more parameters are given"
 grep -q 'Hello there. General Kenobi.' output3.txt
 
 echo ">>> Test finished successfully!"
-
-
+exit 0 # don't forget to put this at the end

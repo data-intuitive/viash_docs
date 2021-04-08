@@ -1,19 +1,15 @@
 ---
 title: "Bash example"
 parent: Getting started
-output:
-  md_document:
-    variant: markdown_github
-    preserve_yaml : true
 ---
 
 ```{r init, include=FALSE}
 library(tidyverse)
 
-source("../../R/md_helpers.R")
+source("../R/md_helpers.R")
 
 # change wd to where the files are located
-knitr::opts_knit$set(root.dir = "examples/toys/hello_world/")
+knitr::opts_knit$set(root.dir = "examples/hello_world/") 
 ```
 
 This vignette demonstrates how to wrap a simple 'hello world' bash script with viash.
@@ -27,22 +23,29 @@ By running the component, it will output "Hello world!", followed by any other i
 
 ```{bash, eval=FALSE}
 cd examples/hello_world
-viash run -f functionality.yaml -- I am viash!
+viash run config.vsh.yaml -- I am viash!
 ```
 ```{bash, echo=FALSE}
-viash run -f functionality.yaml -- I am viash!
+viash run config.vsh.yaml -- I am viash!
 ```
 
 #### Run the component with a Docker backend
-It can also be run with a Docker backend, by providing viash with a platform yaml.
+It can also be run with a Docker backend by specifying the `-p` or `--platform` parameter.
+
+First, you need to let viash set up the Docker container by pulling it from Docker Hub.
 ```{bash}
-viash run -f functionality.yaml -p platform_docker.yaml -- General Kenobi. --greeter="Hello there."
+viash run config.vsh.yaml -p docker -- ---setup
+```
+
+You can run the component with viash in the backend as follows.
+```{bash}
+viash run config.vsh.yaml -p docker -- General Kenobi. --greeter="Hello there."
 ```
 
 #### Export as an executable
 Now that we know what the component does, we can export the functionality as an executable.
 ```{bash}
-viash export -f functionality.yaml -p platform_docker.yaml -o output
+viash build config.vsh.yaml -p docker -o output
 output/hello_world And now, as an executable.
 ```
 
@@ -55,7 +58,7 @@ output/hello_world --help
 #### viash allows testing the component
 To verify that the component works, use `viash test`. This can be run both with or without the Docker backend.
 ```{bash}
-viash test -f functionality.yaml -p platform_docker.yaml
+viash test config.vsh.yaml -p docker
 ```
 
 ## Developing a new component
@@ -80,36 +83,29 @@ test the script without viash:
 
 Next, we write a meta-file describing the functionality of this component in YAML format.
 
-#### Describe the functionality with a functionality.yaml
+#### Describe the component with as a YAML
 
-This file describes the general functionality of the component, its inputs, outputs and arguments, which 
-resources are required to run it, as well as any test scripts to verify whether the component
-works correctly. For each argument, you must specify the name and type, and optionally provide a description,
-a default value, and a few more settings.
+A [viash config](../config) file describes the behaviour of a script and the platform it runs on.
+It consists of two main sections: `functionality` and `platforms`.
 
-```{r, echo = FALSE}
-print_file("functionality.yaml", "yaml")
-```
-
-For more information regarding the functionality YAML, see [functionality.md](functionality.md).
-
-#### Describe the platform it will be run on with a platform_docker.yaml
-
-If no platform yaml is provided, viash will execute the component natively on the host environment. 
-In order to run the component with a Docker backend, the platform yaml needs to be provided. 
-This file describes the dependencies of the component, that is, the base docker image and if-need-be
-extra dependencies such as R or Python packages.
-
-This component requires very little requirements, so the file is very simple.
 
 ```{r, echo = FALSE}
-printFile("platform_docker.yaml", "yaml")
+print_file("config.vsh.yaml", "yaml")
 ```
 
-For more information regarding the platform YAML, see [platform.md](platform.md).
+The [functionality](../config/functionality) section describes the core functionality of the component, such as 
+its inputs, outputs, arguments, and extra resources. For each of the arguments, specifying
+a description and a set of argument restrictions help create a useful command-line interface.
+To ensure that your component works as expected, writing one or more tests is essential.
+
+The platforms section specifies the requirements to execute the component on zero or more platforms.
+The list of currently supported platforms are [Native](../config/platform-native), [Docker](../config/platform-docker),
+and [Nextflow](../config/platform-nextflow). If no platforms are specified, a native platform with no 
+system requirements is assumed.
+
 
 ### Writing a first unit test
-Finally, writing a unit test for a viash component is relatively simple. 
+Writing a unit test for a viash component is relatively simple. 
 You just need to write a Bash script (or R, or Python) which runs the executable multiple
 times, and verifies the output. Take note that the test needs to produce an error code not equal to
 0 when a mistake is found.
