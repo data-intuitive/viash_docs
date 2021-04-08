@@ -66,6 +66,9 @@ functionality:
     - name: Tim Farbe
       roles: [author]
       email: tim@far.be
+  info:
+    foo: bar
+    custom_tag: custom_value
 ```
 
 ## name [string] {#name}
@@ -183,6 +186,8 @@ datacontributor | dtc | for persons or organisations that contributed data sets 
 copyrightholder | cph | for all copyright holders. This is a legal concept so should use the legal name of an institution or corporate body.
 funder | fnd | for persons or organizations that furnished financial support for the development of the software
 
+The [full list of roles](https://www.loc.gov/marc/relators/relaterm.html) is extremely comprehensive.
+
 Example:
 
 ```yaml
@@ -194,4 +199,17 @@ authors:
   - name: Tim Farbe
     roles: [author]
     email: tim@far.be
+```
+
+
+
+## info [list] {#info}
+A map for storing custom annotation (introduced in viash 0.4.0).
+
+Example:
+
+```yaml
+info:
+  foo: bar
+  custom_tag: custom_value
 ```
