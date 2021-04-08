@@ -20,8 +20,9 @@ Arguments:
 
   - `config`: A viash config file (example: `config.vsh.yaml`). This
     argument can also be a script with the config as a header.
-  - `-c, --command <arg>...`: Apply a command to the config using the
-    [viash command DSL](/dsl). (default = List())
+  - `-c, --config_mod <arg>...`: Modify a [viash config](/config) at
+    runtime using a custom DSL. For more information, see the online
+    documentation. (default = List())
   - `-k, --keep <arg>`: Whether or not to keep temporary files. By
     default, files will be deleted if all goes well but remain when an
     error occurs. By specifying –keep true, the temporary files will

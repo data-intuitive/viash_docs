@@ -90,16 +90,16 @@ both with or without the Docker backend.
 viash test config.vsh.yaml -p docker
 ```
 
-    ## Running tests in temporary directory: '/home/rcannood/workspace/viash_temp/viash_test_hello_world_r3305100981094722073'
+    ## Running tests in temporary directory: '/home/rcannood/workspace/viash_temp/viash_test_hello_world_r12526072485494513142'
     ## ====================================================================
-    ## +/home/rcannood/workspace/viash_temp/viash_test_hello_world_r3305100981094722073/build_executable/hello_world_r ---setup
+    ## +/home/rcannood/workspace/viash_temp/viash_test_hello_world_r12526072485494513142/build_executable/hello_world_r ---setup
     ## > docker pull rocker/tidyverse:4.0.4
     ## 4.0.4: Pulling from rocker/tidyverse
     ## Digest: sha256:d36d7b206800cca1984524e677b2732214002b36ef28a8ffae005d4c92eb62d2
     ## Status: Image is up to date for rocker/tidyverse:4.0.4
     ## docker.io/rocker/tidyverse:4.0.4
     ## ====================================================================
-    ## +/home/rcannood/workspace/viash_temp/viash_test_hello_world_r3305100981094722073/test_test.R/test.R
+    ## +/home/rcannood/workspace/viash_temp/viash_test_hello_world_r12526072485494513142/test_test.R/test.R
     ## >>> Checking whether output is correct
     ## >>> Checking whether output is correct when no parameters are given
     ## >>> Checking whether output is correct when more parameters are given

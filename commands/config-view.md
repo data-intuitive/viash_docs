@@ -18,8 +18,9 @@ Arguments:
 
   - `config`: A viash config file (example: `config.vsh.yaml`). This
     argument can also be a script with the config as a header.
-  - `-c, --command <arg>...`: Apply a command to the config using the
-    [viash command DSL](/dsl).
+  - `-c, --config_mod <arg>...`: Modify a [viash config](/config) at
+    runtime using a custom DSL. For more information, see the online
+    documentation.
   - `-p, --platform <arg>`: Specifies which platform amongst those
     specified in the config to use. If this is not provided, the first
     platform will be used. If no platforms are defined in the config,

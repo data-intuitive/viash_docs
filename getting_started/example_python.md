@@ -90,16 +90,16 @@ both with or without the Docker backend.
 viash test config.vsh.yaml -p docker
 ```
 
-    ## Running tests in temporary directory: '/home/rcannood/workspace/viash_temp/viash_test_hello_world_py15876727803129923787'
+    ## Running tests in temporary directory: '/home/rcannood/workspace/viash_temp/viash_test_hello_world_py12906873610936481347'
     ## ====================================================================
-    ## +/home/rcannood/workspace/viash_temp/viash_test_hello_world_py15876727803129923787/build_executable/hello_world_py ---setup
+    ## +/home/rcannood/workspace/viash_temp/viash_test_hello_world_py12906873610936481347/build_executable/hello_world_py ---setup
     ## > docker pull python:3.8
     ## 3.8: Pulling from library/python
     ## Digest: sha256:ff8ae88abfe6c829c188cc54737139f7c583279009ba34c96034e0e66053ac3f
     ## Status: Image is up to date for python:3.8
     ## docker.io/library/python:3.8
     ## ====================================================================
-    ## +/home/rcannood/workspace/viash_temp/viash_test_hello_world_py15876727803129923787/test_test.py/test.py
+    ## +/home/rcannood/workspace/viash_temp/viash_test_hello_world_py12906873610936481347/test_test.py/test.py
     ## 
     ## ----------------------------------------------------------------------
     ## Ran 0 tests in 0.000s

@@ -90,16 +90,16 @@ both with or without the Docker backend.
 viash test config.vsh.yaml -p docker
 ```
 
-    ## Running tests in temporary directory: '/home/rcannood/workspace/viash_temp/viash_test_hello_world13729659524470518269'
+    ## Running tests in temporary directory: '/home/rcannood/workspace/viash_temp/viash_test_hello_world6868464924242766728'
     ## ====================================================================
-    ## +/home/rcannood/workspace/viash_temp/viash_test_hello_world13729659524470518269/build_executable/hello_world ---setup
+    ## +/home/rcannood/workspace/viash_temp/viash_test_hello_world6868464924242766728/build_executable/hello_world ---setup
     ## > docker pull bash:4.0
     ## 4.0: Pulling from library/bash
     ## Digest: sha256:ec2960a16bac139b7a78fed1b035b4f46153da60fb9d3617420492d1e5ed0bd3
     ## Status: Image is up to date for bash:4.0
     ## docker.io/library/bash:4.0
     ## ====================================================================
-    ## +/home/rcannood/workspace/viash_temp/viash_test_hello_world13729659524470518269/test_test.sh/test.sh
+    ## +/home/rcannood/workspace/viash_temp/viash_test_hello_world6868464924242766728/test_test.sh/test.sh
     ## >>> Checking whether output is correct
     ## + echo '>>> Checking whether output is correct'
     ## + ./hello_world I am 'viash!'
@@ -115,8 +115,8 @@ viash test config.vsh.yaml -p docker
     ## + ./hello_world General Kenobi. '--greeter=Hello there.'
     ## + [[ ! -f output3.txt ]]
     ## + grep -q 'Hello there. General Kenobi.' output3.txt
-    ## + echo '>>> Test finished successfully!'
     ## >>> Test finished successfully!
+    ## + echo '>>> Test finished successfully!'
     ## + exit 0
     ## ====================================================================
     ## [32mSUCCESS! All 1 out of 1 test scripts succeeded![0m

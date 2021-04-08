@@ -1,16 +1,16 @@
 ---
 layout: default
-title: Command DSL
+title: Config mods
 nav_order: 5
 has_children: true
 ---
 
-# Command DSL
+# Config mods
 
 Since version 0.4.0, viash supports modifying a [viash config](/config)
 YAML at runtime using a custom DSL. This allows making dynamic changes
 to your projects. All viash subcommands have support for the DSL through
-the `-c` parameter.
+the `-c|--config_mod` parameter.
 
 The easiest way to explain is perhaps by showing some examples. The
 following statements are all valid under the DSL definition.

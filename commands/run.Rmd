@@ -16,7 +16,7 @@ txt <- out$stdout %>% strsplit("\n") %>% first()
 detect_links <- function(x) {
   x %>% 
     gsub("viash[ \n]*config", "[viash config](/config)", .) %>% 
-    gsub("viash[ \n]*command[ \n]*DSL", "[viash command DSL](/dsl)", .)
+    gsub("config[ \n]*mods", "[config mods](/config_mods)", .)
 }
 ```
 
