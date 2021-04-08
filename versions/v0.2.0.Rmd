@@ -1,9 +1,8 @@
 ---
-title: "viash v0.2.0"
+title: "viash 0.2.0"
+date: 2020-09-01
 parent: Version history
 ---
-
-WIP. This document does not describe the full list of changes yet.
 
 View the full changelog [here](https://github.com/data-intuitive/viash/blob/master/CHANGELOG.md).
 

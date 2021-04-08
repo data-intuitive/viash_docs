@@ -1,5 +1,6 @@
 ---
-title: "viash v0.2.1"
+title: "viash 0.2.1"
+date: 2020-09-11
 parent: Version history
 ---
 
