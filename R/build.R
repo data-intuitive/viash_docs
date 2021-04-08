@@ -1,14 +1,3 @@
-build_one <- function(rmd, md) {
-  # if output is not older than input, skip the compilation
-  if (!blogdown:::require_rebuild(md, rmd)) return()
-
-  message('* knitting ', rmd)
-  if (blogdown:::Rscript(shQuote(c('R/build_one.R', rmd, md))) != 0) {
-    unlink(md)
-    stop('Failed to compile ', rmd, ' to ', md)
-  }
-}
-
 # Rmd files under the root directory
 rmds <- c(
   list.files('.', '[.]Rmd$', recursive = TRUE, full.names = TRUE)
@@ -22,6 +11,19 @@ mds <- blogdown:::with_ext(rmds, '.md')
 
 
 for (i in seq_along(rmds)) {
-  build_one(rmds[[i]], mds[[i]])
+  rmd <- rmds[[i]]
+  md <- mds[[i]]
+
+  # if output is not older than input, skip the compilation
+  if (blogdown:::require_rebuild(md, rmd)) {
+    message('* knitting ', rmd)
+
+    rmarkdown::render(
+      input = rmd,
+      output_format = rmarkdown::md_document(
+        variant = "gfm",
+        preserve_yaml = TRUE
+      )
+    )
+  }
 }
-system2('jekyll', 'build')
