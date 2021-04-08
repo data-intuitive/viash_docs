@@ -1,5 +1,5 @@
 functionality:
-  name: hello_world
+  name: hello_world_py
   description: A very simple 'Hello world' component.
   arguments:
   - type: string
@@ -10,18 +10,12 @@ functionality:
     name: --greeter
     default: "Hello world!"
   resources:
-  - type: bash_script
-    path: script.sh
+  - type: python_script
+    path: script.py
   tests:
-  - type: bash_script
-    path: test.sh
+  - type: python_script
+    path: test.py
 platforms:
   - type: native
   - type: docker
-    image: bash:4.0
-  - type: docker
-    id: alpine
-    image: alpine
-    setup:
-      - type: apk
-        packages: [ bash ]
+    image: "python:3.8"

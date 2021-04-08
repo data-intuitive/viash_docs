@@ -15,8 +15,6 @@ echo ">>> Checking whether output is correct when no parameters are given"
 [[ ! -f output2.txt ]] && echo "Output file could not be found!" && exit 1
 grep -q 'Hello world!' output2.txt
 
-echo ">>> Test finished successfully!"
-
 # check 3
 echo ">>> Checking whether output is correct when more parameters are given"
 ./hello_world General Kenobi. --greeter="Hello there." > output3.txt
