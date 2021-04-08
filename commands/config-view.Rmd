@@ -1,8 +1,9 @@
 ---
-title: "viash ns test"
-nav_order: 5
+title: "viash config view"
+nav_order: 10
 parent: Commands
 ---
+
 
 ```{r setup, include=FALSE}
 library(tidyverse)
@@ -10,7 +11,7 @@ library(tidyverse)
 knitr::opts_chunk$set(echo = FALSE)
 
 # get info from help page
-out <- processx::run("viash", c("ns", "test", "-h"))
+out <- processx::run("viash", c("config", "view", "-h"))
 txt <- out$stdout %>% strsplit("\n") %>% first()
 
 detect_links <- function(x) {
@@ -25,8 +26,7 @@ desc <- txt[seq(
   1,
   grep("^Usage:", txt)-2
 )] %>% gsub("^viash ", "# viash ", .) %>% 
-  paste(., collapse = "\n") %>% 
-  detect_links
+  paste(., collapse = "\n")
 knitr::asis_output(desc)
 ```
 

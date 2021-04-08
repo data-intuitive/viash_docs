@@ -9,8 +9,36 @@ has_children: true
 
 viash currently supports the following commands:
 
-* [`viash run config.vsh.yaml`](run): Run a component from the provided [viash config file](/config).
-* [`viash build config.vsh.yaml`](build): Build a component to an executable using a specified platform.
-* [`viash test config.vsh.yaml`](test): Test a component.
-* [`viash ns build`](ns-build): Build many viash components.
-* [`viash ns test`](ns-test): Test many viash components.
+
+```{r setup, include=FALSE}
+library(tidyverse)
+
+knitr::opts_chunk$set(echo = FALSE)
+```
+
+```{r desc}
+commands <- 
+  list.files(pattern = "\\.md") %>%
+  map_df(function(file) {
+    x <- readr::read_lines(file)
+    
+    if (!any(grepl("^Usage:", x))) return(NULL)
+    
+    nav <- x[grepl("nav_order", x)] %>% gsub(".*: *", "", .) %>% as.numeric()
+    if (length(nav) == 0) nav <- Inf
+    
+    tibble(
+      file,
+      name = x[grep("^# ", x)] %>% gsub("^# ", "", .),
+      desc = x[seq(
+        grep("^# ", x)+1,
+        grep("^Usage:", x)-1
+      )] %>% paste(., collapse = " "),
+      text = paste0("* [", name, "](", file, "): ", desc),
+      nav_order = nav
+    )
+  }) %>% 
+  arrange(nav_order, name)
+
+knitr::asis_output(paste(commands$text, collapse = "\n"))
+```

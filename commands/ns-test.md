@@ -6,30 +6,40 @@ parent: Commands
 
 # viash ns test
 
-Test a [namespace](/good_practices/namespaces) from many [viash config
-files](/config).
+Test a namespace containing many [viash config](/config) files.
 
 Usage:
 
-    viash ns test [-n nmspc] [-s src] [-p docker] [--parallel] [--tsv file.tsv] [-k true/false]
+``` bash
+  viash ns test [-n nmspc] [-s src] [-p docker] [--parallel] [--tsv file.tsv]
+```
 
 Arguments:
 
-  - `-n|--namespace <arg>`: Filter which namespaces get selected. Can be
-    a regex. Example: `"build|run"`.
-  - `-s|--src <arg>`: A source directory containing viash config files,
-    possibly structured in a hierarchical folder structure. Default:
-    `src/`.
-  - `-p|--platform <arg>`: Acts as a regular expression to filter the
+  - `config`: A viash config file (example: `config.vsh.yaml`). This
+    argument can also be a script with the config as a header.
+  - `-c, --command <arg>...`: Apply a command to the config using the
+    [viash command DSL](/dsl).
+  - `-k, --keep <arg>`: Whether or not to keep temporary files. By
+    default, files will be deleted if all goes well but remain when an
+    error occurs. By specifying –keep true, the temporary files will
+    always be retained, whereas –keep false will always delete them. The
+    temporary directory can be overwritten by setting defining a
+    VIASH\_TEMP directory.
+  - `-l, --parallel`: Whether or not to run the process in parallel.
+  - `-p, --platform <arg>`: Acts as a regular expression to filter the
     platform ids specified in the found config files. If this is not
     provided, all platforms will be used. If no platforms are defined in
     a config, the native platform will be used. In addition, the path to
     a platform yaml file can also be specified.
-  - `-k|--keep true/false`: Whether or not to keep temporary files. By
-    default, files will be deleted if all goes well but remain when an
-    error occurs. By specifying `--keep true`, the temporary files will
-    always be retained, whereas `--keep false` will always delete them.
-    The temporary directory can be overwritten by setting defining a
-    `VIASH_TEMP` directory.
-  - `-l|--parallel`: Whether or not to run the process in parallel.
-  - `-t|--tsv`: Path to write a summary of the test results to.
+  - `-q, --query <arg>`: Filter which components get selected by name
+    and namespace. Can be a regex. Example: “^mynamespace/component1$”.
+    –query\_name <arg> Filter which components get selected by name.
+    Can be a regex. Example: “^component1”.
+  - `-n, --query_namespace <arg>`: Filter which namespaces get selected
+    by namespace. Can be a regex. Example: “^mynamespace$”.
+  - `-s, --src <arg>`: A source directory containing [viash
+    config](/config) files, possibly structured in a hierarchical folder
+    structure. Default: src/.
+  - `-t, --tsv <arg>`: Path to write a summary of the test results to.
+  - `-h, --help`: Show help message

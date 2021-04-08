@@ -4,13 +4,41 @@ nav_order: 2
 parent: Commands
 ---
 
-# viash build
+```{r setup, include=FALSE}
+library(tidyverse)
 
-Build an executable from the provided [viash config file](/config).
+knitr::opts_chunk$set(echo = FALSE)
+
+# get info from help page
+out <- processx::run("viash", c("build", "-h"))
+txt <- out$stdout %>% strsplit("\n") %>% first()
+
+detect_links <- function(x) {
+  x %>% 
+    gsub("viash[ \n]*config", "[viash config](/config)", .) %>% 
+    gsub("viash[ \n]*command[ \n]*DSL", "[viash command DSL](/dsl)", .)
+}
+```
+
+```{r desc}
+desc <- txt[seq(
+  1,
+  grep("^Usage:", txt)-2
+)] %>% gsub("^viash ", "# viash ", .) %>% 
+  paste(., collapse = "\n") %>% 
+  detect_links
+knitr::asis_output(desc)
+```
 
 Usage: 
-```
-viash build -o output [-p docker] [-m] [-s] config.vsh.yaml 
+```{r usage}
+usage <- txt[seq(
+  grep("^Usage:", txt)+1,
+  grep("^Arguments:", txt)-2
+)] %>% 
+  {paste0("```bash\n", paste(., collapse = "\n"), "\n```\n")} %>% 
+  detect_links
+knitr::asis_output(usage)
 ```
 
 Arguments:
@@ -18,13 +46,16 @@ Arguments:
 * `config`: A viash config file (example: `config.vsh.yaml`). This
             argument can also be a script with the config as a
             header.
-* `-p|--platform <arg>`: Specifies which platform amongst those specified in
-                          the config to use. If this is not provided, the first
-                          platform will be used. If no platforms are defined in
-                          the config, the native platform will be used. In
-                          addition, the path to a platform yaml file can also be
-                          specified.
-* `-m|--meta`: Print out some meta information at the end.
-* `-o|--output <arg>`: Path to directory in which the executable and any
-                          resources is built to. Default: `"output/"`.
-* `-s|--setup`: Set up the platform environment after building the executable.
+```{r arg}
+trail <- grep("^ trailing arguments:", txt)
+if (length(trail) == 0) trail <- length(txt)+1
+arg <- txt[seq(
+  grep("^Arguments:", txt)+1,
+  trail-1
+)] %>% 
+  gsub("^  (-[^A-Z]*)", "* `\\1`: ", .) %>% 
+  gsub(" *$", "", .) %>% 
+  paste(., collapse = "\n") %>% 
+  detect_links
+knitr::asis_output(arg)
+```

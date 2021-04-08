@@ -4,25 +4,58 @@ nav_order: 4
 parent: Commands
 ---
 
-# viash ns build
+```{r setup, include=FALSE}
+library(tidyverse)
 
-Build a [namespace](/good_practices/namespaces) from many [viash config files](/config).
+knitr::opts_chunk$set(echo = FALSE)
+
+# get info from help page
+out <- processx::run("viash", c("ns", "build", "-h"))
+txt <- out$stdout %>% strsplit("\n") %>% first()
+
+detect_links <- function(x) {
+  x %>% 
+    gsub("viash[ \n]*config", "[viash config](/config)", .) %>% 
+    gsub("viash[ \n]*command[ \n]*DSL", "[viash command DSL](/dsl)", .)
+}
+```
+
+```{r desc}
+desc <- txt[seq(
+  1,
+  grep("^Usage:", txt)-2
+)] %>% gsub("^viash ", "# viash ", .) %>% 
+  paste(., collapse = "\n") %>% 
+  detect_links
+knitr::asis_output(desc)
+```
 
 Usage: 
-```
-viash ns build [-n nmspc] [-s src] [-t target] [-p docker] [--setup] [--parallel]
+```{r usage}
+usage <- txt[seq(
+  grep("^Usage:", txt)+1,
+  grep("^Arguments:", txt)-2
+)] %>% 
+  {paste0("```bash\n", paste(., collapse = "\n"), "\n```\n")} %>% 
+  detect_links
+knitr::asis_output(usage)
 ```
 
 Arguments:
 
-* `-n|--namespace <arg>`: Filter which namespaces get selected. Can be a regex. Example: `"build|run"`.
-* `-s|--src <arg>`: A source directory containing viash config files, possibly structured in a hierarchical folder structure. Default: `src/`.
-* `-t|--target <arg>`: A target directory to build the executables into. Default: `target/`.
-* `-p|--platform <arg>`: Acts as a regular expression to filter the platform
-                           ids specified in the found config files. If this is
-                           not provided, all platforms will be used. If no
-                           platforms are defined in a config, the native
-                           platform will be used. In addition, the path to a
-                           platform yaml file can also be specified.
-* `--setup`: Whether or not to set up the platform environment after building the executable.
-* `-l|--parallel`: Whether or not to run the process in parallel.
+* `config`: A viash config file (example: `config.vsh.yaml`). This
+            argument can also be a script with the config as a
+            header.
+```{r arg}
+trail <- grep("^ trailing arguments:", txt)
+if (length(trail) == 0) trail <- length(txt)+1
+arg <- txt[seq(
+  grep("^Arguments:", txt)+1,
+  trail-1
+)] %>% 
+  gsub("^  (-[^A-Z]*)", "* `\\1`: ", .) %>% 
+  gsub(" *$", "", .) %>% 
+  paste(., collapse = "\n") %>% 
+  detect_links
+knitr::asis_output(arg)
+```

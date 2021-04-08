@@ -1,6 +1,6 @@
 ---
-title: "viash ns test"
-nav_order: 5
+title: "viash ns list"
+nav_order: 6
 parent: Commands
 ---
 
@@ -10,7 +10,7 @@ library(tidyverse)
 knitr::opts_chunk$set(echo = FALSE)
 
 # get info from help page
-out <- processx::run("viash", c("ns", "test", "-h"))
+out <- processx::run("viash", c("ns", "list", "-h"))
 txt <- out$stdout %>% strsplit("\n") %>% first()
 
 detect_links <- function(x) {

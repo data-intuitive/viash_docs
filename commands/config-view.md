@@ -1,18 +1,17 @@
 ---
-title: "viash test"
-nav_order: 3
+title: "viash config view"
+nav_order: 10
 parent: Commands
 ---
 
-# viash test
+# viash config view
 
-Test the component using the tests defined in the [viash
-config](/config) file.
+View the config file after parsing
 
 Usage:
 
 ``` bash
-  viash test config.vsh.yaml [-p docker [-k true/false]
+  [viash config](/config) view config.vsh.yaml
 ```
 
 Arguments:
@@ -20,13 +19,7 @@ Arguments:
   - `config`: A viash config file (example: `config.vsh.yaml`). This
     argument can also be a script with the config as a header.
   - `-c, --command <arg>...`: Apply a command to the config using the
-    [viash command DSL](/dsl). (default = List())
-  - `-k, --keep <arg>`: Whether or not to keep temporary files. By
-    default, files will be deleted if all goes well but remain when an
-    error occurs. By specifying –keep true, the temporary files will
-    always be retained, whereas –keep false will always delete them. The
-    temporary directory can be overwritten by setting defining a
-    VIASH\_TEMP directory.
+    [viash command DSL](/dsl).
   - `-p, --platform <arg>`: Specifies which platform amongst those
     specified in the config to use. If this is not provided, the first
     platform will be used. If no platforms are defined in the config,
