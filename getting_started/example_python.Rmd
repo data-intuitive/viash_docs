@@ -9,7 +9,7 @@ library(tidyverse)
 source("../R/md_helpers.R")
 
 # change wd to where the files are located
-knitr::opts_knit$set(root.dir = "examples/hello_world_py/") 
+knitr::opts_knit$set(root.dir = "../examples/hello_world_py/") 
 ```
 
 This vignette demonstrates how to wrap a simple 'hello world' Python script with viash.
@@ -85,7 +85,7 @@ Next, we write a meta-file describing the functionality of this component in YAM
 
 #### Describe the component with as a YAML
 
-A [viash config](../config) file describes the behaviour of a script and the platform it runs on.
+A [viash config](config) file describes the behaviour of a script and the platform it runs on.
 It consists of two main sections: `functionality` and `platforms`.
 
 
@@ -93,14 +93,14 @@ It consists of two main sections: `functionality` and `platforms`.
 print_file("config.vsh.yaml", "yaml")
 ```
 
-The [functionality](../config/functionality) section describes the core functionality of the component, such as 
+The [functionality](config/functionality) section describes the core functionality of the component, such as 
 its inputs, outputs, arguments, and extra resources. For each of the arguments, specifying
 a description and a set of argument restrictions help create a useful command-line interface.
 To ensure that your component works as expected, writing one or more tests is essential.
 
 The platforms section specifies the requirements to execute the component on zero or more platforms.
-The list of currently supported platforms are [Native](../config/platform-native), [Docker](../config/platform-docker),
-and [Nextflow](../config/platform-nextflow). If no platforms are specified, a native platform with no 
+The list of currently supported platforms are [Native](config/platform-native), [Docker](config/platform-docker),
+and [Nextflow](config/platform-nextflow). If no platforms are specified, a native platform with no 
 system requirements is assumed.
 
 

@@ -8,7 +8,7 @@ has_children: true
 ```{r init, include=FALSE}
 library(tidyverse)
 
-source("../../R/md_helpers.R")
+source("../R/md_helpers.R")
 ```
 
 # The viash config file
@@ -37,11 +37,11 @@ the full specifications for each of these subsections.
 ## Example
 
 ```{r, echo = FALSE}
-print_file("../../examples/standalone/addrowlines/config.vsh.yaml", "config.vsh.yaml", format = "yaml")
+print_file("../examples/addrowlines/config.vsh.yaml", "config.vsh.yaml", format = "yaml")
 ```
 
 ```{r, echo = FALSE}
-print_file("../../examples/standalone/addrowlines/script.sh", "script.sh", format = "bash")
+print_file("../examples/addrowlines/script.sh", "script.sh", format = "bash")
 ```
 
 The component can be executed as follows.
@@ -49,7 +49,7 @@ The component can be executed as follows.
 viash run config.vsh.yaml -- config.vsh.yaml | head -5
 ```
 ```{bash, echo=FALSE}
-cd ../../examples/standalone/addrowlines/
+cd ../examples/addrowlines/
 viash run config.vsh.yaml -- config.vsh.yaml | head -5
 ```
 
@@ -58,7 +58,7 @@ Would you rather use Docker as a backend? Easy as pie!
 viash run -P docker config.vsh.yaml -- config.vsh.yaml | head -5
 ```
 ```{bash, echo=FALSE}
-cd ../../examples/standalone/addrowlines/
+cd ../examples/addrowlines/
 viash run -P docker config.vsh.yaml -- config.vsh.yaml | head -5
 ```
 
@@ -67,6 +67,6 @@ viash run -P docker config.vsh.yaml -- config.vsh.yaml | head -5
 viash run config.vsh.yaml -- --help
 ```
 ```{bash, echo=FALSE}
-cd ../../examples/standalone/addrowlines/
+cd ../examples/addrowlines/
 viash run config.vsh.yaml -- --help
 ```

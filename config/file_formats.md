@@ -6,15 +6,17 @@ parent: Config
 
 # Regarding viash file formats
 
-viash uses a `config.vsh.yaml` file represent a component's metadata. Alternatively, the metadata can also be contained in the component script itself. 
+viash uses a `config.vsh.yaml` file represent a component’s metadata.
+Alternatively, the metadata can also be contained in the component
+script itself.
 
 The following two file formats are equivalent.
 
-## Config format 
+## Config format
 
 Metadata `config.vsh.yaml`:
 
-```yaml
+``` yaml
 functionality:
   name: hello
   arguments:
@@ -30,7 +32,7 @@ platforms:
 
 Script `script.sh`:
 
-```bash
+``` bash
 #!/bin/bash
 echo Hello $par_name
 ```
@@ -39,7 +41,7 @@ echo Hello $par_name
 
 Script `script.vsh.sh`:
 
-```bash
+``` bash
 #!/bin/bash
 
 #' functionality:
@@ -53,4 +55,3 @@ Script `script.vsh.sh`:
 
 echo Hello $par_name
 ```
-

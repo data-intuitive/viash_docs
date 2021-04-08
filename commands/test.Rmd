@@ -6,7 +6,7 @@ parent: Commands
 
 # viash test
 
-Test the component using the tests defined in the [viash config file](../../config).
+Test the component using the tests defined in the [viash config file](/config).
 
 Usage:
 ```

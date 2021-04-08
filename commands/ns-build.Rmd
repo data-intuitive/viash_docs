@@ -6,7 +6,7 @@ parent: Commands
 
 # viash ns build
 
-Build a [namespace](../../good_practices/namespaces) from many [viash config files](../../config).
+Build a [namespace](/good_practices/namespaces) from many [viash config files](/config).
 
 Usage: 
 ```

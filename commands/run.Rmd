@@ -6,7 +6,7 @@ parent: Commands
 
 # viash run
 
-Run a viash component from the provided [viash config file](../../config). viash generates a temporary executable and immediately executes it with the given parameters.
+Run a viash component from the provided [viash config file](/config). viash generates a temporary executable and immediately executes it with the given parameters.
 
 Usage:
 ```

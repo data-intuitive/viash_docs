@@ -9,7 +9,7 @@ library(tidyverse)
 source("../R/md_helpers.R")
 
 # change wd to where the files are located
-knitr::opts_knit$set(root.dir = "examples/hello_world/") 
+knitr::opts_knit$set(root.dir = "../examples/hello_world/") 
 ```
 
 This vignette demonstrates how to wrap a simple 'hello world' bash script with viash.
@@ -70,7 +70,7 @@ This is a simple script which prints a simple message, along with any input prov
 Optionally, you can override the greeter with `par_greeter`.
 
 ```{r, echo = FALSE}
-print_file("hello_world.sh")
+print_file("script.sh")
 ```
 
 Anything between the `## VIASH START` and `## VIASH END` lines will automatically be replaced 
@@ -78,14 +78,14 @@ at runtime with parameter values from the CLI. Anything between these two lines 
 test the script without viash:
 
 ```{bash}
-./hello_world.sh
+./script.sh
 ```
 
 Next, we write a meta-file describing the functionality of this component in YAML format.
 
 #### Describe the component with as a YAML
 
-A [viash config](../config) file describes the behaviour of a script and the platform it runs on.
+A [viash config](/config) file describes the behaviour of a script and the platform it runs on.
 It consists of two main sections: `functionality` and `platforms`.
 
 
@@ -93,14 +93,14 @@ It consists of two main sections: `functionality` and `platforms`.
 print_file("config.vsh.yaml", "yaml")
 ```
 
-The [functionality](../config/functionality) section describes the core functionality of the component, such as 
+The [functionality](config/functionality) section describes the core functionality of the component, such as 
 its inputs, outputs, arguments, and extra resources. For each of the arguments, specifying
 a description and a set of argument restrictions help create a useful command-line interface.
 To ensure that your component works as expected, writing one or more tests is essential.
 
 The platforms section specifies the requirements to execute the component on zero or more platforms.
-The list of currently supported platforms are [Native](../config/platform-native), [Docker](../config/platform-docker),
-and [Nextflow](../config/platform-nextflow). If no platforms are specified, a native platform with no 
+The list of currently supported platforms are [Native](config/platform-native), [Docker](config/platform-docker),
+and [Nextflow](config/platform-nextflow). If no platforms are specified, a native platform with no 
 system requirements is assumed.
 
 
@@ -112,7 +112,7 @@ times, and verifies the output. Take note that the test needs to produce an erro
 
 
 ```{r, echo = FALSE}
-print_file("test_hello_world.sh")
+print_file("test.sh")
 ```
 
 When running the test, viash will automatically build an executable and place it -- along with other 

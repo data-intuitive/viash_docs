@@ -6,7 +6,7 @@ parent: Commands
 
 # viash ns test
 
-Test a [namespace](../../good_practices/namespaces) from many [viash config files](../../config).
+Test a [namespace](/good_practices/namespaces) from many [viash config files](/config).
 
 Usage: 
 ```

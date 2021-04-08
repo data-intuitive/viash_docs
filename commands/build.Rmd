@@ -6,7 +6,7 @@ parent: Commands
 
 # viash build
 
-Build an executable from the provided [viash config file](../../config).
+Build an executable from the provided [viash config file](/config).
 
 Usage: 
 ```
