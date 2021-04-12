@@ -6,180 +6,139 @@ parent: Config
 
 ## Introduction
 
-## Filenames
+### Pipelines / Workflows
 
-It’s important in a pipeline that input and output filenames are
-explicitly declared. We try to generalize this as much as possible
-keeping in mind that no clashes between filenames (in parallel runs)
-should collide.
+It’s possible to *convert* a viash component into a NextFlow module.
+Viash uses NextFlow’s DSL2 for this, effectively creating *modules* that
+can be imported in a `main.nf` pipeline definition that deals with the
+*logic* of the pipeline rather than the low-level machinery.
 
-In order to do that, we make the assumption that a module `moduleX`
-transforms the filenames in the following way:
+When it comes to this low-level machinery and the way viash creates a
+module, we refer to [the step-by-step introduction about
+DiFlow](https://www.data-intuitive.com/diflow).
 
-    file.ext      -> file.moduleX.ext'
-    file.int.ext  -> file.moduleX.ext'
+### Parallelization
 
-At least, for modules/functions that turn one input file into one output
-file (not taking into account logging etc.).
+NextFlow, as any other pipeline platform is able to run tasks in
+parallel if the pipeline logic allows for that. In order to keep
+different parallel branch unique, we add a unique identifier `id`. This
+identifier can be a sample identifier, or a plate id (sequencing),
+versions of reference files to consider, etc.
 
-## `function_type`
+In a pipeline, one is often interested in running some computation on
+different datasets, inputs or parts of an input. This means that
+obviously we need to keep track of where the input chunks are located.
+But more importantly, we can not just simply name an output file because
+multiple parallel processes might just overwrite each other’s output
+files.
 
-The `function_type` attempts to capture some high-level functionality of
-the *function* at hand. There are two things to consider for this:
+### Output Filenames
 
-  - What is the input/output signature of the function? In other words,
-    is the input one or more files? Is the output one or more files?
-  - How should the output files be named (based on the input)
+Therefore, it’s important to keep output files distinct across different
+steps of the pipeline but also between different parallel runs. In order
+to assure this, a module will define its own output file name. It is
+constructed from 3 ingredients:
 
-For instance, a tool that creates a full directory structure as output
-has a different *signature* than one that unzips one file.
+1.  The unique `id` of the data going into the process
+2.  The name of the current component/task
+3.  An extension
 
-**Note**: If no function type is declared, by default the
-`transform`/`convert` type is used.
+The extension is derived from the component configuration if a
+`default: ...` attribute is present for the corresponding output
+argument. If no such default value is provided, the *name* of the option
+is used.
 
-### `transform`
+As an example, the following argument for a component `comp`
 
-The `transform` type modifies a file such that the result is of the same
-type as the original.
+    name: --log
+    type: file
+    direction: Output
 
-Examples are:
+will result in `<id>.comp.log`, while the following
 
-  - A TOC is added to a Markdown file. Bot input and output are Markdown
-    format.
-  - An `h5ad` file is loaded and additional annotations are added to it.
+    name: --log
+    type: file
+    direction: Output
+    default: log.txt
 
-### `convert`
+will become in `<id>.comp.txt`.
 
-The `convert` function type converts one format into an other. The type
-of a file is usually expressed by means of the extension. The extension
-of the target file is based upon the extension of the default output
-file value as specified in `functionality.yaml`.
+The config can define a directory as output as well, it will be named
+accordingly.
 
-Examples are:
+**Remark**: If the output is a directory, `type: file` should still be
+used, but the corresponding script/code should take care of writing the
+content to that directory.
 
-  - Generate a PDF file from a Markdown.
-  - Convert an `h5ad` file into a `loom` file
+## Configuration Settings
 
-Please note that `transform` and `convert` are implemented in exactly
-the same way, so they can be interchanged. In a future version of the
-NXF Target, we plan on allowing users to specify the output file name by
-means of other ways.
+This is an example of a NextFlow platform definition:
 
-### `todir`
-
-In this case, a tool writes multiple files and we ideally store those in
-a dedicated (sub) directory. This could correspond to a *fork* in the
-pipeline DAG, but not necessarily so.
-
-It should be noted that the downstream transformations or processes
-should take this forking into account.
-
-### `join`
-
-A pipeline DAG usually contains forks as well as joins. This function
-type combines things. Tools like, e.g. Pandoc, allow the user to combine
-several files into one output file.
-
-## How to specify a join?
-
-A component can be tagged as being a `join` module in NextFlow, i.e. by
-adding the following to `functionality.yaml`:
-
-``` yaml
-function_type: join
-```
-
-In order for a module to be of type join, it effectively needs to:
-
-1.  Take a number of input files in the form of an argument or an option
-    with multiple values, or
-2.  Take multiple options, each requiring a file as parameter. An
-    example is providing a reference file on top of the input file to be
-    processed, a template, …
-
-The reason point 2. is also of type `join` is that we want to explicitly
-keep track of input/output files and provide NextFlow the option to do
-so as well.
-
-Next, the two possible join types above result in two different ways of
-handling the IO in NextFlow. Let’s give an example of both.
-
-First, suppose we use `cat` and we just want to concatenate multiple
-files one after the other. The way to express this in NextFlow would be
-something like:
-
-``` groovy
-concatenate_ = singleSample_ \
-    | toList \
-    | map{ it -> [ it.collect{ b -> b[0]}, it.collect{ a -> a[1] }, params ]} \
-    | concatenate
-```
-
-In other words, we pass a `List`of Path objects to the concatenate
-module.
-
-The second approach, for instance can be used to merge meta information
-(from a file) to an `h5ad` file. This would be expressed like so:
-
-``` groovy
-    singleSample_ = input_ \
-        ...
-        | combine(meta_) \
-        | map{ id, output, params, meta ->
-            [ id, [ "input" : output, "meta" : meta ], params ]
-        } \
-        | annotate
-```
-
-Where the `meta_` `Channel` points to the meta file to be used.
-
-In other words, we either provide a `List` of Path values or in the case
-multiple options take different files we use a `HashMap`.
-
-Remark: Be sure to mark the options in `functionality.yaml` as being of
-`type: file` and `direction: input`.
-
-## Specific Functionality
-
-### Labels
-
-NXF allows the use of labels for processes as a way to refer to a set of
-processes by means of this label. In order to use this functionality,
-add the following to the NXF `platform.yaml`:
-
-``` yaml
-label: myFancyLabel
-```
-
-And then in the main `nextflow.config`, use:
-
-    process {
+    ...
+    platforms:
       ...
-      withLabel: myFancyLabel {
-         maxForks = 5
-         ...
-      }
-    }
+      - type: nextflow
+        publish: true
+        per_id: true
+        label: highmem
 
-### Publish or not
+### `id`
 
-Publishing in NextFlow means that results of a computation are stored in
-a specific location. One does not always want to keep all intermediate
-results: Usually you want to keep the end results and for instance
-reports that are generated. Under the hood, NextFlow *will* keep
-intermediate results for the `-resume` function to work properly.
+The platform definition can be given a unique identifier, which is
+especially useful when multiple `type: nextflow` platform definitions
+are present for the same component/module:
 
-The default is to publish nothing. Steps that require publishing can be
-configured by adding this to the NextFlow platform spec:
+-   `id` is optional
+-   No default value if used
 
-``` yaml
-publish: true
-```
+### `image`, `tag`/`version` and `registry`
 
-### Publish Location
+If no image attributes are configured, viash will use an auto-generated
+image name:
 
-Output is stored under the directory provided on the CLI with the
-parameter `--output <output>`.
+    [<namespace>/]<name>:<version>
+
+This name corresponds to the one given by the Docker platform when a
+custom build is required. This means that it will only work when a
+docker platform definition is used that applies customizations.
+
+If no customizations are applied to the docker platform, it means that
+it uses a simple base image and the auto-generated name above will not
+be used. It’s possible to manually configure an image to be used to run
+the module in mainly two ways:
+
+1.  By simply adding a `image: <name>:<tag>` as an attribute.
+2.  By specifying the different parts of the container name explicitly:
+    -   `image` for the image name
+    -   `tag` or `version`: a tag for the container is fetched from the
+        following (in order):
+        1.  If a platform `version` is configured, use this
+        2.  If a platform `tag` is configured, use it
+        3.  Use the global `version` for this viash config
+    -   `registry` if the image should be fetched from a remote registry
+
+To repeat: The auto-generated image name is ideal in cases where a
+custom container is built for the Docker platform, this container is
+built (or can be fetched from a registry) and used in the NextFlow
+platform. If no customizations are applied, one should add the correct
+`image: ...` to both the `docker` and `nextflow` platform
+configurations.
+
+### `publish`
+
+NextFlow uses the autogenerated `work` dirs to manage process IO under
+the hood. In order effectively *output* something one can *publish* the
+results a module or step in the pipeline. In order to do this, add
+`publish: true` to the config:
+
+-   `publish` is optional
+-   Default value is `false`
+
+This attribute simply defines if output of a component should be
+published yes or no. The output location has to be provided at pipeline
+launch by means of the option `--output ...` or in `nextflow.config`:
+
+    params.output = "..."
 
 By default, a subdirectory is created corresponding to the unique ID
 that is passed in the triplet. Let us illustrate this with an example.
@@ -189,12 +148,10 @@ run in parallel. We use the parent directory name
 (`.getParent().baseName`) as an identifier for the sample. We pass this
 as the first entry of the triplet:
 
-``` groovy
-Channel.fromPath(params.input) \
-    | map{ it -> [ it.getParent().baseName , it ] } \
-    | map{ it -> [ it[0] , it[1], params ] }
-    | ...
-```
+    Channel.fromPath(params.input) \
+        | map{ it -> [ it.getParent().baseName , it ] } \
+        | map{ it -> [ it[0] , it[1], params ] }
+        | ...
 
 Say the resulting sample names are `SAMPLE1` and `SAMPLE2`. The next
 step in the pipeline will be published (at least by default) under:
@@ -202,50 +159,200 @@ step in the pipeline will be published (at least by default) under:
     <output>/SAMPLE1/
     <output>/SAMPLE2/
 
-Please note that in general, the first entry of the triplet is a unique
-ID for this *event* in the `Channel` and thus will not always be a
-*sample* ID.
+### `path`
 
-#### `per_id`
+When `publish: true`, this attribute defines where the output is written
+*relative* to the `params.output` setting. For example,
+`path: processed` in combination with `--output s3://some_bucket/` will
+store the output of this component under
 
-Publishing the results in a subdirectory with this (unique) ID can be
-avoided using the following attribute in the NextFlow platform spec:
+    s3://some_bucket/processed/
 
-``` yaml
-per_id: false
-```
+This attribute gives control over the directory structure of the output.
+For example:
 
-#### `path`
-
-One more option is available for publishing data during the pipeline
-run: Sometimes we want to have a bit more control over where things end
-up inside the `<output>` directory. We can choose to not store the
-results in ID-specific directories but we can also specify an explicit
-hierarchy in which the results need to be stored:
-
-``` yaml
-path: raw_data
-```
+    path: raw_data
 
 Or even:
 
-``` yaml
-path: raw_data/bcl
-```
+    path: raw_data/bcl
 
 Please note that `per_id` and `path` can be combined.
 
-## TODO
+### `per_id`
 
-### Packages
+When `publish: true`, we already noted that a subdirectory is created
+automatically per unique `id`. In order to avoid the creation of this
+subdirectory, `per_id: false` can be added to the platform
+configuration.
 
-The NXF target inherits the R and Python platforms. This should *in
-principle* allow a user to specify additional packages to be installed
-prior to running the function/module. This functionality is not yet
-available, though.
+`path` (see above) is used, but if needed an additional subdirectory can
+be automatically
 
-## Remarks
+In the previous example, given two *samples* `SAMPLE1` and `SAMPLE2`
+running in parallel jobs the output would be stored under:
 
-  - A join operation requires a default value for the output file in
-    order to extract the proper extension to be used for the output
-    file.
+    s3://some_bucket/processed/SAMPLE1/<outputfiles for sample1>
+    s3://some_bucket/processed/SAMPLE2/<outputfiles for sample2>
+
+with the attribute `per_id: false` this will become:
+
+    s3://some_bucket/processed/<outputfiles for samples 1 and 2>
+
+Please note that all output files automatically have a unique name
+attached to them (see earlier) and so not creating the unique
+subdirectory is strictly speaking not necessary to avoid collisions.
+
+-   The attribute is optional
+-   The default value is `true`
+
+### `label` / `labels`
+
+When running the module in a cluster context and depending on the
+cluster type, [NextFlow allows for attaching
+labels](https://www.nextflow.io/docs/latest/process.html#label) to the
+process that can later be used as selectors for associating resources to
+this process.
+
+In order to attach one label to a process/component, one can use the
+`label: ...` attribute, multiple labels can be added using
+`labels: [ ..., ... ]` and the two can even be mixed.
+
+In the main `nextflow.config`, one can now use this label:
+
+    process {
+      ...
+      withLabel: bigmem {
+         maxForks = 5
+         ...
+      }
+    }
+
+### `stageInMode`
+
+By default Nextflow will create a symbolic link to the inputs for a
+process/module and run the tool at hand using those symbolic links. Some
+applications do not cope well with this strategy, in that case the files
+should effectively be copied rather than linked to. This can be achieved
+by using `stageInMode: copy`…
+
+-   The attribute is optional
+-   The default value is `symlink`
+
+## Tips
+
+### How to specify multiple inputs?
+
+If a component deals with just one input file, that input file should be
+provided as the second element in the
+[DiFlow](https://www.data-intuitive.com/diflow/) triplet. In other
+words, if this is the first component in a (sub)workflow, two options
+are available:
+
+    Channel.fromPath(<...>).map{ file -> [ <id>, file, params ] }
+
+or
+
+    Channel.from(<...>).map{ filename -> [ <id>, file(filename), params ] }
+
+It is crucial that this second element in the triplet is of type `Path`.
+
+If multiple inputs are to be provided corresponding to the same option
+for the underlying process or tool a `List` of `Path` objects can be
+provided.
+
+For example, say we ran multiple parallel workflows for a single sample
+and want to join the result of that. The way to express this in NextFlow
+would be something like:
+
+    concatenate_ = singleSample_ \
+        | toList \
+        | map{ it -> [ it.collect{ b -> b[0]}, it.collect{ a -> a[1] }, params ]} \
+        | concatenate
+
+In other words, we pass a `List` of Path objects to the concatenate
+module.
+
+In some cases, multiple input arguments deal with different input files,
+for instance `fastq` files and a reference file for mapping and
+counting. One can pass this to the concatenation module by means of a
+`Map`. This approach, for instance can be used to merge meta information
+(from a file) to an `h5ad` file:
+
+        singleSample_ = input_ \
+            ...
+            | combine(meta_) \
+            | map{ id, output, params, meta ->
+                [ id, [ "input" : output, "meta" : meta ], params ]
+            } \
+            | annotate
+
+Where the `meta_` `Channel` points to the meta file to be used.
+
+In other words, we either provide a `List` of Path values or in the case
+multiple options take different files we use a `HashMap`.
+
+Remark: Be sure to mark the arguments at hand as being of `type: file`
+and `direction: input`.
+
+## Multiple outputs
+
+Internally, DiFlow uses a similar approach to keeping track of outputs
+as discussed for inputs. What comes out of a module, however, is
+slightly different. Since a `workflow` can not emit a multi-channel
+object, we are forced to put all outputs on the same `Channel` and so we
+use a `Map` again to distinguish both. This is only done for multiple
+outputs, though.
+
+By means of an example: Say a module outputs one file, then the triplet
+that is returned from the module looks like this:
+
+    [ <id>, file, params ]
+
+If our tools has two output files, say for instance `outputfile.txt` and
+`logfile.txt` (as indicated by the command line for the tool that looks
+for instance like this:
+`.... --output outputfile.txt --log logfile.txt`), we still get one
+`Channel` back, but on that `Channel` there are now two *events* and
+those look like this:
+
+    [ <id>, [ output: outputfile.txt ], params ]
+    [ <id>, [ log: logfile.txt ], params ]
+
+It’s up to the receiving end of the module to split this downstream. The
+implicit workflow defined in all the generated module contains some
+example code to that, for instance:
+
+    result \
+      | filterOutput \
+      | view{ "Output for output: " + it[1] }
+
+    result \
+      | filterLog \
+      | view{ "Output for log: " + it[1] }
+
+Where the `filterLog` process for instance is defined like so:
+
+    // A process that filters out output from the output Map
+    process filterOutput {
+
+      input:
+        tuple val(id), val(input), val(_params)
+      output:
+        tuple val(id), val(output), val(_params)
+      when:
+        input.keySet().contains("output")
+      exec:
+        output = input["output"]
+
+    }
+
+Alternatively, one could also use methods on the `Channel` itself:
+
+    result \
+      | filter{ it[1].keySet().contains("output") }
+      | map{ [ it[0], it[1]["output"], it[2] ] }
+      | view{ "Output for log: " + it[1] }
+
+One more option is to use the `branch` or `multiMap` `Channel` forking
+operators in NextFlow.
