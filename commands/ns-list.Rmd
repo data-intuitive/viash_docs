@@ -43,9 +43,6 @@ knitr::asis_output(usage)
 
 Arguments:
 
-* `config`: A viash config file (example: `config.vsh.yaml`). This
-            argument can also be a script with the config as a
-            header.
 ```{r arg}
 trail <- grep("^ trailing arguments:", txt)
 if (length(trail) == 0) trail <- length(txt)+1
