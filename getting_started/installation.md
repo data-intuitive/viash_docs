@@ -10,14 +10,14 @@ nav_order: 1
 
 You can run viash on the following operating systems:
 
-  - linux
-  - macOS
-  - Windows using [Windows Subsystem for
+-   Linux
+-   macOS
+-   Windows using [Windows Subsystem for
     Linux](https://docs.microsoft.com/en-us/windows/wsl/install-win10)
 
 ## Prerequisites
 
-  - viash is developed in [Scala 2.12](https://www.scala-lang.org/), so
+-   viash is developed in [Scala 2.12](https://www.scala-lang.org/), so
     you’ll need an [Oracle Java SE Runtime Environment 8
     installation](https://www.oracle.com/java/technologies/javase-jre8-downloads.html)
     in order to use it.
@@ -91,11 +91,11 @@ viash --help
 The following needs to be installed on your system in order to install
 viash:
 
-  - GNU
+-   GNU
     [Autotools](https://www.gnu.org/software/automake/manual/html_node/Autotools-Introduction.html#Autotools-Introduction)
-  - [Oracle Java SE Runtime Environment 8
+-   [Oracle Java SE Runtime Environment 8
     installation](https://www.oracle.com/java/technologies/javase-jre8-downloads.html)
-  - [sbt](https://www.scala-sbt.org/)
+-   [sbt](https://www.scala-sbt.org/)
 
 To build and install viash, run the following commands.
 

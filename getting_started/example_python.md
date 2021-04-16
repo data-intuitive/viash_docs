@@ -9,14 +9,14 @@ script with viash.
 ## Demonstration
 
 Given the files and meta files in the
-[examples/hello\_world\_py](examples/hello_world_py) directory, we
-demonstrate the functionality of viash in running the component with
-multiple backends.
+[examples/hello\_world\_py](https://github.com/data-intuitive/viash_docs/tree/master/examples/hello_world_py)
+directory, we demonstrate the functionality of viash in running the
+component with multiple backends.
 
 #### Run the component
 
-By running the component, it will output “Hello world\!”, followed by
-any other inputs provided to it.
+By running the component, it will output “Hello world!”, followed by any
+other inputs provided to it.
 
 ``` bash
 cd examples/hello_world_py
@@ -37,11 +37,7 @@ from Docker Hub.
 viash run config.vsh.yaml -p docker -- ---setup
 ```
 
-    ## > docker pull python:3.8
-    ## 3.8: Pulling from library/python
-    ## Digest: sha256:ff8ae88abfe6c829c188cc54737139f7c583279009ba34c96034e0e66053ac3f
-    ## Status: Image is up to date for python:3.8
-    ## docker.io/library/python:3.8
+    ## > docker build -t hello_world_py:latest /tmp/viashsetupdocker-hello_world_py-bmKcfp
 
 You can run the component with viash in the backend as follows.
 
@@ -58,7 +54,7 @@ functionality as an executable.
 
 ``` bash
 viash build config.vsh.yaml -p docker -o output
-output/hello_world And now, as an executable.
+output/hello_world_py And now, as an executable.
 ```
 
     ## Hello world! And now, as an executable.
@@ -90,16 +86,12 @@ both with or without the Docker backend.
 viash test config.vsh.yaml -p docker
 ```
 
-    ## Running tests in temporary directory: '/home/rcannood/workspace/viash_temp/viash_test_hello_world_py12906873610936481347'
+    ## Running tests in temporary directory: '/tmp/viash_test_hello_world_py4005516778975781919'
     ## ====================================================================
-    ## +/home/rcannood/workspace/viash_temp/viash_test_hello_world_py12906873610936481347/build_executable/hello_world_py ---setup
-    ## > docker pull python:3.8
-    ## 3.8: Pulling from library/python
-    ## Digest: sha256:ff8ae88abfe6c829c188cc54737139f7c583279009ba34c96034e0e66053ac3f
-    ## Status: Image is up to date for python:3.8
-    ## docker.io/library/python:3.8
+    ## +/tmp/viash_test_hello_world_py4005516778975781919/build_executable/hello_world_py ---setup
+    ## > docker build -t hello_world_py:latest /tmp/viashsetupdocker-hello_world_py-KNfAeb
     ## ====================================================================
-    ## +/home/rcannood/workspace/viash_temp/viash_test_hello_world_py12906873610936481347/test_test.py/test.py
+    ## +/tmp/viash_test_hello_world_py4005516778975781919/test_test.py/test.py
     ## 
     ## ----------------------------------------------------------------------
     ## Ran 0 tests in 0.000s

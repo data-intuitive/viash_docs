@@ -9,20 +9,21 @@ script with viash.
 ## Demonstration
 
 Given the files and meta files in the
-[examples/hello\_world](examples/hello_world) directory, we demonstrate
-the functionality of viash in running the component with multiple
-backends.
+[examples/hello\_world](https://github.com/data-intuitive/viash_docs/tree/master/examples/hello_world)
+directory, we demonstrate the functionality of viash in running the
+component with multiple backends.
 
 #### Run the component
 
-By running the component, it will output “Hello world\!”, followed by
-any other inputs provided to it.
+By running the component, it will output “Hello world!”, followed by any
+other inputs provided to it.
 
 ``` bash
 cd examples/hello_world
 viash run config.vsh.yaml -- I am viash!
 ```
 
+    ## /tmp/viash-run-hello_world-cKfehe: line 7: ﻿#!/usr/bin/env: No such file or directory
     ## Hello world! I am viash!
 
 #### Run the component with a Docker backend
@@ -37,11 +38,7 @@ from Docker Hub.
 viash run config.vsh.yaml -p docker -- ---setup
 ```
 
-    ## > docker pull bash:4.0
-    ## 4.0: Pulling from library/bash
-    ## Digest: sha256:ec2960a16bac139b7a78fed1b035b4f46153da60fb9d3617420492d1e5ed0bd3
-    ## Status: Image is up to date for bash:4.0
-    ## docker.io/library/bash:4.0
+    ## > docker build -t hello_world:latest /tmp/viashsetupdocker-hello_world-Meoadl
 
 You can run the component with viash in the backend as follows.
 
@@ -50,6 +47,7 @@ viash run config.vsh.yaml -p docker -- General Kenobi. --greeter="Hello there."
 ```
 
     ## Hello there. General Kenobi.
+    ## /viash_automount/tmp//viash-run-hello_world-cCLneB: line 7: ﻿#!/usr/bin/env: No such file or directory
 
 #### Export as an executable
 
@@ -61,6 +59,7 @@ viash build config.vsh.yaml -p docker -o output
 output/hello_world And now, as an executable.
 ```
 
+    ## /viash_automount/tmp//viash-run-hello_world-McPCMN: line 7: ﻿#!/usr/bin/env: No such file or directory
     ## Hello world! And now, as an executable.
 
 #### viash automatically generates a CLI
@@ -90,33 +89,32 @@ both with or without the Docker backend.
 viash test config.vsh.yaml -p docker
 ```
 
-    ## Running tests in temporary directory: '/home/rcannood/workspace/viash_temp/viash_test_hello_world6868464924242766728'
+    ## Running tests in temporary directory: '/tmp/viash_test_hello_world184391355153468467'
     ## ====================================================================
-    ## +/home/rcannood/workspace/viash_temp/viash_test_hello_world6868464924242766728/build_executable/hello_world ---setup
-    ## > docker pull bash:4.0
-    ## 4.0: Pulling from library/bash
-    ## Digest: sha256:ec2960a16bac139b7a78fed1b035b4f46153da60fb9d3617420492d1e5ed0bd3
-    ## Status: Image is up to date for bash:4.0
-    ## docker.io/library/bash:4.0
+    ## +/tmp/viash_test_hello_world184391355153468467/build_executable/hello_world ---setup
+    ## > docker build -t hello_world:latest /tmp/viashsetupdocker-hello_world-AcaLfJ
     ## ====================================================================
-    ## +/home/rcannood/workspace/viash_temp/viash_test_hello_world6868464924242766728/test_test.sh/test.sh
+    ## +/tmp/viash_test_hello_world184391355153468467/test_test.sh/test.sh
     ## >>> Checking whether output is correct
     ## + echo '>>> Checking whether output is correct'
     ## + ./hello_world I am 'viash!'
+    ## /tmp/viash-run-hello_world-fepaAl: line 7: ﻿#!/usr/bin/env: No such file or directory
     ## + [[ ! -f output.txt ]]
     ## + grep -q 'Hello world! I am viash!' output.txt
     ## + echo '>>> Checking whether output is correct when no parameters are given'
     ## >>> Checking whether output is correct when no parameters are given
     ## + ./hello_world
+    ## /tmp/viash-run-hello_world-DGiOlM: line 7: ﻿#!/usr/bin/env: No such file or directory
     ## + [[ ! -f output2.txt ]]
     ## + grep -q 'Hello world!' output2.txt
     ## + echo '>>> Checking whether output is correct when more parameters are given'
     ## >>> Checking whether output is correct when more parameters are given
     ## + ./hello_world General Kenobi. '--greeter=Hello there.'
+    ## /tmp/viash-run-hello_world-PFFJBn: line 7: ﻿#!/usr/bin/env: No such file or directory
     ## + [[ ! -f output3.txt ]]
     ## + grep -q 'Hello there. General Kenobi.' output3.txt
-    ## >>> Test finished successfully!
     ## + echo '>>> Test finished successfully!'
+    ## >>> Test finished successfully!
     ## + exit 0
     ## ====================================================================
     ## [32mSUCCESS! All 1 out of 1 test scripts succeeded![0m
@@ -132,6 +130,8 @@ functionality of the component, in this case a bash script.
 This is a simple script which prints a simple message, along with any
 input provided to it through the `par_input` parameter. Optionally, you
 can override the greeter with `par_greeter`.
+
+    ## Warning in readLines(path): incomplete final line found on 'script.sh'
 
 Contents of [`script.sh`](script.sh):
 
@@ -157,6 +157,7 @@ viash:
 ./script.sh
 ```
 
+    ## ./script.sh: line 1: ﻿#!/usr/bin/env: No such file or directory
     ## Hello world! I am debug!
 
 Next, we write a meta-file describing the functionality of this

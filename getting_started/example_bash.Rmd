@@ -6,7 +6,7 @@ parent: Getting started
 ```{r init, include=FALSE}
 library(tidyverse)
 
-source("../R/md_helpers.R")
+source("../src/helper/md_helpers.R")
 
 # change wd to where the files are located
 knitr::opts_knit$set(root.dir = "../examples/hello_world/") 

@@ -9,14 +9,14 @@ with viash.
 ## Demonstration
 
 Given the files and meta files in the
-[examples/hello\_world\_r](examples/hello_world_r) directory, we
-demonstrate the functionality of viash in running the component with
-multiple backends.
+[examples/hello\_world\_r](https://github.com/data-intuitive/viash_docs/tree/master/examples/hello_world_r)
+directory, we demonstrate the functionality of viash in running the
+component with multiple backends.
 
 #### Run the component
 
-By running the component, it will output “Hello world\!”, followed by
-any other inputs provided to it.
+By running the component, it will output “Hello world!”, followed by any
+other inputs provided to it.
 
 ``` bash
 cd examples/hello_world_r
@@ -37,11 +37,7 @@ from Docker Hub.
 viash run config.vsh.yaml -p docker -- ---setup
 ```
 
-    ## > docker pull rocker/tidyverse:4.0.4
-    ## 4.0.4: Pulling from rocker/tidyverse
-    ## Digest: sha256:d36d7b206800cca1984524e677b2732214002b36ef28a8ffae005d4c92eb62d2
-    ## Status: Image is up to date for rocker/tidyverse:4.0.4
-    ## docker.io/rocker/tidyverse:4.0.4
+    ## > docker build -t hello_world_r:latest /tmp/viashsetupdocker-hello_world_r-aHjBEf
 
 You can run the component with viash in the backend as follows.
 
@@ -58,7 +54,7 @@ functionality as an executable.
 
 ``` bash
 viash build config.vsh.yaml -p docker -o output
-output/hello_world And now, as an executable.
+output/hello_world_r And now, as an executable.
 ```
 
     ## Hello world! And now, as an executable.
@@ -90,16 +86,12 @@ both with or without the Docker backend.
 viash test config.vsh.yaml -p docker
 ```
 
-    ## Running tests in temporary directory: '/home/rcannood/workspace/viash_temp/viash_test_hello_world_r12526072485494513142'
+    ## Running tests in temporary directory: '/tmp/viash_test_hello_world_r8655741578522292510'
     ## ====================================================================
-    ## +/home/rcannood/workspace/viash_temp/viash_test_hello_world_r12526072485494513142/build_executable/hello_world_r ---setup
-    ## > docker pull rocker/tidyverse:4.0.4
-    ## 4.0.4: Pulling from rocker/tidyverse
-    ## Digest: sha256:d36d7b206800cca1984524e677b2732214002b36ef28a8ffae005d4c92eb62d2
-    ## Status: Image is up to date for rocker/tidyverse:4.0.4
-    ## docker.io/rocker/tidyverse:4.0.4
+    ## +/tmp/viash_test_hello_world_r8655741578522292510/build_executable/hello_world_r ---setup
+    ## > docker build -t hello_world_r:latest /tmp/viashsetupdocker-hello_world_r-KlGdaO
     ## ====================================================================
-    ## +/home/rcannood/workspace/viash_temp/viash_test_hello_world_r12526072485494513142/test_test.R/test.R
+    ## +/tmp/viash_test_hello_world_r8655741578522292510/test_test.R/test.R
     ## >>> Checking whether output is correct
     ## >>> Checking whether output is correct when no parameters are given
     ## >>> Checking whether output is correct when more parameters are given

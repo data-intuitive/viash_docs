@@ -96,10 +96,10 @@ The **functionality** attribute describes the core functionality of the
 component, such as its inputs, outputs, arguments, and extra resources.
 The ‘Hello World’ component accepts two arguments:
 
-  - A `string` named **input** that accepts multiple space-separated
+-   A `string` named **input** that accepts multiple space-separated
     arguments.
-  - A second `string` named **–greeter** which defaults to “Hello
-    world\!”.
+-   A second `string` named **–greeter** which defaults to “Hello
+    world!”.
 
 These arguments are passed on to the **resources**. In this case,
 there’s a single reference to a file named
@@ -120,8 +120,8 @@ par_greeter="Hello world!"
 echo $par_greeter $par_input
 ```
 
-Any variables starting with `par_` between the `## VIASH START` and `##
-VIASH END` lines will automatically be replaced at runtime with
+Any variables starting with `par_` between the `## VIASH START` and
+`## VIASH END` lines will automatically be replaced at runtime with
 parameter values from the CLI.
 
 Finally, there’s a **tests** section to put your test scripts. It’s a
@@ -167,7 +167,6 @@ first platform when you don’t pass the platform option, in this case
 that’s `native`.
 
 <!-- ## Exporting a Component -->
-
 <!-- Components can be exported... TODO -->
 
 ## What’s Next?
@@ -175,6 +174,6 @@ that’s `native`.
 Now that you understand the basics of how viash works, take a look at
 how to write your own component:
 
-  - [Bash example](/getting_started/example_bash)
-  - [Python example](/getting_started/example_python)
-  - [R example](/getting_started/example_r)
+-   [Bash example](/getting_started/example_bash)
+-   [Python example](/getting_started/example_python)
+-   [R example](/getting_started/example_r)
