@@ -37,7 +37,7 @@ from Docker Hub.
 viash run config.vsh.yaml -p docker -- ---setup
 ```
 
-    ## > docker build -t hello_world_py:latest /tmp/viashsetupdocker-hello_world_py-bmKcfp
+    ## > docker build -t hello_world_py:latest /tmp/viashsetupdocker-hello_world_py-GMDFEE
 
 You can run the component with viash in the backend as follows.
 
@@ -86,12 +86,12 @@ both with or without the Docker backend.
 viash test config.vsh.yaml -p docker
 ```
 
-    ## Running tests in temporary directory: '/tmp/viash_test_hello_world_py4005516778975781919'
+    ## Running tests in temporary directory: '/tmp/viash_test_hello_world_py6599615297583267826'
     ## ====================================================================
-    ## +/tmp/viash_test_hello_world_py4005516778975781919/build_executable/hello_world_py ---setup
-    ## > docker build -t hello_world_py:latest /tmp/viashsetupdocker-hello_world_py-KNfAeb
+    ## +/tmp/viash_test_hello_world_py6599615297583267826/build_executable/hello_world_py ---setup
+    ## > docker build -t hello_world_py:latest /tmp/viashsetupdocker-hello_world_py-AeABGA
     ## ====================================================================
-    ## +/tmp/viash_test_hello_world_py4005516778975781919/test_test.py/test.py
+    ## +/tmp/viash_test_hello_world_py6599615297583267826/test_test.py/test.py
     ## 
     ## ----------------------------------------------------------------------
     ## Ran 0 tests in 0.000s

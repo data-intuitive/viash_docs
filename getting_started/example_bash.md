@@ -23,7 +23,7 @@ cd examples/hello_world
 viash run config.vsh.yaml -- I am viash!
 ```
 
-    ## /tmp/viash-run-hello_world-cKfehe: line 7: ﻿#!/usr/bin/env: No such file or directory
+    ## /tmp/viash-run-hello_world-DMjJMm: line 7: ﻿##: command not found
     ## Hello world! I am viash!
 
 #### Run the component with a Docker backend
@@ -38,7 +38,7 @@ from Docker Hub.
 viash run config.vsh.yaml -p docker -- ---setup
 ```
 
-    ## > docker build -t hello_world:latest /tmp/viashsetupdocker-hello_world-Meoadl
+    ## > docker build -t hello_world:latest /tmp/viashsetupdocker-hello_world-pFCLfB
 
 You can run the component with viash in the backend as follows.
 
@@ -47,7 +47,7 @@ viash run config.vsh.yaml -p docker -- General Kenobi. --greeter="Hello there."
 ```
 
     ## Hello there. General Kenobi.
-    ## /viash_automount/tmp//viash-run-hello_world-cCLneB: line 7: ﻿#!/usr/bin/env: No such file or directory
+    ## /viash_automount/tmp//viash-run-hello_world-ibAipJ: line 7: $'\357\273\277##': command not found
 
 #### Export as an executable
 
@@ -59,7 +59,7 @@ viash build config.vsh.yaml -p docker -o output
 output/hello_world And now, as an executable.
 ```
 
-    ## /viash_automount/tmp//viash-run-hello_world-McPCMN: line 7: ﻿#!/usr/bin/env: No such file or directory
+    ## /viash_automount/tmp//viash-run-hello_world-qjH9ua: line 7: $'\357\273\277##': command not found
     ## Hello world! And now, as an executable.
 
 #### viash automatically generates a CLI
@@ -89,28 +89,28 @@ both with or without the Docker backend.
 viash test config.vsh.yaml -p docker
 ```
 
-    ## Running tests in temporary directory: '/tmp/viash_test_hello_world184391355153468467'
+    ## Running tests in temporary directory: '/tmp/viash_test_hello_world6710890578205556308'
     ## ====================================================================
-    ## +/tmp/viash_test_hello_world184391355153468467/build_executable/hello_world ---setup
-    ## > docker build -t hello_world:latest /tmp/viashsetupdocker-hello_world-AcaLfJ
+    ## +/tmp/viash_test_hello_world6710890578205556308/build_executable/hello_world ---setup
+    ## > docker build -t hello_world:latest /tmp/viashsetupdocker-hello_world-DnmliH
     ## ====================================================================
-    ## +/tmp/viash_test_hello_world184391355153468467/test_test.sh/test.sh
+    ## +/tmp/viash_test_hello_world6710890578205556308/test_test.sh/test.sh
     ## >>> Checking whether output is correct
     ## + echo '>>> Checking whether output is correct'
     ## + ./hello_world I am 'viash!'
-    ## /tmp/viash-run-hello_world-fepaAl: line 7: ﻿#!/usr/bin/env: No such file or directory
+    ## /tmp/viash-run-hello_world-BFe8X7: line 7: $'\357\273\277##': command not found
     ## + [[ ! -f output.txt ]]
     ## + grep -q 'Hello world! I am viash!' output.txt
     ## + echo '>>> Checking whether output is correct when no parameters are given'
     ## >>> Checking whether output is correct when no parameters are given
     ## + ./hello_world
-    ## /tmp/viash-run-hello_world-DGiOlM: line 7: ﻿#!/usr/bin/env: No such file or directory
+    ## /tmp/viash-run-hello_world-un2BxP: line 7: $'\357\273\277##': command not found
     ## + [[ ! -f output2.txt ]]
     ## + grep -q 'Hello world!' output2.txt
     ## + echo '>>> Checking whether output is correct when more parameters are given'
     ## >>> Checking whether output is correct when more parameters are given
     ## + ./hello_world General Kenobi. '--greeter=Hello there.'
-    ## /tmp/viash-run-hello_world-PFFJBn: line 7: ﻿#!/usr/bin/env: No such file or directory
+    ## /tmp/viash-run-hello_world-AxZoD4: line 7: $'\357\273\277##': command not found
     ## + [[ ! -f output3.txt ]]
     ## + grep -q 'Hello there. General Kenobi.' output3.txt
     ## + echo '>>> Test finished successfully!'
@@ -131,13 +131,9 @@ This is a simple script which prints a simple message, along with any
 input provided to it through the `par_input` parameter. Optionally, you
 can override the greeter with `par_greeter`.
 
-    ## Warning in readLines(path): incomplete final line found on 'script.sh'
-
 Contents of [`script.sh`](script.sh):
 
 ``` bash
-#!/usr/bin/env bash
-
 ## VIASH START
 
 par_input="I am debug!"
@@ -157,7 +153,7 @@ viash:
 ./script.sh
 ```
 
-    ## ./script.sh: line 1: ﻿#!/usr/bin/env: No such file or directory
+    ## ./script.sh: line 1: ﻿##: command not found
     ## Hello world! I am debug!
 
 Next, we write a meta-file describing the functionality of this
@@ -192,7 +188,7 @@ functionality:
 platforms:
   - type: native
   - type: docker
-    image: bash:4.0
+    image: ubuntu:latest
   - type: docker
     id: alpine
     image: alpine
@@ -225,7 +221,6 @@ to produce an error code not equal to 0 when a mistake is found.
 Contents of [`test.sh`](test.sh):
 
 ``` bash
-#!/usr/bin/env bash
 set -ex # exit the script when one of the checks fail.
 
 # check 1

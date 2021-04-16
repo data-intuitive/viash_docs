@@ -1,4 +1,3 @@
-#!/usr/bin/env bash
 set -ex # exit the script when one of the checks fail.
 
 # check 1

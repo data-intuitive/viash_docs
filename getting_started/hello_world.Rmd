@@ -82,8 +82,6 @@ The **functionality** attribute describes the core functionality of the componen
 These arguments are passed on to the **resources**. In this case, there's a single reference to a file named [`script.sh`](http://www.data-intuitive.com/viash_docs/examples/hello_world/script.sh). This file is the 'brain' of the component, it's small Bash script which prints out two environment values: `par_input` and `par_greeter`: 
 
 ```bash
-#!/usr/bin/env bash
-
 ## VIASH START
 
 par_input="I am debug!"

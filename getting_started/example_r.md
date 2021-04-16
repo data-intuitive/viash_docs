@@ -37,7 +37,7 @@ from Docker Hub.
 viash run config.vsh.yaml -p docker -- ---setup
 ```
 
-    ## > docker build -t hello_world_r:latest /tmp/viashsetupdocker-hello_world_r-aHjBEf
+    ## > docker build -t hello_world_r:latest /tmp/viashsetupdocker-hello_world_r-glHMpo
 
 You can run the component with viash in the backend as follows.
 
@@ -86,12 +86,12 @@ both with or without the Docker backend.
 viash test config.vsh.yaml -p docker
 ```
 
-    ## Running tests in temporary directory: '/tmp/viash_test_hello_world_r8655741578522292510'
+    ## Running tests in temporary directory: '/tmp/viash_test_hello_world_r7325312522419792347'
     ## ====================================================================
-    ## +/tmp/viash_test_hello_world_r8655741578522292510/build_executable/hello_world_r ---setup
-    ## > docker build -t hello_world_r:latest /tmp/viashsetupdocker-hello_world_r-KlGdaO
+    ## +/tmp/viash_test_hello_world_r7325312522419792347/build_executable/hello_world_r ---setup
+    ## > docker build -t hello_world_r:latest /tmp/viashsetupdocker-hello_world_r-MAGeKd
     ## ====================================================================
-    ## +/tmp/viash_test_hello_world_r8655741578522292510/test_test.R/test.R
+    ## +/tmp/viash_test_hello_world_r7325312522419792347/test_test.R/test.R
     ## >>> Checking whether output is correct
     ## >>> Checking whether output is correct when no parameters are given
     ## >>> Checking whether output is correct when more parameters are given
