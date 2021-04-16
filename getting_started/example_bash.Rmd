@@ -15,7 +15,7 @@ knitr::opts_knit$set(root.dir = "../examples/hello_world/")
 This vignette demonstrates how to wrap a simple 'hello world' bash script with viash.
 
 ## Demonstration
-Given the files and meta files in the [examples/hello_world](examples/hello_world) directory, we demonstrate the functionality of viash in running the component 
+Given the files and meta files in the [examples/hello_world](https://github.com/data-intuitive/viash_docs/tree/master/examples/hello_world) directory, we demonstrate the functionality of viash in running the component 
 with multiple backends.
 
 #### Run the component
