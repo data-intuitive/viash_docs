@@ -1,17 +1,20 @@
 ## Running a local server
 
-Add to .bashrc:
-```bash
-export GEM_HOME=/home/<username>/.gem
-export PATH="$PATH:$HOME/.gem/bin"
-```
-
-Execute the following:
+First time setup:
 
 ```bash
-bundle install
-bundle exec jekyll serve --port 4070 --host 127.0.0.1
+bin/run_server ---setup
 ```
+
+To run the server locally, run:
+```
+bin/run_server
+docker kill $(docker ps -q)
+```
+
+Open [http://0.0.0.0:4000](http://0.0.0.0:4000).
+
+FYI: `bin/run_server` was built with `viash build src/run_server/config.vsh.yaml -o bin`
 
 ## Building Rmd files to md
 
