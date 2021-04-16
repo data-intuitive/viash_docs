@@ -1,6 +1,11 @@
+setwd(par$viash_docs)
+
+# start docker daemon
+system("dockerd", ignore.stdout = TRUE, ignore.stderr = TRUE, wait = FALSE)
+
 # Rmd files under the root directory
 rmds <- c(
-  list.files('.', '[.]Rmd$', recursive = TRUE, full.names = TRUE)
+  list.files(".", '[.]Rmd$', recursive = TRUE, full.names = TRUE)
 )
 
 # remove rmds under examples dir
