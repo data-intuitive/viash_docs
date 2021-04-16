@@ -76,17 +76,15 @@ viash run config.vsh.yaml -- config.vsh.yaml | head -5
     ##      4     arguments:
     ##      5     - name: input
 
-Would you rather use Docker as a backend? Easy as pie\!
+Would you rather use Docker as a backend? Easy as pie!
 
 ``` bash
 viash run -P docker config.vsh.yaml -- config.vsh.yaml | head -5
 ```
 
-    ##      1   functionality:
-    ##      2     name: addrowlines
-    ##      3     description: Add rowlines to a text file.
-    ##      4     arguments:
-    ##      5     - name: input
+    ## Unable to find image 'addrowlines:latest' locally
+    ## docker: Error response from daemon: pull access denied for addrowlines, repository does not exist or may require 'docker login': denied: requested access to the resource is denied.
+    ## See 'docker run --help'.
 
 ``` bash
 viash run config.vsh.yaml -- --help

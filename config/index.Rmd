@@ -8,7 +8,7 @@ has_children: true
 ```{r init, include=FALSE}
 library(tidyverse)
 
-source("../R/md_helpers.R")
+source("../src/helper/md_helpers.R")
 ```
 
 # The viash config file
