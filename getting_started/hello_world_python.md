@@ -1,7 +1,7 @@
 ---
-title: "Hello World"
+title: "Hello World (Python)"
 parent: Getting started
-nav_order: 2
+nav_order: 3
 ---
 
 # Hello World
@@ -108,8 +108,6 @@ This file is the ‘brain’ of the component, it’s small Bash script which
 prints out two environment values: `par_input` and `par_greeter`:
 
 ``` bash
-#!/usr/bin/env bash
-
 ## VIASH START
 
 par_input="I am debug!"
