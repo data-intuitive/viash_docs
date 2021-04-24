@@ -4,7 +4,13 @@ parent: Getting started
 nav_order: 3
 ---
 
-```{r include=FALSE}
+```{r init, include=FALSE}
+library(tidyverse)
+
+source("../src/helper/md_helpers.R")
+
+# change wd to where the files are located
+knitr::opts_knit$set(root.dir = "../examples/hello_world_py/") 
 # Remove hashtags before bash output
 knitr::opts_chunk$set(comment = NA)
 ```
@@ -51,34 +57,8 @@ viash run $URL -- NAME. --greeter="Hello there,"
 
 When you call 'viash run', viash parses the [`config.vsh.yaml`](http://www.data-intuitive.com/viash_docs/examples/hello_world_py/config.vsh.yaml) file, which is a meta description of the component written in the yaml serialization language:
 
-```yaml
-functionality:
-  name: hello_world
-  description: A very simple 'Hello world' component.
-  arguments:
-  - type: string
-    name: input
-    multiple: true
-    multiple_sep: " "
-  - type: string
-    name: --greeter
-    default: "Hello world!"
-  resources:
-  - type: bash_script
-    path: script.sh
-  tests:
-  - type: bash_script
-    path: test.sh
-platforms:
-  - type: native
-  - type: docker
-    image: bash:4.0
-  - type: docker
-    id: alpine
-    image: alpine
-    setup:
-      - type: apk
-        packages: [ bash ]
+```{r, echo = FALSE}
+print_file("config.vsh.yaml", format = "yaml", show_filename = FALSE)
 ```
 
 This config file describes the behavior of a script and the platform it runs on.
@@ -91,22 +71,15 @@ The **functionality** attribute describes the core functionality of the componen
 - A `string` named **input** that accepts multiple space-separated arguments.
 - A second `string` named **--greeter** which defaults to "Hello world!".
 
-These arguments are passed on to the **resources**. In this case, there's a single reference to a file named [`script.sh`](http://www.data-intuitive.com/viash_docs/examples/hello_world_py/script.sh). This file is the 'brain' of the component, it's small Bash script which prints out two environment values: `par_input` and `par_greeter`: 
+These arguments are passed on to the **resources**. In this case, there's a single reference to a file named [`script.py`](http://www.data-intuitive.com/viash_docs/examples/hello_world_py/script.py). This file is the 'brain' of the component, it's small Python script which prints out two environment values: `par_input` and `par_greeter`: 
 
-```bash
-## VIASH START
-
-par_input="I am debug!"
-par_greeter="Hello world!"
-
-## VIASH END
-
-echo $par_greeter $par_input
+```{r, echo = FALSE}
+print_file("script.py", format = "python", show_filename = FALSE)
 ```
 
-Any variables starting with `par_` between the `## VIASH START` and `## VIASH END` lines will automatically be replaced at runtime with parameter values from the CLI. 
+Any variables in the `par` dictionary between the `## VIASH START` and `## VIASH END` lines will automatically be replaced at runtime with parameter values from the CLI. 
 
-Finally, there's a **tests** section to put your test scripts. It's a good practice to write tests and run these every time you update your component and/or the resources. You can read more about writing and running viash tests [here](http://www.data-intuitive.com/viash_docs/good_practices/testing/). (TODO: link vervangen, tekst ipv here)
+Finally, there's a **tests** section to put your test scripts. It's a good practice to write tests and run these every time you update your component and/or the resources. You can read more about writing and running viash tests [on the Testing page](http://www.data-intuitive.com/viash_docs/good_practices/testing/).
 
 ### Platforms
 

@@ -68,7 +68,7 @@ serialization language:
 
 ``` yaml
 functionality:
-  name: hello_world
+  name: hello_world_r
   description: A very simple 'Hello world' component.
   arguments:
   - type: string
@@ -79,21 +79,15 @@ functionality:
     name: --greeter
     default: "Hello world!"
   resources:
-  - type: bash_script
-    path: script.sh
+  - type: r_script
+    path: script.R
   tests:
-  - type: bash_script
-    path: test.sh
+  - type: r_script
+    path: test.R
 platforms:
   - type: native
   - type: docker
-    image: bash:4.0
-  - type: docker
-    id: alpine
-    image: alpine
-    setup:
-      - type: apk
-        packages: [ bash ]
+    image: "rocker/tidyverse:4.0.4"
 ```
 
 This config file describes the behavior of a script and the platform it
@@ -113,31 +107,31 @@ The ‘Hello World’ component accepts two arguments:
 
 These arguments are passed on to the **resources**. In this case,
 there’s a single reference to a file named
-[`script.sh`](http://www.data-intuitive.com/viash_docs/examples/hello_world/script.sh).
-This file is the ‘brain’ of the component, it’s small Bash script which
+[`script.r`](http://www.data-intuitive.com/viash_docs/examples/hello_world/script.r).
+This file is the ‘brain’ of the component, it’s small R script which
 prints out two environment values: `par_input` and `par_greeter`:
 
-``` bash
+``` r
 ## VIASH START
-
-par_input="I am debug!"
-par_greeter="Hello world!"
+par <- list(
+  input = "I am debug!",
+  greeter = "Hello world!"
+)
 
 ## VIASH END
 
-echo $par_greeter $par_input
+cat(par$greeter, " ", paste(par$input, collapse = " "), "\n", sep = "")
 ```
 
-Any variables starting with `par_` between the `## VIASH START` and
+Any variables in the `par` list between the `## VIASH START` and
 `## VIASH END` lines will automatically be replaced at runtime with
 parameter values from the CLI.
 
 Finally, there’s a **tests** section to put your test scripts. It’s a
 good practice to write tests and run these every time you update your
 component and/or the resources. You can read more about writing and
-running viash tests
-[here](http://www.data-intuitive.com/viash_docs/good_practices/testing/).
-(TODO: link vervangen, tekst ipv here)
+running viash tests [on the Testing
+page](http://www.data-intuitive.com/viash_docs/good_practices/testing/).
 
 ### Platforms
 

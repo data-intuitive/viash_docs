@@ -16,7 +16,7 @@ you can override the greeter with `par["greeter"]`.
 
 Contents of [`script.py`](script.py):
 
-``` bash
+``` python
 ## VIASH START
 par = {
   "input": ["I am debug!"],

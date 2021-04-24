@@ -23,7 +23,7 @@ This is a simple script which prints a simple message, along with any input prov
 Optionally, you can override the greeter with `par["greeter"]`.
 
 ```{r, echo = FALSE}
-print_file("script.py")
+print_file("script.py", format = "python")
 ```
 
 Anything between the `## VIASH START` and `## VIASH END` lines will automatically be replaced 

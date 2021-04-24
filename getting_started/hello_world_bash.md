@@ -117,10 +117,8 @@ prints out two environment values: `par_input` and `par_greeter`:
 
 ``` bash
 ## VIASH START
-
 par_input="I am debug!"
 par_greeter="Hello world!"
-
 ## VIASH END
 
 echo $par_greeter $par_input
@@ -133,9 +131,8 @@ parameter values from the CLI.
 Finally, there’s a **tests** section to put your test scripts. It’s a
 good practice to write tests and run these every time you update your
 component and/or the resources. You can read more about writing and
-running viash tests
-[here](http://www.data-intuitive.com/viash_docs/good_practices/testing/).
-(TODO: link vervangen, tekst ipv here)
+running viash tests [on the Testing
+page](http://www.data-intuitive.com/viash_docs/good_practices/testing/).
 
 ### Platforms
 
