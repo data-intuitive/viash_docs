@@ -10,13 +10,24 @@ We have provided a simple **Hello World** component as an introduction
 to viash. Follow the steps below to learn how to run a component and get
 a result back from it.
 
+## Prerequisites
+
+To follow along with this tutorial, you need to have this software
+installed on your machine:
+
+-   An [installation of viash](../installation).
+-   A **Unix shell** like Bash or Zsh.
+-   An [installation of python 3](https://www.python.org/downloads). You
+    may have to install the `python-is-python3` package on Ubuntu and
+    its derivatives to make Python 3 the default version.
+
 ## Running the Component
 
 You can run a simple ‘Hello World’ component by running the following
 command:
 
 ``` bash
-URL=http://www.data-intuitive.com/viash_docs/examples/hello_world/config.vsh.yaml
+URL=http://www.data-intuitive.com/viash_docs/examples/hello_world_py/config.vsh.yaml
 viash run $URL
 ```
 
@@ -52,7 +63,7 @@ viash run $URL -- NAME. --greeter="Hello there,"
 ## How does the Hello World component work?
 
 When you call ‘viash run’, viash parses the
-[`config.vsh.yaml`](http://www.data-intuitive.com/viash_docs/examples/hello_world/config.vsh.yaml)
+[`config.vsh.yaml`](http://www.data-intuitive.com/viash_docs/examples/hello_world_py/config.vsh.yaml)
 file, which is a meta description of the component written in the yaml
 serialization language:
 
@@ -103,7 +114,7 @@ The ‘Hello World’ component accepts two arguments:
 
 These arguments are passed on to the **resources**. In this case,
 there’s a single reference to a file named
-[`script.sh`](http://www.data-intuitive.com/viash_docs/examples/hello_world/script.sh).
+[`script.sh`](http://www.data-intuitive.com/viash_docs/examples/hello_world_py/script.sh).
 This file is the ‘brain’ of the component, it’s small Bash script which
 prints out two environment values: `par_input` and `par_greeter`:
 

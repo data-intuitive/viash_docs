@@ -35,7 +35,9 @@ Here are a few use cases which serve as motivation for viash:
 Here are some links to get you started with viash:
 
 - [Installing viash](/getting_started/installation): This guide walks you through the steps to install viash on your machine.
-- [Running your first component](/getting_started/hello_world): Get a feel for viash with a classic **Hello World** tutorial.
+- [Running your first component (Bash)](/getting_started/hello_world_bash): Get a feel for viash with a classic **Hello World** tutorial, written in Bash.
+- [Running your first component (Python)](/getting_started/hello_world_python): Get a feel for viash with a classic **Hello World** tutorial, written in Python.
+- [Running your first component (R)](/getting_started/hello_world_r): Get a feel for viash with a classic **Hello World** tutorial, written in R.
 
 ## Documentation
 

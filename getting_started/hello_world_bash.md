@@ -10,6 +10,14 @@ We have provided a simple **Hello World** component as an introduction
 to viash. Follow the steps below to learn how to run a component and get
 a result back from it.
 
+## Prerequisites
+
+To follow along with this tutorial, you need to have this software
+installed on your machine:
+
+-   An [installation of viash](../installation).
+-   A **Unix shell** like Bash or Zsh.
+
 ## Running the Component
 
 You can run a simple ‘Hello World’ component by running the following

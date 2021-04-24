@@ -9,4 +9,4 @@ par = {
 if par["input"] is None:
   par["input"] = []
 
-print(par["greeter"], par["input"])
+print(par["greeter"], *par["input"])
