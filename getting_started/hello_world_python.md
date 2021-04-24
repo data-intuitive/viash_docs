@@ -31,7 +31,7 @@ URL=http://www.data-intuitive.com/viash_docs/examples/hello_world_py/config.vsh.
 viash run $URL
 ```
 
-    ## Hello world!
+    Hello world!
 
 Every component accepts –help as an option, which outputs a description
 of the component and a list of accepted options. Run the command below
@@ -41,14 +41,14 @@ to see the help for the ‘Hello World’ component:
 viash run $URL -- --help
 ```
 
-    ## A very simple 'Hello world' component.
-    ## 
-    ## Options:
-    ##     string1 string2 ...
-    ##         type: string, multiple values allowed
-    ## 
-    ##     --greeter=string
-    ##         type: string, default: Hello world!
+    A very simple 'Hello world' component.
+
+    Options:
+        string1 string2 ...
+            type: string, multiple values allowed
+
+        --greeter=string
+            type: string, default: Hello world!
 
 As you can see, the ‘Hello World’ component accepts several string
 arguments and a `--greeter` option. Run the command below and replace
@@ -58,7 +58,7 @@ NAME with your name to see what happens:
 viash run $URL -- NAME. --greeter="Hello there,"
 ```
 
-    ## Hello there, NAME.
+    Hello there, NAME.
 
 ## How does the Hello World component work?
 
@@ -169,7 +169,7 @@ command:
 viash run -p native $URL -- Mike. --greeter="Hello there,"
 ```
 
-    ## Hello there, Mike.
+    Hello there, Mike.
 
 The results should be exactly the same as viash automatically picks the
 first platform when you don’t pass the platform option, in this case

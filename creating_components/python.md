@@ -14,6 +14,8 @@ This is a simple script which prints a simple message, along with any
 input provided to it through the `par["input"]` parameter. Optionally,
 you can override the greeter with `par["greeter"]`.
 
+    Warning in readLines(path): incomplete final line found on 'script.py'
+
 Contents of [`script.py`](script.py):
 
 ``` bash
@@ -28,7 +30,7 @@ par = {
 if par["input"] is None:
   par["input"] = []
 
-print(par["greeter"], par["input"])
+print(par["greeter"], *par["input"])
 ```
 
 Anything between the `## VIASH START` and `## VIASH END` lines will
@@ -40,7 +42,7 @@ viash:
 python script.py
 ```
 
-    ## ('Hello world!', ['I am debug!'])
+    Hello world! I am debug!
 
 Next, we write a meta-file describing the functionality of this
 component in YAML format.

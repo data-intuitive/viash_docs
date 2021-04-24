@@ -10,6 +10,8 @@ source("../src/helper/md_helpers.R")
 
 # change wd to where the files are located
 knitr::opts_knit$set(root.dir = "../examples/hello_world_py/") 
+# Remove hashtags before bash output
+knitr::opts_chunk$set(comment = NA)
 ```
 
 ## Developing a new component

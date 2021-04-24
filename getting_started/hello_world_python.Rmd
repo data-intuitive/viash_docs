@@ -4,6 +4,10 @@ parent: Getting started
 nav_order: 3
 ---
 
+```{r include=FALSE}
+# Remove hashtags before bash output
+knitr::opts_chunk$set(comment = NA)
+```
 
 # Hello World
 

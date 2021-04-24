@@ -4,6 +4,11 @@ parent: Getting started
 nav_order: 2
 ---
 
+```{r include=FALSE}
+# Remove hashtags before bash output
+knitr::opts_chunk$set(comment = NA)
+```
+
 # Hello World
 
 We have provided a simple **Hello World** component as an introduction to viash. Follow the steps below to learn how to run a component and get a result back from it.

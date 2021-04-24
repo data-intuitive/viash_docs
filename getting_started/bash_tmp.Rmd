@@ -5,6 +5,8 @@ source("../src/helper/md_helpers.R")
 
 # change wd to where the files are located
 knitr::opts_knit$set(root.dir = "../examples/hello_world/") 
+# Remove hashtags before bash output
+knitr::opts_chunk$set(comment = NA)
 ```
 
 This example demonstrates how to wrap a simple 'hello world' bash script with viash.

@@ -34,8 +34,8 @@ viash:
 ./script.sh
 ```
 
-    ## ./script.sh: line 5: $'\r': command not found
-    ## Hello world! I am debug!
+    ./script.sh: line 5: $'\r': command not found
+    Hello world! I am debug!
 
 Next, we write a meta-file describing the functionality of this
 component in YAML format.
