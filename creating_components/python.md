@@ -14,8 +14,6 @@ This is a simple script which prints a simple message, along with any
 input provided to it through the `par["input"]` parameter. Optionally,
 you can override the greeter with `par["greeter"]`.
 
-    Warning in readLines(path): incomplete final line found on 'script.py'
-
 Contents of [`script.py`](script.py):
 
 ``` bash
