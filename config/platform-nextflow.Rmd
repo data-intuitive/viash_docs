@@ -303,4 +303,37 @@ result \
 
 One more option is to use the `branch` or `multiMap` `Channel` forking operators in NextFlow.
 
+## Access arguments from the `nextflow` CLI (`v0.4.1+`)
 
+We provide a way to access the argument values for all the arguments for every component from the NextFlow CLI. All components store their respective arguments under a component-specific key that corresponds to the component name.
+
+Furthermore, the value that will effectively be passed to the process depends on the following attributes for an argument:
+
+```yaml
+required: true/false
+default: ...
+```
+
+If an argument is `required: true`, it can have
+
+- a `default: ...` value: It will use this default value on the CLI unless you override it on the CLI
+- no default value: In this case, one has to provide a value when starting a NextFlow pipeline. Otherwise viash will give a warning and NXF will throw an error.
+
+If an argument is `required: false`, it can have
+
+- `a default: ...` value: It will use this default value unless you override it from the CLI
+- no default value: In this case, this argument will not be present on the CLI, but it can still be overridden from the CLI
+
+Please refer to [this issue](https://github.com/data-intuitive/viash/issues/46) for more information.
+
+Given the above, its possible to override any of these using the following scheme:
+
+```
+--<component_name>__<argument_name> <value>
+```
+
+For instance:
+
+```
+nextflow run main.nf --filter__threshold 0.2
+```
