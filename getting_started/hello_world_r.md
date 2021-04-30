@@ -123,9 +123,11 @@ par <- list(
 cat(par$greeter, " ", paste(par$input, collapse = " "), "\n", sep = "")
 ```
 
-Any variables in the `par` list between the `## VIASH START` and
-`## VIASH END` lines will automatically be replaced at runtime with
-parameter values from the CLI.
+Any variables defined in the config file will be automatically generated
+between the `## VIASH START` and `## VIASH END` lines. You can add
+pre-defined values here for debugging purposes by adding the variables
+in a `par` list. Their values will automatically be replaced at runtime
+with parameter values from the CLI.
 
 Finally, there’s a **tests** section to put your test scripts. It’s a
 good practice to write tests and run these every time you update your
