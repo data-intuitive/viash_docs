@@ -26,11 +26,11 @@ You can run a simple ‘Hello World’ component by running the following
 command:
 
 ``` bash
-URL=http://www.data-intuitive.com/viash_docs/examples/hello_world/config.vsh.yaml
+URL=http://www.data-intuitive.com/viash_docs/examples/hello_world_r/config.vsh.yaml
 viash run $URL
 ```
 
-    Hello world!
+    Hello world! 
 
 Every component accepts –help as an option, which outputs a description
 of the component and a list of accepted options. Run the command below
@@ -59,10 +59,10 @@ viash run $URL -- NAME. --greeter="Hello there,"
 
     Hello there, NAME.
 
-## How does the Hello World component work?
+## How Does the Hello World Component Work?
 
 When you call ‘viash run’, viash parses the
-[`config.vsh.yaml`](http://www.data-intuitive.com/viash_docs/examples/hello_world/config.vsh.yaml)
+[`config.vsh.yaml`](http://www.data-intuitive.com/viash_docs/examples/hello_world_r/config.vsh.yaml)
 file, which is a meta description of the component written in the yaml
 serialization language:
 
@@ -107,7 +107,7 @@ The ‘Hello World’ component accepts two arguments:
 
 These arguments are passed on to the **resources**. In this case,
 there’s a single reference to a file named
-[`script.r`](http://www.data-intuitive.com/viash_docs/examples/hello_world/script.r).
+[`script.r`](http://www.data-intuitive.com/viash_docs/examples/hello_world_r/script.r).
 This file is the ‘brain’ of the component, it’s small R script which
 prints out two environment values: `par_input` and `par_greeter`:
 
@@ -170,8 +170,26 @@ The results should be exactly the same as viash automatically picks the
 first platform when you don’t pass the platform option, in this case
 that’s `native`.
 
-<!-- ## Exporting a Component -->
-<!-- Components can be exported... TODO -->
+## Exporting a Component as an Executable
+
+Components can be exported to executables, making it easy to share
+scripted functionality without the need to have viash installed on the
+target system.  
+Run the following command to make viash parse the config file and export
+the result to an executable called **hello\_world\_r** in a (new) folder
+named **my\_hello\_world**:
+
+``` bash
+viash build $URL -o my_hello_world
+```
+
+You can now run the following command to run the generated executable:
+
+``` bash
+my_hello_world/hello_world_r NAME. --greeter="Hello there,"
+```
+
+    Hello there, NAME.
 
 ## What’s Next?
 

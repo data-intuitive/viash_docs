@@ -31,7 +31,7 @@ To follow along with this tutorial, you need to have this software installed on 
 
 You can run a simple 'Hello World' component by running the following command:
 ```{bash}
-URL=http://www.data-intuitive.com/viash_docs/examples/hello_world/config.vsh.yaml
+URL=http://www.data-intuitive.com/viash_docs/examples/hello_world_r/config.vsh.yaml
 viash run $URL
 ```
 
@@ -40,7 +40,7 @@ Every component accepts --help as an option, which outputs a description of the 
 viash run $URL -- --help
 ```
 ```{bash, echo=FALSE}
-URL=http://www.data-intuitive.com/viash_docs/examples/hello_world/config.vsh.yaml
+URL=http://www.data-intuitive.com/viash_docs/examples/hello_world_r/config.vsh.yaml
 viash run $URL -- --help
 ```
 
@@ -49,13 +49,13 @@ As you can see, the 'Hello World' component accepts several string arguments and
 viash run $URL -- NAME. --greeter="Hello there,"
 ```
 ```{bash, echo=FALSE}
-URL=http://www.data-intuitive.com/viash_docs/examples/hello_world/config.vsh.yaml
+URL=http://www.data-intuitive.com/viash_docs/examples/hello_world_r/config.vsh.yaml
 viash run $URL -- NAME. --greeter="Hello there,"
 ```
 
-## How does the Hello World component work?
+## How Does the Hello World Component Work?
 
-When you call 'viash run', viash parses the [`config.vsh.yaml`](http://www.data-intuitive.com/viash_docs/examples/hello_world/config.vsh.yaml) file, which is a meta description of the component written in the yaml serialization language:
+When you call 'viash run', viash parses the [`config.vsh.yaml`](http://www.data-intuitive.com/viash_docs/examples/hello_world_r/config.vsh.yaml) file, which is a meta description of the component written in the yaml serialization language:
 
 ```{r, echo = FALSE}
 print_file("config.vsh.yaml", format = "yaml", show_filename = FALSE)
@@ -71,7 +71,7 @@ The **functionality** attribute describes the core functionality of the componen
 - A `string` named **input** that accepts multiple space-separated arguments.
 - A second `string` named **--greeter** which defaults to "Hello world!".
 
-These arguments are passed on to the **resources**. In this case, there's a single reference to a file named [`script.r`](http://www.data-intuitive.com/viash_docs/examples/hello_world/script.r). This file is the 'brain' of the component, it's small R script which prints out two environment values: `par_input` and `par_greeter`: 
+These arguments are passed on to the **resources**. In this case, there's a single reference to a file named [`script.r`](http://www.data-intuitive.com/viash_docs/examples/hello_world_r/script.r). This file is the 'brain' of the component, it's small R script which prints out two environment values: `par_input` and `par_greeter`: 
 
 ```{r, echo = FALSE}
 print_file("script.R", format = "r", show_filename = FALSE)
@@ -106,14 +106,32 @@ You can specify what platform a component should run on by passing the `-p` or `
 viash run -p native $URL -- Mike. --greeter="Hello there,"
 ```
 ```{bash, echo=FALSE}
-URL=http://www.data-intuitive.com/viash_docs/examples/hello_world/config.vsh.yaml
+URL=http://www.data-intuitive.com/viash_docs/examples/hello_world_r/config.vsh.yaml
 viash run -p native $URL -- Mike. --greeter="Hello there,"
 ```
 The results should be exactly the same as viash automatically picks the first platform when you don't pass the platform option, in this case that's `native`.
 
-<!-- ## Exporting a Component -->
+## Exporting a Component as an Executable
 
-<!-- Components can be exported... TODO -->
+Components can be exported to executables, making it easy to share scripted functionality without the need to have viash installed on the target system.  
+Run the following command to make viash parse the config file and export the result to an executable called **hello_world_r** in a (new) folder named **my_hello_world**:
+
+```{bash, eval=FALSE}
+viash build $URL -o my_hello_world
+```
+```{bash, echo=FALSE}
+URL=http://www.data-intuitive.com/viash_docs/examples/hello_world_r/config.vsh.yaml
+viash build $URL -o my_hello_world
+```
+
+You can now run the following command to run the generated executable:
+
+```{bash, eval=FALSE}
+my_hello_world/hello_world_r NAME. --greeter="Hello there,"
+```
+```{bash, echo=FALSE}
+my_hello_world/hello_world_r NAME. --greeter="Hello there,"
+```
 
 ## What's Next?
 
@@ -122,3 +140,7 @@ Now that you understand the basics of how viash works, take a look at how to wri
 - [Bash example](/getting_started/example_bash)
 - [Python example](/getting_started/example_python)
 - [R example](/getting_started/example_r)
+
+```{bash cleanup, echo=FALSE}
+rm -r my_hello_world
+```

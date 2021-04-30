@@ -57,7 +57,7 @@ viash run $URL -- NAME. --greeter="Hello there,"
 
     Hello there, NAME.
 
-## How does the Hello World component work?
+## How Does the Hello World Component Work?
 
 When you call ‘viash run’, viash parses the
 [`config.vsh.yaml`](http://www.data-intuitive.com/viash_docs/examples/hello_world/config.vsh.yaml)
@@ -162,17 +162,35 @@ You can specify what platform a component should run on by passing the
 command:
 
 ``` bash
-viash run -p native $URL -- Mike. --greeter="Hello there,"
+viash run -p native $URL -- NAME. --greeter="Hello there,"
 ```
 
-    Hello there, Mike.
+    Hello there, NAME.
 
 The results should be exactly the same as viash automatically picks the
 first platform when you don’t pass the platform option, in this case
 that’s `native`.
 
-<!-- ## Exporting a Component -->
-<!-- Components can be exported... TODO -->
+## Exporting a Component as an Executable
+
+Components can be exported to executables, making it easy to share
+scripted functionality without the need to have viash installed on the
+target system.  
+Run the following command to make viash parse the config file and export
+the result to an executable called **hello\_world** in a (new) folder
+named **my\_hello\_world**:
+
+``` bash
+viash build $URL -o my_hello_world
+```
+
+You can now run the following command to run the generated executable:
+
+``` bash
+my_hello_world/hello_world NAME. --greeter="Hello there,"
+```
+
+    Hello there, NAME.
 
 ## What’s Next?
 
