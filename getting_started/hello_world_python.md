@@ -200,6 +200,6 @@ my_hello_world/hello_world_py NAME. --greeter="Hello there,"
 Now that you understand the basics of how viash works, take a look at
 how to write your own component:
 
--   [Bash example](/getting_started/example_bash)
--   [Python example](/getting_started/example_python)
--   [R example](/getting_started/example_r)
+-   [Creating a Bash component](/creating_components/bash)
+-   [Creating a Python component](/creating_components/python)
+-   [Creating an R component](/creating_components/r)
