@@ -9,4 +9,5 @@ editor_options:
 # Creating Components
 
 You can create your own viash components using any of the [supported
-languages](#). <!-- TODO: Add page with supported languages! -->
+languages](/getting_started/supported_languages).
+<!-- TODO: Add page with supported languages! -->
