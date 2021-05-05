@@ -1,7 +1,7 @@
 ---
 title: "Hello World (Bash)"
 parent: Getting started
-nav_order: 2
+nav_order: 3
 ---
 
 # Hello World
