@@ -10,4 +10,3 @@ editor_options:
 
 You can create your own viash components using any of the [supported
 languages](/getting_started/supported_languages).
-<!-- TODO: Add page with supported languages! -->
