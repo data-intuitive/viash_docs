@@ -1,0 +1,21 @@
+functionality:
+  name: check_if_urls_reachable
+  description: Check URLs in a markdown are reachable and create a text report with the results.
+  arguments:                     
+  - type: file
+    name: inputfile
+    description: The input markdown file.
+  - type: string                           
+    name: --domain
+    description: The domain URL that gets inserted before any relative URLs.
+  - type: string                           
+    name: --output
+    description: The path of the output text file.
+    default: "output.txt"
+  resources:
+  - type: bash_script
+    path: script.sh
+platforms:
+  - type: native
+  - type: docker
+    image: bash:4.0
