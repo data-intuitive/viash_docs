@@ -529,6 +529,8 @@ for (i in seq_along(rmds)) {
     )
   }
 }
+
+message('DONE!')
 VIASHMAIN
 PATH="$VIASH_RESOURCES_DIR:\$PATH"
 
