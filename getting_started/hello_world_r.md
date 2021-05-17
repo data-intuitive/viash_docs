@@ -15,7 +15,7 @@ a result back from it.
 To follow along with this tutorial, you need to have this software
 installed on your machine:
 
--   An [installation of viash](../installation).
+-   An [installation of viash](/getting_started/installation).
 -   A **Unix shell** like Bash or Zsh.
 -   An [installation of the R software
     environment](https://cran.r-project.org/mirrors.html)

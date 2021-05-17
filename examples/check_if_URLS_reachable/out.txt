@@ -1,3 +1,0 @@
-Scala 2.12 https://www.scala-lang.org
-Autotools https://www.gnu.org/software/automake/manual/html_node
-sbt https://www.scala-sbt.org

@@ -23,7 +23,7 @@ We have provided a simple **Hello World** component as an introduction to viash.
 
 To follow along with this tutorial, you need to have this software installed on your machine:
 
-- An [installation of viash](../installation).
+- An [installation of viash](/getting_started/installation).
 - A **Unix shell** like Bash or Zsh.
 - An [installation of python 3](https://www.python.org/downloads). You may have to install the `python-is-python3` package on Ubuntu and its derivatives to make Python 3 the default version.
 

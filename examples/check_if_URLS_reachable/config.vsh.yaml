@@ -19,3 +19,6 @@ platforms:
   - type: native
   - type: docker
     image: bash:4.0
+    setup:
+      - type: apk
+        packages: [ curl ]
