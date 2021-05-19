@@ -9,12 +9,21 @@ library(tidyverse)
 source("../src/helper/md_helpers.R")
 
 # change wd to where the files are located
-knitr::opts_knit$set(root.dir = "../examples/hello_world/") 
+knitr::opts_knit$set(root.dir = "../examples/check_if_URLS_reachable/") 
 # Remove hashtags before bash output
 knitr::opts_chunk$set(comment = NA)
 ```
 
-## Developing a new component
+# Developing a new component
+
+## Write a script in Bash
+
+## Describe the component using YAML
+
+## Run the component
+
+## Building an executable
+
 
 The first step of developing this component, is writing the core functionality of the component, in this case a bash script. 
 
@@ -63,11 +72,11 @@ You just need to write a Bash script (or R, or Python) which runs the executable
 times, and verifies the output. Take note that the test needs to produce an error code not equal to
 0 when a mistake is found.
 
-
-```{r, echo = FALSE}
-print_file("test.sh")
-```
+TODO: Add unit test
 
 When running the test, viash will automatically build an executable and place it -- along with other 
 resources and test resources -- in a temporary working directory.
 
+```{bash cleanup, echo=FALSE}
+rm -r output.txt
+```

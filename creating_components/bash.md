@@ -3,7 +3,15 @@ title: "Creating a Bash component"
 parent: Creating components
 ---
 
-## Developing a new component
+# Developing a new component
+
+## Write a script in Bash
+
+## Describe the component using YAML
+
+## Run the component
+
+## Building an executable
 
 The first step of developing this component, is writing the core
 functionality of the component, in this case a bash script.
@@ -17,12 +25,62 @@ can override the greeter with `par_greeter`.
 Contents of [`script.sh`](script.sh):
 
 ``` bash
+#!/usr/bin/env bash
+
 ## VIASH START
-par_input="I am debug!"
-par_greeter="Hello world!"
+
+par_inputfile="Testfile.md"
+par_domain="http://www.data-intuitive.com/viash_docs"
+par_output="output.txt"
+
 ## VIASH END
 
-echo $par_greeter $par_input
+amount_of_errors=0
+
+echo "Extracting URLs..."
+
+# Extract the titles and URLs from the markdown file with sed and put them into arrays
+readarray -t title_array <<<$(sed -rn 's@^.*\[(.*)\]\((.*)\).*$@\1@p' $par_inputfile)
+readarray -t url_array <<<$(sed -rn 's@^.*\[(.*)\]\((.*)\).*$@\2@p' $par_inputfile)
+
+# Get length of array
+amount_of_urls=$(echo "${#url_array[@]}")
+
+echo "Checking $amount_of_urls URLs..."
+
+# Clear file
+>$par_output
+
+# Print each value of the array by using loop
+for ((n = 0; n < ${#title_array[*]}; n++)); do
+    title="${title_array[n]}"
+    url="${url_array[n]}"
+
+    # If an URL doesn't start with 'http', add the domain before it
+    if [[ $url != http* ]]; then
+        url="$par_domain${url_array[n]}"
+    fi
+
+    echo -e "Link name: $title" >>$par_output
+    echo -e "URL: $url" >>$par_output
+
+    # Do a cURL and get the status code from the last response after following any redirects
+    status_code=$(curl -ILs --max-redirs 5 $url | tac | grep -m1 HTTP)
+    expected_code="200"
+
+    # Check if status code obtained via cURL contains the expected code
+    if [[ $status_code == *$expected_code* ]]; then
+        echo -e "Status: OK, can be reached." >>$par_output
+    else
+        echo $status_code
+        echo -e "Status: ERROR! URL cannot be reached. Status code: $status_code" >>$par_output
+        amount_of_errors=$(($amount_of_errors + 1))
+    fi
+
+    echo -e "---" >>$par_output
+done
+
+echo "$par_inputfile has been checked and a report named $par_output has been generated. $amount_of_errors of $amount_of_urls URLs could not be resolved."
 ```
 
 Anything between the `## VIASH START` and `## VIASH END` lines will
@@ -34,8 +92,10 @@ viash:
 ./script.sh
 ```
 
-    ./script.sh: line 5: $'\r': command not found
-    Hello world! I am debug!
+    Extracting URLs...
+    Checking 6 URLs...
+    HTTP/2 404 
+    Testfile.md has been checked and a report named output.txt has been generated. 1 of 6 URLs could not be resolved.
 
 Next, we write a meta-file describing the functionality of this
 component in YAML format.
@@ -50,32 +110,29 @@ Contents of [`yaml`](config.vsh.yaml):
 
 ``` bash
 functionality:
-  name: hello_world
-  description: A very simple 'Hello world' component.
-  arguments:
-  - type: string
-    name: input
-    multiple: true
-    multiple_sep: " "
-  - type: string
-    name: --greeter
-    default: "Hello world!"
+  name: check_if_urls_reachable
+  description: Check URLs in a markdown are reachable and create a text report with the results.
+  arguments:                     
+  - type: file
+    name: inputfile
+    description: The input markdown file.
+  - type: string                           
+    name: --domain
+    description: The domain URL that gets inserted before any relative URLs.
+  - type: string                           
+    name: --output
+    description: The path of the output text file.
+    default: "output.txt"
   resources:
   - type: bash_script
     path: script.sh
-  tests:
-  - type: bash_script
-    path: test.sh
 platforms:
   - type: native
   - type: docker
     image: bash:4.0
-  - type: docker
-    id: alpine
-    image: alpine
     setup:
       - type: apk
-        packages: [ bash ]
+        packages: [ curl ]
 ```
 
 The [functionality](config/functionality) section describes the core
@@ -99,35 +156,7 @@ need to write a Bash script (or R, or Python) which runs the executable
 multiple times, and verifies the output. Take note that the test needs
 to produce an error code not equal to 0 when a mistake is found.
 
-Contents of [`test.sh`](test.sh):
-
-``` bash
-set -ex # exit the script when one of the checks fail.
-
-# check 1
-echo ">>> Checking whether output is correct"
-./hello_world I am viash! > output.txt
-
-[[ ! -f output.txt ]] && echo "Output file could not be found!" && exit 1
-grep -q 'Hello world! I am viash!' output.txt
-
-# check 2
-echo ">>> Checking whether output is correct when no parameters are given"
-./hello_world > output2.txt
-
-[[ ! -f output2.txt ]] && echo "Output file could not be found!" && exit 1
-grep -q 'Hello world!' output2.txt
-
-# check 3
-echo ">>> Checking whether output is correct when more parameters are given"
-./hello_world General Kenobi. --greeter="Hello there." > output3.txt
-
-[[ ! -f output3.txt ]] && echo "Output file could not be found!" && exit 1
-grep -q 'Hello there. General Kenobi.' output3.txt
-
-echo ">>> Test finished successfully!"
-exit 0 # don't forget to put this at the end
-```
+TODO: Add unit test
 
 When running the test, viash will automatically build an executable and
 place it – along with other resources and test resources – in a
