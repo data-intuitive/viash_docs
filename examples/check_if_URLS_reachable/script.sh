@@ -10,7 +10,7 @@ par_output="output.txt"
 
 amount_of_errors=0
 
-echo "Extracting URLs..."
+echo "Extracting URLs"
 
 # Extract the titles and URLs from the markdown file with sed and put them into arrays
 readarray -t title_array <<<$(sed -rn 's@^.*\[(.*)\]\((.*)\).*$@\1@p' $par_inputfile)
@@ -19,7 +19,7 @@ readarray -t url_array <<<$(sed -rn 's@^.*\[(.*)\]\((.*)\).*$@\2@p' $par_inputfi
 # Get length of array
 amount_of_urls=$(echo "${#url_array[@]}")
 
-echo "Checking $amount_of_urls URLs..."
+echo "Checking $amount_of_urls URLs"
 
 # Clear file
 >$par_output
@@ -34,6 +34,8 @@ for ((n = 0; n < ${#title_array[*]}; n++)); do
         url="$par_domain${url_array[n]}"
     fi
 
+    echo "$(($n + 1)): $url"
+
     echo -e "Link name: $title" >>$par_output
     echo -e "URL: $url" >>$par_output
 
@@ -43,6 +45,7 @@ for ((n = 0; n < ${#title_array[*]}; n++)); do
 
     # Check if status code obtained via cURL contains the expected code
     if [[ $status_code == *$expected_code* ]]; then
+        echo "OK"
         echo -e "Status: OK, can be reached." >>$par_output
     else
         echo $status_code

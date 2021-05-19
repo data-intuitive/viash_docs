@@ -3,8 +3,10 @@ functionality:
   description: Check URLs in a markdown are reachable and create a text report with the results.
   arguments:                     
   - type: file
-    name: inputfile
+    name: --inputfile
     description: The input markdown file.
+    required: true
+    must_exist: true
   - type: string                           
     name: --domain
     description: The domain URL that gets inserted before any relative URLs.
@@ -18,7 +20,7 @@ functionality:
 platforms:
   - type: native
   - type: docker
-    image: bash:4.0
+    image: bash:latest
     setup:
       - type: apk
         packages: [ curl ]

@@ -14,7 +14,11 @@ knitr::opts_knit$set(root.dir = "../examples/check_if_URLS_reachable/")
 knitr::opts_chunk$set(comment = NA)
 ```
 
-# Developing a new component
+# Developing a new viash component
+
+In order to create a component you need two files: a script for the functionality and a config file that describes the component.
+
+
 
 ## Write a script in Bash
 
