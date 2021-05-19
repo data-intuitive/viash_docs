@@ -3,26 +3,38 @@ title: "Creating a Bash component"
 parent: Creating components
 ---
 
-# Developing a new component
+# Developing a new viash component
+
+In this tutorial, you’ll create a component that does the following:
+
+-   Extract all hyperlinks from a markdown file
+-   Check if every URL is reachable
+-   Create a text report with the results
+
+The component will be able to run locally and as a docker container. In
+order to create a component you need two files: a script for the
+functionality and a config file that describes the component. Let’s get
+started!
+
+## Prerequisites
+
+To follow along with this tutorial, you need to have this software
+installed on your machine:
+
+-   An [installation of viash](/getting_started/installation).
+-   A **Unix shell** like Bash or Zsh.
+
+We recommend you take a look at the [hello world
+example](/getting_started/hello_world_bash) first to understand how
+components work.
 
 ## Write a script in Bash
 
-## Describe the component using YAML
-
-## Run the component
-
-## Building an executable
-
 The first step of developing this component, is writing the core
-functionality of the component, in this case a bash script.
-
-#### Write a script in Bash
-
-This is a simple script which prints a simple message, along with any
-input provided to it through the `par_input` parameter. Optionally, you
-can override the greeter with `par_greeter`.
-
-Contents of [`script.sh`](script.sh):
+functionality of the component, in this case a bash script.  
+Create a new folder named “my\_viash\_component” and open it. Now create
+a new file named **script.sh** in there and add this code as its
+content:
 
 ``` bash
 #!/usr/bin/env bash
@@ -37,7 +49,7 @@ par_output="output.txt"
 
 amount_of_errors=0
 
-echo "Extracting URLs..."
+echo "Extracting URLs"
 
 # Extract the titles and URLs from the markdown file with sed and put them into arrays
 readarray -t title_array <<<$(sed -rn 's@^.*\[(.*)\]\((.*)\).*$@\1@p' $par_inputfile)
@@ -46,7 +58,7 @@ readarray -t url_array <<<$(sed -rn 's@^.*\[(.*)\]\((.*)\).*$@\2@p' $par_inputfi
 # Get length of array
 amount_of_urls=$(echo "${#url_array[@]}")
 
-echo "Checking $amount_of_urls URLs..."
+echo "Checking $amount_of_urls URLs"
 
 # Clear file
 >$par_output
@@ -61,6 +73,8 @@ for ((n = 0; n < ${#title_array[*]}; n++)); do
         url="$par_domain${url_array[n]}"
     fi
 
+    echo "$(($n + 1)): $url"
+
     echo -e "Link name: $title" >>$par_output
     echo -e "URL: $url" >>$par_output
 
@@ -70,6 +84,7 @@ for ((n = 0; n < ${#title_array[*]}; n++)); do
 
     # Check if status code obtained via cURL contains the expected code
     if [[ $status_code == *$expected_code* ]]; then
+        echo "OK"
         echo -e "Status: OK, can be reached." >>$par_output
     else
         echo $status_code
@@ -83,6 +98,18 @@ done
 echo "$par_inputfile has been checked and a report named $par_output has been generated. $amount_of_errors of $amount_of_urls URLs could not be resolved."
 ```
 
+## Describe the component using YAML
+
+## Run the component
+
+## Building an executable
+
+#### Write a script in Bash
+
+This is a simple script which prints a simple message, along with any
+input provided to it through the `par_input` parameter. Optionally, you
+can override the greeter with `par_greeter`.
+
 Anything between the `## VIASH START` and `## VIASH END` lines will
 automatically be replaced at runtime with parameter values from the CLI.
 Anything between these two lines can be used to test the script without
@@ -92,9 +119,20 @@ viash:
 ./script.sh
 ```
 
-    Extracting URLs...
-    Checking 6 URLs...
+    Extracting URLs
+    Checking 6 URLs
+    1: https://www.google.com
+    OK
+    2: https://www.reddit.com
+    OK
+    3: http://microsoft.com/random-link
     HTTP/2 404 
+    4: http://www.data-intuitive.com/viash_docs/
+    OK
+    5: http://www.data-intuitive.com/viash_docs/getting_started/installation
+    OK
+    6: http://www.data-intuitive.com/viash_docs/good_practices/testing
+    OK
     Testfile.md has been checked and a report named output.txt has been generated. 1 of 6 URLs could not be resolved.
 
 Next, we write a meta-file describing the functionality of this
@@ -114,8 +152,10 @@ functionality:
   description: Check URLs in a markdown are reachable and create a text report with the results.
   arguments:                     
   - type: file
-    name: inputfile
+    name: --inputfile
     description: The input markdown file.
+    required: true
+    must_exist: true
   - type: string                           
     name: --domain
     description: The domain URL that gets inserted before any relative URLs.
@@ -129,7 +169,7 @@ functionality:
 platforms:
   - type: native
   - type: docker
-    image: bash:4.0
+    image: bash:latest
     setup:
       - type: apk
         packages: [ curl ]

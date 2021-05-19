@@ -56,4 +56,6 @@ for ((n = 0; n < ${#title_array[*]}; n++)); do
     echo -e "---" >>$par_output
 done
 
-echo "$par_inputfile has been checked and a report named $par_output has been generated. $amount_of_errors of $amount_of_urls URLs could not be resolved."
+echo ""
+echo "$par_inputfile has been checked and a report named $par_output has been generated.
+$amount_of_errors of $amount_of_urls URLs could not be resolved."
