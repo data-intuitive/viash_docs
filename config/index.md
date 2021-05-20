@@ -36,8 +36,7 @@ these subsections.
 
 ## Example
 
-Contents of
-[`config.vsh.yaml`](../examples/addrowlines/config.vsh.yaml):
+Contents of [`config.vsh.yaml`](config.vsh.yaml):
 
 ``` yaml
 functionality:
@@ -58,7 +57,7 @@ platforms:
     image: bash:4.0
 ```
 
-Contents of [`script.sh`](../examples/addrowlines/script.sh):
+Contents of [`script.sh`](script.sh):
 
 ``` bash
 cat -n $par_input
@@ -70,11 +69,11 @@ The component can be executed as follows.
 viash run config.vsh.yaml -- config.vsh.yaml | head -5
 ```
 
-    ##      1   functionality:
-    ##      2     name: addrowlines
-    ##      3     description: Add rowlines to a text file.
-    ##      4     arguments:
-    ##      5     - name: input
+         1  functionality:
+         2    name: addrowlines
+         3    description: Add rowlines to a text file.
+         4    arguments:
+         5    - name: input                           
 
 Would you rather use Docker as a backend? Easy as pie!
 
@@ -82,17 +81,17 @@ Would you rather use Docker as a backend? Easy as pie!
 viash run -P docker config.vsh.yaml -- config.vsh.yaml | head -5
 ```
 
-    ## Unable to find image 'addrowlines:latest' locally
-    ## docker: Error response from daemon: pull access denied for addrowlines, repository does not exist or may require 'docker login': denied: requested access to the resource is denied.
-    ## See 'docker run --help'.
+    Unable to find image 'addrowlines:latest' locally
+    docker: Error response from daemon: pull access denied for addrowlines, repository does not exist or may require 'docker login': denied: requested access to the resource is denied.
+    See 'docker run --help'.
 
 ``` bash
 viash run config.vsh.yaml -- --help
 ```
 
-    ## Add rowlines to a text file.
-    ## 
-    ## Options:
-    ##     file
-    ##         type: file
-    ##         The input file.
+    Add rowlines to a text file.
+
+    Options:
+        file
+            type: file
+            The input file.

@@ -178,7 +178,7 @@ Next, run the script by executing this command:
 ./script.sh
 ```
 
-The script will now show the following:
+The script will now show the following output:
 
     Extracting URLs
     Checking 6 URLs
@@ -198,20 +198,58 @@ The script will now show the following:
     Testfile.md has been checked and a report named output.txt has been generated.
     1 of 6 URLs could not be resolved.
 
+If you get this same output, that means the script is working as
+intended! Feel free to take a peek at the generated **output.txt** file
+as well. You might have noticed you didn’t have to provide any
+arguments, that’s because the values are hard-coded into the script for
+debugging purposes.
+
+Now the script has been tested, it’s time to create a config file to
+describe the component based on it.
+
 ## Describe the component using YAML
 
-Create new file named config.vsh.yaml Every config file needs at least
-two attributes:
+A **viash config file** is a [YAML](https://yaml.org/) file that
+describes the behavior and supported platforms of a viash component.
+Create new file named **config.vsh.yaml** and paste the following
+template inside of it:
+
+``` yaml
+functionality:
+  name: NAME
+  description: DESCRIPTION
+  arguments:                     
+  - type: string
+    name: --input
+    description: INPUT DESCRIPTION
+  resources:
+  - type: LANGUAGE_script
+    path: SCRIPT
+platforms:
+  - type: native
+```
+
+Every config file requires these two dictionaries:
 [functionality](http://www.data-intuitive.com/viash_docs/getting_started/hello_world_bash/#functionality)
 and
-[platforms](http://www.data-intuitive.com/viash_docs/getting_started/hello_world_bash/#platforms)
+[platforms](http://www.data-intuitive.com/viash_docs/getting_started/hello_world_bash/#platforms).
+This bare-bones config file makes it easy to “fill in the blanks” for
+this example. For more information about config files, you can take a
+look at the [Config](/config) page.
+
+Let’s start off by defining the functionality of our component.
 
 ### Defining the functionality
+
+The **functionality** dictionary describes what the component does and
+the resources it needs to do so. The first key is **name**, this will be
+the name of the component once it’s built. Replace **NAME** with
+**md\_url\_checker** or any other name of your choosing.
 
 ### Defining the platforms
 
 What platforms do you want the component to run on and what are the
-dependancies?
+dependencies?
 
 native = for developers that know what they’re doing or for simple
 components without any dependancies docker = recommended for most
@@ -229,7 +267,7 @@ The end result should look like this:
 
 ``` yaml
 functionality:
-  name: check_if_urls_reachable
+  name: md_url_checker
   description: Check URLs in a markdown are reachable and create a text report with the results.
   arguments:                     
   - type: file
@@ -239,7 +277,7 @@ functionality:
     must_exist: true
   - type: string                           
     name: --domain
-    description: The domain URL that gets inserted before any relative URLs. or example,"/documentation/intro" could be replaced with "https://my-website/documentation/intro" to create a valid URL.
+    description: The domain URL that gets inserted before any relative URLs. For example, "/documentation/intro" could be replaced with "https://my-website/documentation/intro" to create a valid URL.
   - type: string                           
     name: --output
     description: The path of the output text file that will contain the report.
@@ -310,7 +348,7 @@ Contents of [`yaml`](config.vsh.yaml):
 
 ``` bash
 functionality:
-  name: check_if_urls_reachable
+  name: md_url_checker
   description: Check URLs in a markdown are reachable and create a text report with the results.
   arguments:                     
   - type: file
@@ -320,7 +358,7 @@ functionality:
     must_exist: true
   - type: string                           
     name: --domain
-    description: The domain URL that gets inserted before any relative URLs. or example,"/documentation/intro" could be replaced with "https://my-website/documentation/intro" to create a valid URL.
+    description: The domain URL that gets inserted before any relative URLs. For example, "/documentation/intro" could be replaced with "https://my-website/documentation/intro" to create a valid URL.
   - type: string                           
     name: --output
     description: The path of the output text file that will contain the report.
