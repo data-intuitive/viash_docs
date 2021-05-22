@@ -15,12 +15,14 @@ functionality:
     description: The path of the output text file that will contain the report.
     default: "output.txt"
   resources:
-  - type: bash_script
-    path: script.sh
+  - type: python_script
+    path: script.py
 platforms:
   - type: native
   - type: docker
-    image: bash:latest
+    image: python:3.9.5-slim-buster
     setup:
-      - type: apk
-        packages: [ curl ]
+      - type: apt
+        packages: [ python3-lxml ]
+      - type: python
+        pip: [ markdown, lxml, requests ]

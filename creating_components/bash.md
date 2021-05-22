@@ -243,8 +243,40 @@ Let’s start off by defining the functionality of our component.
 
 The **functionality** dictionary describes what the component does and
 the resources it needs to do so. The first key is **name**, this will be
-the name of the component once it’s built. Replace **NAME** with
-**md\_url\_checker** or any other name of your choosing.
+the name of the component once it’s built. Replace the **NAME** value
+with **md\_url\_checker** or any other name of your choosing.
+
+Next up is the **description** key, its value will be printed out at the
+top when the **–help** command is called. Replace **DESCRIPTION** with
+“**Check if URLs in a markdown are reachable and create a text report
+with the results.**”. You can use multiple lines for a description by
+starting its value with a pipe (\|) and a new line, like so:
+
+``` yaml
+functionality:
+  name: md_url_checker
+  description: |
+    This is the first line of my description.
+    Here's a second line!
+```
+
+The **arguments** dictionary contains all of the arguments that are
+accepted by the component. These arguments will be injected as variables
+in the script. In the case of the example script, this are the variables
+we’re working with:
+
+-   `par_inputfile`
+-   `par_domain`
+-   `par_output`
+
+To create good arguments, you need to ask yourself a few essential
+questions about each variable:
+
+-   What is the most fitting [data
+    type](config/functionality/#arguments-list)?
+-   What is an appropriate name?
+-   How would I describe this variable?
+-   Is it required?
 
 ### Defining the platforms
 
@@ -268,7 +300,7 @@ The end result should look like this:
 ``` yaml
 functionality:
   name: md_url_checker
-  description: Check URLs in a markdown are reachable and create a text report with the results.
+  description: Check if URLs in a markdown are reachable and create a text report with the results.
   arguments:                     
   - type: file
     name: --inputfile
@@ -349,7 +381,7 @@ Contents of [`yaml`](config.vsh.yaml):
 ``` bash
 functionality:
   name: md_url_checker
-  description: Check URLs in a markdown are reachable and create a text report with the results.
+  description: Check if URLs in a markdown are reachable and create a text report with the results.
   arguments:                     
   - type: file
     name: --inputfile
