@@ -10,10 +10,11 @@ functionality:
   - type: string                           
     name: --domain
     description: The domain URL that gets inserted before any relative URLs. For example, "/documentation/intro" could be replaced with "https://my-website/documentation/intro" to create a valid URL.
-  - type: string                           
+  - type: file                           
     name: --output
     description: The path of the output text file that will contain the report.
     default: "output.txt"
+    direction: output
   resources:
   - type: python_script
     path: script.py

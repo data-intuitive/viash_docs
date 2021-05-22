@@ -17,7 +17,7 @@ functionality and a config file that describes the component.
 
 The files used in this tutorial can be found here:
 
-<https://github.com/data-intuitive/viash_docs/examples/check_if_URLS_reachable>
+<https://github.com/data-intuitive/viash_docs/examples/md_url_checker>
 
 ## Prerequisites
 
@@ -26,6 +26,7 @@ installed on your machine:
 
 -   An [installation of viash](/getting_started/installation).
 -   A **Unix shell** like Bash or Zsh.
+-   An installation of [Docker](https://www.docker.com/).
 -   An installation of [cURL](https://curl.se/). Install this via your
     package manager if you don’t have it installed yet.
 
@@ -274,9 +275,74 @@ questions about each variable:
 
 -   What is the most fitting [data
     type](config/functionality/#arguments-list)?
--   What is an appropriate name?
--   How would I describe this variable?
+-   Is it an input or an output?
 -   Is it required?
+
+Let’s take a closer look at `par_inputfile` for starters:
+
+We know it’s a file, as the script needs the path to a markdown **file**
+as its **input**. It’s also definitely a **required** variable, as the
+script would be pointless without it.  
+With this in mind, modify the first argument as follows:
+
+-   Change **type**’s value to **file**.
+-   Set **name**’s value to **–inputfile**. The name of an argument has
+    to match the variable name as the argument will be injected into the
+    final script. In the case of **bash** scripts, the variable name
+    gets a **‘par\_’** prefix add to it. This is the reason why the
+    script variables all start with **‘par\_’**.
+-   Use “**The input markdown file.**” for the **description** value.
+    This description will be included when the **–help** option is
+    called.
+-   Add a new key named **required** and set its value to **true**. This
+    ensures that the component will not be run without a value for this
+    argument.
+-   Add another key, name it **must\_exist** and set its value to
+    **true**. This key is unique to **file** type arguments, it adds
+    extra logic to the component to check if a file exists before
+    running the component. This saves you from having to do this check
+    yourself in the script.
+
+That’s it for the first argument! The result should look like this:
+
+``` yaml
+  - type: file
+    name: --inputfile
+    description: The input markdown file.
+    required: true
+    must_exist: true
+```
+
+Now for `par_domain`, this is a simple **optional string** that gets
+added before relative URLs. Make room for a new argument by creating a
+new line below `must_exist: true` and press **Shift + Tab** to back up
+one tab so the cursor is aligned with the start of the first argument.
+Add the `--domain` argument here:
+
+``` yaml
+  - type: string                           
+    name: --domain
+    description: The domain URL that gets inserted before any relative URLs. For example, "/documentation/intro" could be replaced with "https://my-website/documentation/intro" to create a valid URL.
+```
+
+If an argument isn’t required, you can simply omit the **required** key.
+Again, the variable name in the script will get the \*\*’\_par’\*\*
+prefix added automatically in bash scripts. Here’s what the arguments
+dictionary look like up until now:
+
+``` yaml
+  arguments:                     
+  - type: file
+    name: --inputfile
+    description: The input markdown file.
+    required: true
+    must_exist: true
+  - type: string                           
+    name: --domain
+    description: The domain URL that gets inserted before any relative URLs. For example, "/documentation/intro" could be replaced with "https://my-website/documentation/intro" to create a valid URL.
+```
+
+The final variable to create an argument for is `par_output`.
 
 ### Defining the platforms
 
@@ -310,10 +376,11 @@ functionality:
   - type: string                           
     name: --domain
     description: The domain URL that gets inserted before any relative URLs. For example, "/documentation/intro" could be replaced with "https://my-website/documentation/intro" to create a valid URL.
-  - type: string                           
+  - type: file                           
     name: --output
     description: The path of the output text file that will contain the report.
     default: "output.txt"
+    direction: output
   resources:
   - type: bash_script
     path: script.sh
@@ -391,10 +458,11 @@ functionality:
   - type: string                           
     name: --domain
     description: The domain URL that gets inserted before any relative URLs. For example, "/documentation/intro" could be replaced with "https://my-website/documentation/intro" to create a valid URL.
-  - type: string                           
+  - type: file                           
     name: --output
     description: The path of the output text file that will contain the report.
     default: "output.txt"
+    direction: output
   resources:
   - type: bash_script
     path: script.sh
