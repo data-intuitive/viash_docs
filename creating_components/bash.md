@@ -342,7 +342,54 @@ dictionary look like up until now:
     description: The domain URL that gets inserted before any relative URLs. For example, "/documentation/intro" could be replaced with "https://my-website/documentation/intro" to create a valid URL.
 ```
 
-The final variable to create an argument for is `par_output`.
+The final variable to create an argument for is `par_output`. This is
+another **file** and clearly an **output**. Its value **isn’t required**
+as we can use a **default** path if no explicit value is given.  
+Add yet another new argument with the following keys and values:
+
+-   Add a **type** key and set **file** as its value.
+-   The next key is **name**, use **–output** as its value.
+-   For the **description**, use “**The path of the output text file
+    that will contain the report.**”.
+-   Add a new key and name it **default**. This will act as the default
+    value when not specified by the user of the component. Set its value
+    to **“output.txt”**, including the quotation marks.
+-   Finally, add the **direction** key and set its value to **output**.
+    This specifies the direction of an argument as either **input** or
+    **output**, with input being the default. Specifying that an
+    argument is an output is important so the component can correctly
+    handle the writing of files and the passing of values in a pipeline.
+
+The finished argument should look like this:
+
+``` yaml
+  - type: file                           
+    name: --output
+    description: The path of the output text file that will contain the report.
+    default: "output.txt"
+    direction: output
+```
+
+With that, there’s just one more part of the functionality to fill in:
+the script itself!  
+Every viash component has one or more resources, the most important of
+which is often the script. The template already contains a **resources**
+dictionary, so replace the following values to point to the script:
+
+-   Set the value of **type** to **bash\_script**. The script used in
+    this case was written in **bash**, so the resource type is set
+    accordingly so viash knows what flavor of code to generate to create
+    the final component. You can find a full overview of the different
+    resource types on the [Functionality
+    page](/config/functionality/#resources-list).
+-   Change the value of **path** to **script.sh**. This points to the
+    resource and can be a relative path, an absolute path or even a URL.
+    In this case we keep the script in the same directory as the config
+    file to keep things simple.
+
+That finishes up the functionality side of the component! All that’s
+left is defining the platforms with their dependencies and then running
+and building the component.
 
 ### Defining the platforms
 
@@ -350,12 +397,19 @@ What platforms do you want the component to run on and what are the
 dependencies?
 
 native = for developers that know what they’re doing or for simple
-components without any dependancies docker = recommended for most
+components without any dependencies docker = recommended for most
 components, the dependencies are resolved by using docker containers,
 either from scratch or by pulling one from a docker repository. This has
 huge benefits as the end user doesn’t need to have any of the
 dependencies installed locally. nextflow = this converts the component
 into NextFlow module that can be imported into a pipeline
+
+The platforms section specifies the requirements to execute the
+component on zero or more platforms. The list of currently supported
+platforms are [Native](config/platform-native),
+[Docker](config/platform-docker), and
+[Nextflow](config/platform-nextflow). If no platforms are specified, a
+native platform with no system requirements is assumed.
 
 This example component will support both the native and docker platform
 
@@ -401,95 +455,10 @@ file.
 
 ## Building an executable
 
-#### Write a script in Bash
+## Writing a unit test
 
-This is a simple script which prints a simple message, along with any
-input provided to it through the `par_input` parameter. Optionally, you
-can override the greeter with `par_greeter`.
-
-Anything between the `## VIASH START` and `## VIASH END` lines will
-automatically be replaced at runtime with parameter values from the CLI.
-Anything between these two lines can be used to test the script without
-viash:
-
-``` bash
-./script.sh
-```
-
-    Extracting URLs
-    Checking 6 URLs
-    1: https://www.google.com
-    OK
-    2: https://www.reddit.com
-    OK
-    3: http://microsoft.com/random-link
-    HTTP/2 404 
-    4: http://www.data-intuitive.com/viash_docs/
-    OK
-    5: http://www.data-intuitive.com/viash_docs/getting_started/installation
-    OK
-    6: http://www.data-intuitive.com/viash_docs/good_practices/testing
-    OK
-
-    Testfile.md has been checked and a report named output.txt has been generated.
-    1 of 6 URLs could not be resolved.
-
-Next, we write a meta-file describing the functionality of this
-component in YAML format.
-
-#### Describe the component with as a YAML
-
-A [viash config](/config) file describes the behaviour of a script and
-the platform it runs on. It consists of two main sections:
-`functionality` and `platforms`.
-
-Contents of [`yaml`](config.vsh.yaml):
-
-``` bash
-functionality:
-  name: md_url_checker
-  description: Check if URLs in a markdown are reachable and create a text report with the results.
-  arguments:                     
-  - type: file
-    name: --inputfile
-    description: The input markdown file.
-    required: true
-    must_exist: true
-  - type: string                           
-    name: --domain
-    description: The domain URL that gets inserted before any relative URLs. For example, "/documentation/intro" could be replaced with "https://my-website/documentation/intro" to create a valid URL.
-  - type: file                           
-    name: --output
-    description: The path of the output text file that will contain the report.
-    default: "output.txt"
-    direction: output
-  resources:
-  - type: bash_script
-    path: script.sh
-platforms:
-  - type: native
-  - type: docker
-    image: bash:latest
-    setup:
-      - type: apk
-        packages: [ curl ]
-```
-
-The [functionality](config/functionality) section describes the core
-functionality of the component, such as its inputs, outputs, arguments,
-and extra resources. For each of the arguments, specifying a description
-and a set of argument restrictions help create a useful command-line
-interface. To ensure that your component works as expected, writing one
-or more tests is essential.
-
-The platforms section specifies the requirements to execute the
-component on zero or more platforms. The list of currently supported
-platforms are [Native](config/platform-native),
-[Docker](config/platform-docker), and
-[Nextflow](config/platform-nextflow). If no platforms are specified, a
-native platform with no system requirements is assumed.
-
-### Writing a first unit test
+To ensure that your component works as expected during its development
+cycles, writing one or more tests is essential.
 
 Writing a unit test for a viash component is relatively simple. You just
 need to write a Bash script (or R, or Python) which runs the executable
