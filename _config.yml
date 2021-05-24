@@ -45,9 +45,9 @@ heading_anchors: true
 # Aux links for the upper right navigation
 aux_links:
   "viash_docs on GitHub":
-    - "//github.com/data-intuitive/viash_docs"
+    - "https://github.com/data-intuitive/viash_docs"
   "viash on GitHub":
-    - "//github.com/data-intuitive/viash"
+    - "https://github.com/data-intuitive/viash"
 
 # Makes Aux links open in a new tab. Default is false
 aux_links_new_tab: false

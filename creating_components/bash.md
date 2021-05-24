@@ -393,23 +393,24 @@ and building the component.
 
 ### Defining the platforms
 
-What platforms do you want the component to run on and what are the
-dependencies?
-
-native = for developers that know what they’re doing or for simple
-components without any dependencies docker = recommended for most
-components, the dependencies are resolved by using docker containers,
-either from scratch or by pulling one from a docker repository. This has
-huge benefits as the end user doesn’t need to have any of the
-dependencies installed locally. nextflow = this converts the component
-into NextFlow module that can be imported into a pipeline
-
-The platforms section specifies the requirements to execute the
+The platforms dictionary specifies the requirements to execute the
 component on zero or more platforms. The list of currently supported
 platforms are [Native](config/platform-native),
 [Docker](config/platform-docker), and
 [Nextflow](config/platform-nextflow). If no platforms are specified, a
-native platform with no system requirements is assumed.
+native platform is assumed. Here’s a quick overview of the platforms:
+
+-   **native**: The platform for developers that know what they’re doing
+    or for simple components without any dependencies. All dependencies
+    need to be installed on the system the component is run on.
+-   **docker**: This platform is recommended for most components. The
+    dependencies are resolved by using [docker](https://www.docker.com/)
+    containers, either from scratch or by pulling one from a docker
+    repository. This has huge benefits as the end user doesn’t need to
+    have any of the dependencies installed locally.
+-   **nextflow**: This converts the component into a
+    [NextFlow](https://www.nextflow.io/) module that can be imported
+    into a pipeline.
 
 This example component will support both the native and docker platform
 
