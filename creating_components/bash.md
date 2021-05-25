@@ -166,8 +166,8 @@ Links that are relative to [Viash Docs](http://www.data-intuitive.com/viash_docs
 - It's important to write [tests](/good_practices/testing) for your components.
 ```
 
-Now open a terminal in the **my\_viash\_component** folder and execute
-the following command to make your script executable:
+Now open a terminal in the folder and execute the following command to
+make your script executable:
 
 ``` bash
 chmod +x ./script.sh
@@ -412,62 +412,185 @@ native platform is assumed. Here’s a quick overview of the platforms:
     [NextFlow](https://www.nextflow.io/) module that can be imported
     into a pipeline.
 
-This example component will support both the native and docker platform
-
-### Creating a final config file
-
-The end result should look like this:
+In this tutorial, we’ll take a look at both the native and docker
+platforms. The platforms are also defined in the **config.vsh.yaml**
+file at the very bottom. The native platform is actually already defined
+in the template, that one **type** key with a value of **native** is
+enough! Now for adding the docker platform, add a new line below the
+last and add the following:
 
 ``` yaml
-functionality:
-  name: md_url_checker
-  description: Check if URLs in a markdown are reachable and create a text report with the results.
-  arguments:                     
-  - type: file
-    name: --inputfile
-    description: The input markdown file.
-    required: true
-    must_exist: true
-  - type: string                           
-    name: --domain
-    description: The domain URL that gets inserted before any relative URLs. For example, "/documentation/intro" could be replaced with "https://my-website/documentation/intro" to create a valid URL.
-  - type: file                           
-    name: --output
-    description: The path of the output text file that will contain the report.
-    default: "output.txt"
-    direction: output
-  resources:
-  - type: bash_script
-    path: script.sh
-platforms:
-  - type: native
   - type: docker
     image: bash:latest
+```
+
+This tells viash that this component can be built to a docker container
+with the [latest bash image](https://hub.docker.com/_/bash) as its base.
+If your script doesn’t depend on any packages, this would be all you’d
+have to add when using a bash script. The script in our example however
+needs **curl** installed to work. Luckily, this isn’t a problem since
+viash [supports defining dependencies](config/platform-docker/#example)
+which then get pulled from inside the docker container before running
+the script. To add curl as a dependancy that needs to be installed, add
+these lines below `image: bash:latest`:
+
+``` yaml
     setup:
       - type: apk
         packages: [ curl ]
 ```
 
+This will prompt the
+[apk](https://wiki.alpinelinux.org/wiki/Alpine_Linux_package_management)
+package manager to download and install curl inside of the container.
+That’s it for the config! Be sure to save it and let’s move on to
+actually running the component you’ve created. For reference, you can
+take a look at the completed **config.vsh.yaml** file in [our Github
+repository](https://github.com/data-intuitive/viash_docs/tree/master/examples/md_url_checker/config.vsh.yaml).
+
 ## Run the component
 
-You can now also use one of your own markdown files as the input. In
-that case, replace **Testfile.md** in the command with the path to your
-file.
+Time to run the component! First off, let’s see what the output of
+`--help` is. To do that, open a terminal in the **my\_viash\_component**
+folder and execute the following command:
+
+``` bash
+viash run config.vsh.yaml -- --help
+```
+
+This will show the following:
+
+    Check if URLs in a markdown are reachable and create a text report with the results.
+
+    Options:
+        --inputfile=file
+            type: file, required parameter
+            The input markdown file.
+
+        --domain=string
+            type: string
+            The domain URL that gets inserted before any relative URLs. For example, /documentation/intro could be replaced with https://my-website/documentation/intro to create a valid URL.
+
+        --output=file
+            type: file, default: output.txt
+            The path of the output text file that will contain the report.
+
+As you can see, the values you entered into the config file are all
+here.  
+Next, let’s run the component natively with some arguments. You can use
+one of your own markdown files as the input if you desire. In that case,
+replace **Testfile.md** in the command with the path to your file.  
+Execute the following command to run the component with the default
+platform, in this case **native** as it’s the first in the **platforms**
+dictionary:
+
+``` bash
+viash run config.vsh.yaml -- --inputfile=Testfile.md --domain=http://www.data-intuitive.com/viash_docs/ --output=my_report.txt
+```
+
+If all goes well, you’ll see something like this output in the terminal
+and a file named **my\_report.txt** will have appeared:
+
+    Extracting URLs
+    Checking 6 URLs
+    1: https://www.google.com
+    OK
+    2: https://www.reddit.com
+    OK
+    3: http://microsoft.com/random-link
+    HTTP/2 404 
+    4: http://www.data-intuitive.com/viash_docs/
+    OK
+    5: http://www.data-intuitive.com/viash_docs//getting_started/installation
+    OK
+    6: http://www.data-intuitive.com/viash_docs//good_practices/testing
+    OK
+
+    Testfile.md has been checked and a report named my_report.txt has been generated.
+    1 of 6 URLs could not be resolved.
+
+For more information on the run command, take a look at [the viash run
+command page](/commands/run/). Great! With that working, the next step
+is building an executable.
 
 ## Building an executable
 
-## Writing a unit test
+You can generate an executable using either the native or the docker
+platform. The former will generate a file that can be run locally, but
+depends on your locally installed software packages to work. A docker
+executable on the other hand can build and start up a docker container
+that handles the dependencies for you.  
+To create a native build, execute the following command:
 
-To ensure that your component works as expected during its development
-cycles, writing one or more tests is essential.
+``` bash
+viash build config.vsh.yaml
+```
 
-Writing a unit test for a viash component is relatively simple. You just
-need to write a Bash script (or R, or Python) which runs the executable
-multiple times, and verifies the output. Take note that the test needs
-to produce an error code not equal to 0 when a mistake is found.
+A new folder named **output** will have been created with an executable
+inside named **md\_url\_checker**. To test it out, execute the following
+command:
 
-TODO: Add unit test
+``` bash
+output/md_url_checker --inputfile=Testfile.md --domain=http://www.data-intuitive.com/viash_docs/ --output=my_report.txt
+```
 
-When running the test, viash will automatically build an executable and
-place it – along with other resources and test resources – in a
-temporary working directory.
+The output is the same as by running the component, but the executable
+can be easily shared and now includes the ability to feed arguments to
+it and an included `--help` command. Not bad!  
+Next up is the docker executable. You can specify the platform with the
+`-p` argument and choose an output folder using `-o`, apart from that
+it’s the same as the previous build command:
+
+``` bash
+viash build -p docker -o docker_output config.vsh.yaml 
+```
+
+You’ll now have a **docker\_ouput** folder alongside the **output** one.
+This folder also contains a file named md\_url\_checker, but its inner
+workings are slightly different.  
+If you would simply run this file as with the native executable, you
+would run into an error as the docker container needs to be built first.
+You can let the executable prepare a docker container for you by using
+this command:
+
+``` bash
+docker_output/md_url_checker ---setup
+```
+
+This is a one time action for every docker executable. The output will
+look similar to this:
+
+    > docker build -t md_url_checker:latest /tmp/viashsetupdocker-md_url_checker-COeCgO
+
+Once that has finished, you can execute **md\_url\_checker** as if it
+was a native executable, but it will pass its arguments to the docker
+container:
+
+``` bash
+docker_output/md_url_checker --inputfile=Testfile.md --domain=http://www.data-intuitive.com/viash_docs/ --output=my_report.txt
+```
+
+For more information about the viash build command, take a look at [its
+command page](/commands/build/). That concludes the building of
+executables based on components using viash!
+
+<!-- ## Writing a unit test -->
+<!-- To ensure that your component works as expected during its development cycles, writing one or more tests is essential. -->
+<!-- Writing a unit test for a viash component is relatively simple.  -->
+<!-- You just need to write a Bash script (or R, or Python) which runs the executable multiple -->
+<!-- times, and verifies the output. Take note that the test needs to produce an error code not equal to -->
+<!-- 0 when a mistake is found. -->
+<!-- TODO: Add unit test -->
+<!-- When running the test, viash will automatically build an executable and place it -- along with other  -->
+<!-- resources and test resources -- in a temporary working directory. -->
+
+## What’s next?
+
+Now you’re ready to use viash to creating components from your own
+scripts, check out the rest of our documentation on the left. Here are
+some good starting points:
+
+-   The [viash commands](/commands/)
+-   An [overview of the functionality
+    dictionary](/config/functionality/) of the config file
+-   More details about [the docker platform](/config/platform-docker/)
