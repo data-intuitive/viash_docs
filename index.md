@@ -23,7 +23,7 @@ viash can help you:
 -   Combine multiple components in a **Nextflow** pipeline.
 -   Unit-test your component to ensure that it works at all times.
 
-## Example Use Cases
+## Example use cases
 
 Here are a few use cases which serve as motivation for viash:
 
@@ -47,7 +47,7 @@ Here are a few use cases which serve as motivation for viash:
     spend two hours installing your [Conda](https://docs.conda.io/)
     stack on their laptop.
 
-## Getting Started
+## Getting started
 
 Here are some links to get you started with viash:
 

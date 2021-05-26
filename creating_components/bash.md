@@ -25,7 +25,7 @@ To follow along with this tutorial, you need to have this software
 installed on your machine:
 
 -   An [installation of viash](/getting_started/installation).
--   A **Unix shell** like Bash or Zsh.
+-   A **Bash** Unix shell.
 -   An installation of [Docker](https://www.docker.com/).
 -   An installation of [cURL](https://curl.se/). Install this via your
     package manager if you don’t have it installed yet.
@@ -34,7 +34,7 @@ We recommend you take a look at the [hello world
 example](/getting_started/hello_world_bash) first to understand how
 components work.
 
-## Write a script in Bash
+## Write a script in bash
 
 The first step of developing this component, is writing the core
 functionality of the component, in this case a bash script.  
@@ -560,7 +560,7 @@ docker_output/md_url_checker ---setup
 This is a one time action for every docker executable. The output will
 look similar to this:
 
-    > docker build -t md_url_checker:latest /tmp/viashsetupdocker-md_url_checker-COeCgO
+    > docker build -t md_url_checker:latest /tmp/viashsetupdocker-md_url_checker-cHKIGO
 
 Once that has finished, you can execute **md\_url\_checker** as if it
 was a native executable, but it will pass its arguments to the docker

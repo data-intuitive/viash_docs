@@ -4,7 +4,7 @@ parent: Getting started
 nav_order: 4
 ---
 
-# Hello World
+# Hello world
 
 We have provided a simple **Hello World** component as an introduction
 to viash. Follow the steps below to learn how to run a component and get
@@ -16,12 +16,12 @@ To follow along with this tutorial, you need to have this software
 installed on your machine:
 
 -   An [installation of viash](/getting_started/installation).
--   A **Unix shell** like Bash or Zsh.
+-   A **Bash** Unix shell.
 -   An [installation of python 3](https://www.python.org/downloads). You
     may have to install the `python-is-python3` package on Ubuntu and
     its derivatives to make Python 3 the default version.
 
-## Running the Component
+## Running the component
 
 You can run a simple ‘Hello World’ component by running the following
 command:
@@ -60,7 +60,7 @@ viash run $URL -- NAME. --greeter="Hello there,"
 
     Hello there, NAME.
 
-## How Does the Hello World Component Work?
+## How does the hello world component work?
 
 When you call ‘viash run’, viash parses the
 [`config.vsh.yaml`](http://www.data-intuitive.com/viash_docs/examples/hello_world_py/config.vsh.yaml)
@@ -174,7 +174,7 @@ The results should be exactly the same as viash automatically picks the
 first platform when you don’t pass the platform option, in this case
 that’s `native`.
 
-## Exporting a Component as an Executable
+## Exporting a component as an executable
 
 Components can be exported to executables, making it easy to share
 scripted functionality without the need to have viash installed on the
@@ -195,7 +195,7 @@ my_hello_world/hello_world_py NAME. --greeter="Hello there,"
 
     Hello there, NAME.
 
-## What’s Next?
+## What’s next?
 
 Now that you understand the basics of how viash works, take a look at
 how to write your own component:

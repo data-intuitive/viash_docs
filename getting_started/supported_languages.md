@@ -40,3 +40,15 @@ components](/creating_components) section.
 -   [Creating an R component](/creating_components/r): This tutorial
     explains how to create your own viash component from scratch using
     an R script at its core.
+
+## Scala
+
+The documentation for this language is still in progress.
+
+## Javascript
+
+The documentation for this language is still in progress.
+
+## C
+
+The documentation for this language is still in progress.
