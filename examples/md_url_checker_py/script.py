@@ -26,6 +26,7 @@ output_file.truncate(0)
 
 amount_of_urls = len(doc.xpath('//a'))
 amount_of_errors = 0
+expected_code = 200
 
 for index, link in enumerate(doc.xpath('//a')):
     title = link.text
@@ -38,8 +39,6 @@ for index, link in enumerate(doc.xpath('//a')):
 
     output_file.write("Link name: " + title + "\n")
     output_file.write("URL: " + url + "\n")
-
-    expected_code = 200
 
     try:
         req = requests.head(url, allow_redirects=True)
