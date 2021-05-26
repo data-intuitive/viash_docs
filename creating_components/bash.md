@@ -560,7 +560,7 @@ docker_output/md_url_checker ---setup
 This is a one time action for every docker executable. The output will
 look similar to this:
 
-    > docker build -t md_url_checker:latest /tmp/viashsetupdocker-md_url_checker-cHKIGO
+    > docker build -t md_url_checker:latest /tmp/viashsetupdocker-md_url_checker-daaKHa
 
 Once that has finished, you can execute **md\_url\_checker** as if it
 was a native executable, but it will pass its arguments to the docker
@@ -575,14 +575,11 @@ command page](/commands/build/). That concludes the building of
 executables based on components using viash!
 
 <!-- ## Writing a unit test -->
-<!-- To ensure that your component works as expected during its development cycles, writing one or more tests is essential. -->
-<!-- Writing a unit test for a viash component is relatively simple.  -->
-<!-- You just need to write a Bash script (or R, or Python) which runs the executable multiple -->
-<!-- times, and verifies the output. Take note that the test needs to produce an error code not equal to -->
-<!-- 0 when a mistake is found. -->
+<!-- To finish off this tutorial, it's important to talk about unit tests. To ensure that your component works as expected during its development cycles, writing one or more tests is essential. -->
+<!-- Luckily, writing a unit test for a viash component is straightforward. -->
+<!-- You just need to write a script which runs the executable multiple times and verifies the output. Take note that the test needs to produce an error code other than 0 when a mistake is found. -->
 <!-- TODO: Add unit test -->
-<!-- When running the test, viash will automatically build an executable and place it -- along with other  -->
-<!-- resources and test resources -- in a temporary working directory. -->
+<!-- When running the test, viash will automatically build an executable and place it alongside the other resources in a temporary working directory. -->
 
 ## What’s next?
 

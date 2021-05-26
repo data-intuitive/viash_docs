@@ -18,6 +18,10 @@ functionality:
   resources:
   - type: bash_script
     path: script.sh
+  tests:
+  - type: bash_script
+    path: test.sh
+  - path: Testfile.md
 platforms:
   - type: native
   - type: docker
