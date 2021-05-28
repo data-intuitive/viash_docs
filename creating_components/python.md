@@ -1,105 +1,7 @@
 ---
-title: "Python example"
-parent: Getting started
+title: "Creating a Python component"
+parent: Creating components
 ---
-
-This vignette demonstrates how to wrap a simple ‘hello world’ Python
-script with viash.
-
-## Demonstration
-
-Given the files and meta files in the
-[examples/hello\_world\_py](https://github.com/data-intuitive/viash_docs/tree/master/examples/hello_world_py)
-directory, we demonstrate the functionality of viash in running the
-component with multiple backends.
-
-#### Run the component
-
-By running the component, it will output “Hello world!”, followed by any
-other inputs provided to it.
-
-``` bash
-cd examples/hello_world_py
-viash run config.vsh.yaml -- I am viash!
-```
-
-    ## Hello world! I am viash!
-
-#### Run the component with a Docker backend
-
-It can also be run with a Docker backend by specifying the `-p` or
-`--platform` parameter.
-
-First, you need to let viash set up the Docker container by pulling it
-from Docker Hub.
-
-``` bash
-viash run config.vsh.yaml -p docker -- ---setup
-```
-
-    ## > docker build -t hello_world_py:latest /tmp/viashsetupdocker-hello_world_py-GMDFEE
-
-You can run the component with viash in the backend as follows.
-
-``` bash
-viash run config.vsh.yaml -p docker -- General Kenobi. --greeter="Hello there."
-```
-
-    ## Hello there. General Kenobi.
-
-#### Export as an executable
-
-Now that we know what the component does, we can export the
-functionality as an executable.
-
-``` bash
-viash build config.vsh.yaml -p docker -o output
-output/hello_world_py And now, as an executable.
-```
-
-    ## Hello world! And now, as an executable.
-
-#### viash automatically generates a CLI
-
-By running the command with a `--help` flag, more information about the
-component is provided.
-
-``` bash
-output/hello_world_py --help
-```
-
-    ## A very simple 'Hello world' component.
-    ## 
-    ## Options:
-    ##     string1 string2 ...
-    ##         type: string, multiple values allowed
-    ## 
-    ##     --greeter=string
-    ##         type: string, default: Hello world!
-
-#### viash allows testing the component
-
-To verify that the component works, use `viash test`. This can be run
-both with or without the Docker backend.
-
-``` bash
-viash test config.vsh.yaml -p docker
-```
-
-    ## Running tests in temporary directory: '/tmp/viash_test_hello_world_py6599615297583267826'
-    ## ====================================================================
-    ## +/tmp/viash_test_hello_world_py6599615297583267826/build_executable/hello_world_py ---setup
-    ## > docker build -t hello_world_py:latest /tmp/viashsetupdocker-hello_world_py-AeABGA
-    ## ====================================================================
-    ## +/tmp/viash_test_hello_world_py6599615297583267826/test_test.py/test.py
-    ## 
-    ## ----------------------------------------------------------------------
-    ## Ran 0 tests in 0.000s
-    ## 
-    ## OK
-    ## ====================================================================
-    ## [32mSUCCESS! All 1 out of 1 test scripts succeeded![0m
-    ## Cleaning up temporary directory
 
 ## Developing a new component
 
@@ -114,7 +16,7 @@ you can override the greeter with `par["greeter"]`.
 
 Contents of [`script.py`](script.py):
 
-``` bash
+``` python
 ## VIASH START
 par = {
   "input": ["I am debug!"],
@@ -138,7 +40,7 @@ viash:
 python script.py
 ```
 
-    ## Hello world! I am debug!
+    Hello world! I am debug!
 
 Next, we write a meta-file describing the functionality of this
 component in YAML format.

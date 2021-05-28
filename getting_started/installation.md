@@ -24,7 +24,7 @@ You can run viash on the following operating systems:
 
 ## Installing viash
 
-### Packaged Release
+### Packaged release
 
 To install viash, download the [latest
 release](https://github.com/data-intuitive/viash/releases/latest) and
@@ -38,9 +38,8 @@ echo $PATH
 
 #### Installing viash to \~/bin
 
-In order to add `~/bin` to your $PATH, you need to edit `~/.bashrc` or
-`~/.zshrc` (depending on the shell you are using) and add the following
-line to the end of it:
+In order to add `~/bin` to your $PATH, you need to edit `~/.bashrc` and
+add the following line to the end of it:
 
 ``` bash
 export PATH="$HOME/bin:$PATH"
@@ -86,7 +85,7 @@ To verify your installation, run the following command:
 viash --help
 ```
 
-### Build from Source
+### Build from source
 
 The following needs to be installed on your system in order to install
 viash:
@@ -120,7 +119,7 @@ To verify your installation, run the following command:
 viash --help
 ```
 
-### Build from Source using Docker
+### Build from source using docker
 
 If you have Java and Docker installed, but not `sbt`, run this instead:
 

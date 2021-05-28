@@ -49,3 +49,6 @@ platforms:
         packages: [ python3 ]
       - type: docker
         run: [ ln -sf python3 /usr/bin/python ]
+      # documentation example dependancies
+      - type: apk
+        packages: [ curl ]

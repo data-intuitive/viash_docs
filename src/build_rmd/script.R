@@ -32,3 +32,5 @@ for (i in seq_along(rmds)) {
     )
   }
 }
+
+message('DONE!')

@@ -1,15 +1,32 @@
 ---
-title: "Hello World"
+title: "Hello World (Bash)"
 parent: Getting started
-nav_order: 2
+nav_order: 3
 ---
 
+```{r init, include=FALSE}
+library(tidyverse)
 
-# Hello World
+source("../src/helper/md_helpers.R")
+
+# change wd to where the files are located
+knitr::opts_knit$set(root.dir = "../examples/hello_world/") 
+# Remove hashtags before bash output
+knitr::opts_chunk$set(comment = NA)
+```
+
+# Hello world
 
 We have provided a simple **Hello World** component as an introduction to viash. Follow the steps below to learn how to run a component and get a result back from it.
 
-## Running the Component
+## Prerequisites
+
+To follow along with this tutorial, you need to have this software installed on your machine:
+
+- An [installation of viash](/getting_started/installation).
+- A **Bash** Unix shell.
+
+## Running the component
 
 You can run a simple 'Hello World' component by running the following command:
 ```{bash}
@@ -35,38 +52,12 @@ URL=http://www.data-intuitive.com/viash_docs/examples/hello_world/config.vsh.yam
 viash run $URL -- NAME. --greeter="Hello there,"
 ```
 
-## How does the Hello World component work?
+## How does the hello world component work?
 
 When you call 'viash run', viash parses the [`config.vsh.yaml`](http://www.data-intuitive.com/viash_docs/examples/hello_world/config.vsh.yaml) file, which is a meta description of the component written in the yaml serialization language:
 
-```yaml
-functionality:
-  name: hello_world
-  description: A very simple 'Hello world' component.
-  arguments:
-  - type: string
-    name: input
-    multiple: true
-    multiple_sep: " "
-  - type: string
-    name: --greeter
-    default: "Hello world!"
-  resources:
-  - type: bash_script
-    path: script.sh
-  tests:
-  - type: bash_script
-    path: test.sh
-platforms:
-  - type: native
-  - type: docker
-    image: bash:4.0
-  - type: docker
-    id: alpine
-    image: alpine
-    setup:
-      - type: apk
-        packages: [ bash ]
+```{r, echo = FALSE}
+print_file("config.vsh.yaml", format = "yaml", show_filename = FALSE)
 ```
 
 This config file describes the behavior of a script and the platform it runs on.
@@ -81,20 +72,13 @@ The **functionality** attribute describes the core functionality of the componen
 
 These arguments are passed on to the **resources**. In this case, there's a single reference to a file named [`script.sh`](http://www.data-intuitive.com/viash_docs/examples/hello_world/script.sh). This file is the 'brain' of the component, it's small Bash script which prints out two environment values: `par_input` and `par_greeter`: 
 
-```bash
-## VIASH START
-
-par_input="I am debug!"
-par_greeter="Hello world!"
-
-## VIASH END
-
-echo $par_greeter $par_input
+```{r, echo = FALSE}
+print_file("script.sh", format = "bash", show_filename = FALSE)
 ```
 
-Any variables starting with `par_` between the `## VIASH START` and `## VIASH END` lines will automatically be replaced at runtime with parameter values from the CLI. 
+Any variables defined in the config file will be automatically generated between the `## VIASH START` and `## VIASH END` lines. You can add pre-defined values here for debugging purposes by adding the variables and adding the `par_` prefix, their values will automatically be replaced at runtime with parameter values from the CLI. 
 
-Finally, there's a **tests** section to put your test scripts. It's a good practice to write tests and run these every time you update your component and/or the resources. You can read more about writing and running viash tests [here](http://www.data-intuitive.com/viash_docs/good_practices/testing/). (TODO: link vervangen, tekst ipv here)
+Finally, there's a **tests** section to put your test scripts. It's a good practice to write tests and run these every time you update your component and/or the resources. You can read more about writing and running viash tests [on the Testing page](http://www.data-intuitive.com/viash_docs/good_practices/testing/).
 
 ### Platforms
 
@@ -118,22 +102,44 @@ The list of currently supported platforms are [Native](/config/platform-native/)
 You can specify what platform a component should run on by passing the `-p` or `--platform` option. For example, try running the following command:
 
 ```{bash, eval=FALSE}
-viash run -p native $URL -- Mike. --greeter="Hello there,"
+viash run -p native $URL -- NAME. --greeter="Hello there,"
 ```
 ```{bash, echo=FALSE}
 URL=http://www.data-intuitive.com/viash_docs/examples/hello_world/config.vsh.yaml
-viash run -p native $URL -- Mike. --greeter="Hello there,"
+viash run -p native $URL -- NAME. --greeter="Hello there,"
 ```
 The results should be exactly the same as viash automatically picks the first platform when you don't pass the platform option, in this case that's `native`.
 
-<!-- ## Exporting a Component -->
+## Exporting a component as an executable
 
-<!-- Components can be exported... TODO -->
+Components can be exported to executables, making it easy to share scripted functionality without the need to have viash installed on the target system.  
+Run the following command to make viash parse the config file and export the result to an executable called **hello_world** in a (new) folder named **my_hello_world**:
 
-## What's Next?
+```{bash, eval=FALSE}
+viash build $URL -o my_hello_world
+```
+```{bash, echo=FALSE}
+URL=http://www.data-intuitive.com/viash_docs/examples/hello_world/config.vsh.yaml
+viash build $URL -o my_hello_world
+```
+
+You can now run the following command to run the generated executable:
+
+```{bash, eval=FALSE}
+my_hello_world/hello_world NAME. --greeter="Hello there,"
+```
+```{bash, echo=FALSE}
+my_hello_world/hello_world NAME. --greeter="Hello there,"
+```
+
+## What's next?
 
 Now that you understand the basics of how viash works, take a look at how to write your own component:
 
-- [Bash example](/getting_started/example_bash)
-- [Python example](/getting_started/example_python)
-- [R example](/getting_started/example_r)
+- [Creating a Bash component](/creating_components/bash)
+- [Creating a Python component](/creating_components/python)
+- [Creating an R component](/creating_components/r)
+
+```{bash cleanup, echo=FALSE}
+rm -r my_hello_world
+```

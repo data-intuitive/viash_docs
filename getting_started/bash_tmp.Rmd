@@ -1,0 +1,59 @@
+```{r init, include=FALSE}
+library(tidyverse)
+
+source("../src/helper/md_helpers.R")
+
+# change wd to where the files are located
+knitr::opts_knit$set(root.dir = "../examples/hello_world/") 
+# Remove hashtags before bash output
+knitr::opts_chunk$set(comment = NA)
+```
+
+This example demonstrates how to wrap a simple 'hello world' bash script with viash.
+
+## Demonstration
+Given the files and meta files in the [examples/hello_world](https://github.com/data-intuitive/viash_docs/tree/master/examples/hello_world) directory, we demonstrate the functionality of viash in running the component 
+with multiple backends.
+
+#### Run the component
+By running the component, it will output "Hello world!", followed by any other inputs provided to it.
+
+```{bash, eval=FALSE}
+cd examples/hello_world
+viash run config.vsh.yaml -- I am viash!
+```
+```{bash, echo=FALSE}
+viash run config.vsh.yaml -- I am viash!
+```
+
+#### Run the component with a Docker backend
+It can also be run with a Docker backend by specifying the `-p` or `--platform` parameter.
+
+First, you need to let viash set up the Docker container by pulling it from Docker Hub.
+```{bash}
+viash run config.vsh.yaml -p docker -- ---setup
+```
+
+You can run the component with viash in the backend as follows.
+```{bash}
+viash run config.vsh.yaml -p docker -- General Kenobi. --greeter="Hello there."
+```
+
+#### Export as an executable
+Now that we know what the component does, we can export the functionality as an executable.
+```{bash}
+viash build config.vsh.yaml -p docker -o output
+output/hello_world And now, as an executable.
+```
+
+#### viash automatically generates a CLI
+By running the command with a `--help` flag, more information about the component is provided.
+```{bash}
+output/hello_world --help
+```
+
+#### viash allows testing the component
+To verify that the component works, use `viash test`. This can be run both with or without the Docker backend.
+```{bash}
+viash test config.vsh.yaml -p docker
+```
