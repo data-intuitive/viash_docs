@@ -1,4 +1,4 @@
-set -ex # exit the script when one of the checks fail.
+set -ex # exit the script when one of the checks fail and output all commands.
 
 # check 1
 echo ">>> Checking whether output is correct"

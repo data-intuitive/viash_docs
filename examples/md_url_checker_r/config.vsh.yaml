@@ -1,5 +1,5 @@
 functionality:
-  name: md_url_checker
+  name: md_url_checker_r
   description: Check if URLs in a markdown are reachable and create a text report with the results.
   arguments:                     
   - type: file

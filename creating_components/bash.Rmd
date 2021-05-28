@@ -292,38 +292,66 @@ viash build -p docker -o docker_output config.vsh.yaml
 viash build -p docker -o docker_output config.vsh.yaml 
 ```
 
-You'll now have a **docker_ouput** folder alongside the **output** one. This folder also contains a file named md_url_checker, but its inner workings are slightly different.  
-If you would simply run this file as with the native executable, you would run into an error as the docker container needs to be built first. You can let the executable prepare a docker container for you by using this command:
-
-```{bash, eval=FALSE}
-docker_output/md_url_checker ---setup
-```
-
-This is a one time action for every docker executable. The output will look similar to this:
-
-```{bash, echo=FALSE}
-docker_output/md_url_checker ---setup
-```
-
-Once that has finished, you can execute **md_url_checker** as if it was a native executable, but it will pass its arguments to the docker container:
+You'll now have a **docker_ouput** folder alongside the **output** one. This folder also contains a file named **md_url_checker**, but its inner workings are slightly different than before.
+Run **md_url_checker** with the full arguments list to test what happens:
 
 ```{bash, eval=FALSE}
 docker_output/md_url_checker --inputfile=Testfile.md --domain=http://www.data-intuitive.com/viash_docs/ --output=my_report.txt
 ```
 
-For more information about the viash build command, take a look at [its command page](/commands/build/).
+Here's what just happened:
+
+- If the docker image wasn't found, viash will download it. 
+- A check is made to see if a container named "md_url_checker" exists. If not, one will be built with the image defined in the config as its base.
+- All dependencies defined in the config are taken care of.
+- The script is run with the passed arguments and the output is passed to your shell. The **my_report.txt** file is written to your working directory.
+
+For more information about the `viash build` command, take a look at [its command page](/commands/build/).
 That concludes the building of executables based on components using viash! 
 
-<!-- ## Writing a unit test -->
+## Writing and running a unit test
 
-<!-- To finish off this tutorial, it's important to talk about unit tests. To ensure that your component works as expected during its development cycles, writing one or more tests is essential. -->
-<!-- Luckily, writing a unit test for a viash component is straightforward. -->
+To finish off this tutorial, it's important to talk about unit tests. To ensure that your component works as expected during its development cycle, writing one or more tests is essential.
+Luckily, writing a unit test for a viash component is straightforward.
 
-<!-- You just need to write a script which runs the executable multiple times and verifies the output. Take note that the test needs to produce an error code other than 0 when a mistake is found. -->
+You just need to add test parameters in the config file and write a script which runs the executable and verifies the output. When running tests, viash will automatically build an executable and place it alongside the other defined resources in a temporary working directory.
+To get started, open up **config.vsh.yaml** file again and add this at the end of the functionality dictionary, between the `path: script.sh` and `platforms:` lines:
 
-<!-- TODO: Add unit test -->
+```yaml
+  tests:
+  - type: bash_script
+    path: test.sh
+  - path: Testfile.md
+```
 
-<!-- When running the test, viash will automatically build an executable and place it alongside the other resources in a temporary working directory. -->
+This test dictionary contains a reference to the test script and all of the files that need to be copied over in order to complete a test. In the case of our example, **test.sh** will be the test script and **Testfile.md** is necessary as an input markdown file is required for the script to function. Now create a new file named **test.sh** in the **my_viash_component** folder and add this as its content:
+
+```{r, echo = FALSE}
+print_file("test.sh", format = "bash", show_filename = FALSE)
+```
+
+This bash script will run the component and perform several checks to its output. A successful test runs all the way down and exits with a **0 exit code**, any other code means a failure:
+
+- `set -ex` will stop the script once any of the lines fail and will output all commands to the shell with a '+' before it.
+- `./md_url_checker --inputfile Testfile.md > test-output.txt` runs the component and writes its output to a file.
+- `[[ ! -f test-output.txt ]] && echo "Test output file could not be found!" && exit 1` checks is the output file exists, if it doesn't exit with a 1 code.
+- All of the `grep` calls check if a certain piece of text could be found. Each of these calls can exit the script if the text wasn't found.
+- If everything succeeded, exit with a 0 code. Make sure not to forget this final line in your own tests.
+
+Make sure both the config and test files are saved, then run a test by running this command:
+
+```{bash, eval=FALSE}
+viash test config.vsh.yaml 
+```
+
+The output will look like this:
+
+```{bash, echo=FALSE}
+viash test config.vsh.yaml 
+```
+
+If the test succeeds it simply writes the full output to the shell. If there's any issues, the script stops and an error message will appear in red.
+For more information on tests take a look at the [Testing page](/good_practices/testing/).
 
 ## What's next?
 
