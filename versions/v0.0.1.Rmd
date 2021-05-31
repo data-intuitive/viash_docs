@@ -1,7 +1,0 @@
----
-title: "viash 0.0.1"
-date: 2020-05-05
-parent: Version history
----
-
-* Initial proof of concept.
